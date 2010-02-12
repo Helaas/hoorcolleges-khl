@@ -4,10 +4,10 @@
 
     ## SQL en SQL abstractie
 
-    require_once("./adodb_lite/adodb.inc.php");
+    require_once("adodb_lite/adodb.inc.php");
 
     $db = ADONewConnection("mysql"); # bvb. 'mysql' of 'oci8' en anderen
-    $db->debug = true;
+    //$db->debug = true;
 
     if ($config["server"]){
         $config["dbnaam"] = "web_k_be"; // Database naam
@@ -22,6 +22,11 @@
     // Verbinden
 
     $db->Connect("localhost", $config["bdgebruiker"], $config["dbwachtwoord"], $config["dbnaam"]);
+
+
+    ## Template en het scheiden van HTML en 
+    require_once('TinyButStrong.php');
+    $TBS = new clsTinyButStrong;
 
 
 ?>
