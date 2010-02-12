@@ -1,0 +1,27 @@
+<?php
+
+    $config["server"] = true; //True = Thuisservers | false = web-k
+
+    ## SQL en SQL abstractie
+
+    require_once("./adodb_lite/adodb.inc.php");
+
+    $db = ADONewConnection("mysql"); # bvb. 'mysql' of 'oci8' en anderen
+    $db->debug = true;
+
+    if ($config["server"]){
+        $config["dbnaam"] = "web_k_be"; // Database naam
+        $config["bdgebruiker"] = "root"; // Gebruikersnaam
+        $config["dbwachtwoord"] = ""; // Password
+    } else {
+        $config["dbnaam"] = "web_k_be"; // Database naam
+        $config["bdgebruiker"] = "web_k_be"; // Gebruikersnaam
+        $config["dbwachtwoord"] = "pJ7xtbvU"; // Password
+    }
+
+    // Verbinden
+
+    $db->Connect("localhost", $config["bdgebruiker"], $config["dbwachtwoord"], $config["dbnaam"]);
+
+
+?>
