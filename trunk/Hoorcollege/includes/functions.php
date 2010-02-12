@@ -72,4 +72,19 @@
 
     }
 
+    //functie om na te gaan of het paswoord juist is
+    function paswoordOk($email, $pw) {
+        global $db;
+        $resultaat = $db->Execute("select count( distinct email ) as aantal
+                                   from hoorcollege_gebruiker where email = '$email'
+                                    and wachtwoord = '$pw'");
+
+        if($resultaat->fields["aantal"] > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 ?>
