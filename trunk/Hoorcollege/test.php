@@ -1,5 +1,5 @@
 <?php
-    include_once('gebruiker.class.php'); 
+    include_once('./includes/gebruiker.class.php');
     $gebruiker = new Gebruiker('1', 'Beslic', 'Filip', 'lala', 'sdf', '99');
 
     session_start();
