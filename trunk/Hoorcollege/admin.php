@@ -1,6 +1,5 @@
 <?php
-    require_once('./includes/kern.php');
-    require_once('./includes/functions.php');
+    require_once('./includes/kern.php');    
     $TBS = new clsTinyButStrong;
 
     session_start();
@@ -31,14 +30,10 @@
 
         if(isset ($_POST['knopvoegtoe'])) {
             //controleren of alle gegevens correct zijn            
-            if(empty ($_POST['naam']) || empty ($_POST['voornaam']) || empty ($_POST['email'])) {
+            if(empty ($_POST['naam']) || empty ($_POST['voornaam']) || empty ($_POST['email']) || bestaatEmail($_POST['email'])) {
                 $correct = false;
 
                 $email = $_POST['email'];
-                //gegevens ophalen uit database
-                $resultaat = $db->Execute("SELECT COUNT( DISTINCT email ) AS aantal
-                                   FROM `hoorcollege_gebruiker` WHERE email = '$email'");
-
                 if(bestaatEmail($email)) {
                     $foutboodschap = "Email adres is al toegekent aan een andere gebruiker!";
                 }
@@ -52,7 +47,14 @@
                 $config["pagina"] = "./admin/student.html";
             }
             else {
+                $config["pagina"] = "./admin/student.html";
                 //gebruiker toevoegen aan databank
+                if(!voegGebruikerToe($_POST['naam'], $_POST['voornaam'], $_POST['email'])) {
+                    $foutboodschap = "Omwille van technische problemen kon de gebruiker niet toegevoegd worden!";
+                }
+                $TBS->LoadTemplate('./html/template.html') ;
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker');
+                $TBS->Show() ;
             }
         }
 

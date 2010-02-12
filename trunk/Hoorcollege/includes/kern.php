@@ -34,7 +34,8 @@
     ## Gebruikers
     require_once('Gebruiker.class.php');
 
-   
+   ## Gebruikers
+    require_once('functions.php');
 
 
 ?>
