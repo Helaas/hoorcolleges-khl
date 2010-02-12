@@ -13,12 +13,19 @@
        
         if($_GET['actie'] == 'student') {
             //table aanmaken voor de studentenoverzicht op student.html
-            //$TBS->MergeBlock('blk1', 'web_k_be', 'SELECT * FROM ');
+            $cnx_id = mysql_connect('localhost','web_k_be','pJ7xtbvU');
+            mysql_select_db('web_k_be',$cnx_id) ;
+            $TBS->LoadTemplate('./html/template.html') ;
+            $TBS->MergeBlock('blk1', $cnx_id, 'SELECT * FROM `hoorcollege_gebruiker`');
+            mysql_close($cnx_id) ;
+            $TBS->Show() ;
         }
-        $gebruiker = $_SESSION['gebruiker'];
-        $gebruikerID = $gebruiker->getIdGebruiker();
-        $TBS->LoadTemplate('./html/template.html') ;
-        $TBS->Show() ;
+        else {
+            $TBS->LoadTemplate('./html/template.html') ;
+            $TBS->Show() ;
+        }
+               
+        
     }
     else if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == "99" ) {
         //bepalen welke content geladen moet worden
@@ -30,7 +37,10 @@
                 $foutboodschap = "Gegevens zijn niet correct ingevuld en/of email adres is al aan een andere gebruiker toegekent!";
                 //content wijzigen, omdat er een fout is, moet terug de content van student.html opgehaald worden
                 $config["pagina"] = "./admin/student.html";
-            }            
+            }
+            else {
+                //gebruiker toevoegen aan databank
+            }
         }             
         
         $gebruiker = $_SESSION['gebruiker'];        
