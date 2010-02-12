@@ -21,11 +21,14 @@
         $pasww = generatePassword();
         $gelukt =  $db->Execute("insert into hoorcollege_gebruiker (naam, voornaam, email, wachtwoord, niveau)
                                     values('$naam', '$voornaam', '$email', '$pasww', '1')");
-        //gebruiker mailen
-        $boodschap = "Geachte $voornaam, $naam\n\nVanaf nu kan u hoorcollges volgen op KHL - Hoorcolleges.\n"
-        . "U inlog gegevens: \n\nGebruikernaam: $email\nPasswoord: $pasww\n\nMet vriendelijke groeten.\n\n"
-        ."Het Katholieke Hogeschool Leuven.";
-        $verstuurd = mail("$email", 'KHL - Belangrijk: login gegevens: Hoorcolleges', $boodschap);
+        if($gelukt) {
+            //gebruiker mailen
+            $boodschap = "Geachte $voornaam, $naam\n\nVanaf nu kan u hoorcollges volgen op KHL - Hoorcolleges.\n"
+            . "U inlog gegevens: \n\nGebruikernaam: $email\nPasswoord: $pasww\n\nMet vriendelijke groeten.\n\n"
+            ."Het Katholieke Hogeschool Leuven.";
+            $verstuurd = mail("$email", 'KHL - Belangrijk: login gegevens: Hoorcolleges', $boodschap);
+        }
+        
         if(!$verstuurd) {
             //indien geen mail kon worden verzonden
             $gelukt = $verstuurd;
