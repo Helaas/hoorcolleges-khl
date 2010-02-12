@@ -1,0 +1,9 @@
+<h2>File Upload</h2>
+
+<!-- Upload segment, roept Upload.php op, max file size = value -->
+<form enctype="multipart/form-data" action="Upload.php" method="POST">
+<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+Kies een bestand: <input name="uploadedfile" type="file" /><br />
+<input type="submit" value="Upload File" />
+</form>
+
