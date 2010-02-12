@@ -48,5 +48,5 @@
 * automatically.
 */
 
-// $modules = "pear";
+ $modules = "pear";
 ?>

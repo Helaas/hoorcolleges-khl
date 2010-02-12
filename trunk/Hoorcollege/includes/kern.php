@@ -5,9 +5,10 @@
     ## SQL en SQL abstractie
 
     require_once("adodb_lite/adodb.inc.php");
-
+    $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
     $db = ADONewConnection("mysql"); # bvb. 'mysql' of 'oci8' en anderen
     //$db->debug = true;
+
 
     if ($config["server"]){
         $config["dbnaam"] = "web_k_be"; // Database naam
