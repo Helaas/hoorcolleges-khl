@@ -27,8 +27,11 @@
 
     ## Template en het scheiden van HTML en 
     require_once('TinyButStrong.php');
-    require_once ('tbsdb_pearADO.php');
+    require_once('tbsdb_pearADO.php'); //Speciale module door Kevin Vranken om communicatie TBS <-> ADodb Lite mogelijk te maken
     $TBS = new clsTinyButStrong;
+
+    ## Gebruikers
+    require_once('./includes/gebruiker.class.php');
 
 
 ?>

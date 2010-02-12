@@ -2,7 +2,7 @@
 
 /** Module voor adodb lite queries te kunnen draaien met TinyButStrong
  *  Module geschreven door Kevin Vranken in 2010
- *  onder de GNU v2 licence - gnu.org
+ *  onder de GNU Lesser General Public License v2 licence - gnu.org
  *
  * @global <type> $db
  * @param <type> $source
