@@ -1,0 +1,14 @@
+<h2>Admin sectie</h2>
+    <h3>Toevoegen van studenten</h3>
+        <form action="admin.php" method="POST">
+            Naam: <br><br><input type="text" name="naam" value="[onshow._POST.naam;noerr]" size="30" /><br><br>
+            Voornaam: <br><br><input type="text" name="voornaam" value="[onshow._POST.voornaam;noerr]" size="30" /><br><br>
+            Email: <br><br><input type="text" name="email" value="[onshow._POST.email;noerr]" size="30" /><br><br><br>
+
+            <p id ="fout">
+                [onshow.foutboodschap]
+            </p>
+            <input type="submit" value="voegtoe" name="knopvoegtoe" />
+        </form>
+    
+    <h3>Overzicht studenten</h3>

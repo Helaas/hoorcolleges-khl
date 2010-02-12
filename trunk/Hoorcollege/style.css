@@ -19,6 +19,10 @@ margin-bottom:10px;
 line-height:1.2em;
 }
 
+p#fout {
+    color : #800517;
+}
+
 strong {
 font-weight:bold;
 }

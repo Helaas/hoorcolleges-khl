@@ -4,10 +4,12 @@
     $TBS = new clsTinyButStrong;
 
     session_start();
+
+    $foutboodschap = '';
    
     if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == "99" && isset ($_GET['actie'])) {
-        //nagaan naar welke pagina er moet genavigeerd worden
-        $config["pagina"] = $_GET['actie'] . ".html";
+        //bepalen welke content geladen moet worden
+        $config["pagina"] = "/admin/" . $_GET['actie'] . ".html";
        
         if($_GET['actie'] == 'student') {
             //table aanmaken voor de studentenoverzicht op student.html
@@ -19,10 +21,19 @@
         $TBS->Show() ;
     }
     else if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == "99" ) {
-        $config["pagina"] = "admin.html";
+        //bepalen welke content geladen moet worden
+        $config["pagina"] = "./admin/admin.html";
         
-        $gebruiker = $_SESSION['gebruiker'];
-        $gebruikerID = $gebruiker->getIdGebruiker();
+        if(isset ($_POST['knopvoegtoe'])) {
+            //controleren of alle gegevens correct zijn
+            if(true) {
+                $foutboodschap = "Gegevens zijn niet correct ingevuld en/of email adres is al aan een andere gebruiker toegekent!";
+                //content wijzigen, omdat er een fout is, moet terug de content van student.html opgehaald worden
+                $config["pagina"] = "./admin/student.html";
+            }            
+        }             
+        
+        $gebruiker = $_SESSION['gebruiker'];        
         $TBS->LoadTemplate('./html/template.html') ;
         $TBS->Show() ;
     }
