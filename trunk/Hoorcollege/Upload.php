@@ -6,8 +6,7 @@ $testinhoud = "";
 
 
 
- // if (is_dir("TestBibliotheek/".$_POST['vak']."/") && is_dir("TestBibliotheek/".$_POST['vak']."/".$_POST['onderwerp']."/")){
-   //   }
+
 
     if (!is_dir("TestBibliotheek/".$_POST['vak']."/")){
         mkdir("TestBibliotheek/".$_POST['vak'], 0777);

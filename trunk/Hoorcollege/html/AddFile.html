@@ -2,11 +2,15 @@
 
 <!-- Upload segment, roept Upload.php op, max file size = value -->
 <form enctype="multipart/form-data" action="Upload.php" method="POST">
+Vak:<br />
+<input name="vak" type="txt" /><br /><br />
+Onderwerp:<br />
+<input name="onderwerp" type="txt" /><br />
+<br />
 <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 Kies een bestand: <input name="uploadedfile" type="file" /><br />
-<br />
-Vak:       <input name="vak" type="txt" /><br />
-Onderwerp: <input name="onderwerp" type="txt" /><br />
+
+
 <input type="submit" value="Upload File" />
 </form>
 
