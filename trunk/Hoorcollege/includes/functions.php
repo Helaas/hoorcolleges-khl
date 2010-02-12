@@ -19,6 +19,7 @@
     function voegGebruikerToe($naam, $voornaam, $email) {
         global $db;
         $pasww = generatePassword();
+        $verstuurd = false;
         $gelukt =  $db->Execute("insert into hoorcollege_gebruiker (naam, voornaam, email, wachtwoord, niveau)
                                     values('$naam', '$voornaam', '$email', '$pasww', '1')");
         if($gelukt) {
