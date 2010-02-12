@@ -1,6 +1,7 @@
 <?php
 
     $config["server"] = true; //True = Thuisservers | false = web-k
+    if ($_SERVER["SERVER_NAME"] == "www.web-k.be") $config["server"] = false;
 
     ## SQL en SQL abstractie
 
@@ -31,7 +32,7 @@
     $TBS = new clsTinyButStrong;
 
     ## Gebruikers
-    require_once('./includes/gebruiker.class.php');
+    require_once('Gebruiker.class.php');
 
 
 ?>
