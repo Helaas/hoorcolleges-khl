@@ -1,7 +1,6 @@
 <?php
     include_once('./includes/kern.php');
     echo "<pre>";
-    //$db->SetFetchMode(ADODB_FETCH_ASSOC);
 
     ## Voorbeeldqueries
 

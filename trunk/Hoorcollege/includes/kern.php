@@ -27,6 +27,7 @@
 
     ## Template en het scheiden van HTML en 
     require_once('TinyButStrong.php');
+    require_once ('tbsdb_pearADO.php');
     $TBS = new clsTinyButStrong;
 
 

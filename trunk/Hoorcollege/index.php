@@ -1,7 +1,6 @@
 <?php
 session_start();
-include_once('./includes/TinyButStrong.php');
-$TBS = new clsTinyButStrong;
+include_once('./includes/kern.php');
 
 $config["pagina"] = "index.html";
 
