@@ -9,6 +9,7 @@
     $foutboodschap = '';
     $foutboodschap2 = '';
     $foutboodschap3 = '';
+    $foutboodschap4 = '';
 
     //dit is de main content
     $config["pagina"] = "./admin/admin.html";
@@ -129,6 +130,17 @@
                 $foutboodschap3 = 'Student is succesvol verwijderd van de groep!'; //dit is geen foutboodschap
             }
         }
+        else if(isset ($_POST['verwijderallestudentuitgroepknop'])) { //alle studenten uit groep verwijderen in groep.html
+            $config["pagina"] = "./admin/groep.html";
+            if(isGroepLeeg($_POST['selectgroepverwijderhelegroep'])) {
+                $foutboodschap4 = "Deze groep heeft geen studenten!";
+            }
+            else {
+                verwijderAlleStudentenVanGroep($_POST['selectgroepverwijderhelegroep']);
+                $typeboodschap = "juist";
+                $foutboodschap4 = 'Studenten zijn succesvol verwijderd van de groep!'; //dit is geen foutboodschap
+            }
+        }
         
         $TBS->LoadTemplate('./html/template.html');        
         //indien bepaalde subcontenten geladen moeten worden, moeten bepaalde gegevens uit de db worden gehaald
@@ -154,6 +166,9 @@
             $TBS->MergeBlock('blk7', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau = 1 GROUP BY naam, voornaam asc');
             //select veld voor overzicht groepen voor te verwijderen functie
             $TBS->MergeBlock('blk8', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+
+            //select veld voor overzicht groepen voor te verwijderen alle studenten uit groep functie
+            $TBS->MergeBlock('blk9', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
         }
 
         $TBS->Show() ;

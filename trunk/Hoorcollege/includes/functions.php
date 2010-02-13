@@ -43,6 +43,19 @@
         }
     }
 
+    //methode om na te gaan of een groep leeg is, dus geen studenten die eraan gekoppeld zijn
+    function isGroepLeeg($groepId) {
+        global $db;
+        $resultaat = $db->Execute("select count('$groepId') as aantal
+                                   from hoorcollege_gebruikergroep where Groep_idGroep = '$groepId'");
+        if($resultaat->fields["aantal"] == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     //methode om te controleren of een lector een vak beheert
     function beheertLectorVak($lectorId, $vakId) {
         global $db;
@@ -134,6 +147,14 @@
         global $db;
         $gelukt =  $db->Execute("delete from hoorcollege_gebruikergroep
                                     where Gebruiker_idGebruiker='$studentId' && Groep_idGroep='$groepId'");
+        return $gelukt;
+    }
+
+    //functie om alle studenten te verwijderen uit een groep, wordt onderandere in admin.php gebruikt
+    function verwijderAlleStudentenVanGroep($groepId) {
+        global $db;
+        $gelukt =  $db->Execute("delete from hoorcollege_gebruikergroep
+                                    where Groep_idGroep='$groepId'");
         return $gelukt;
     }
 
