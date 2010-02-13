@@ -92,4 +92,11 @@
         }
     }
 
+    function getGebruiker($email){
+        global $db;
+        $resultaat = $db->Execute("select *
+                                   from hoorcollege_gebruiker where email = '$email'");
+        return $resultaat;
+    }
+
 ?>

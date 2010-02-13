@@ -37,7 +37,7 @@ padding:0;
 }
 
 li {
-margin:0 0 5px 15px;
+margin:0 0 5px 0;
 padding-left:15px;
 list-style:none;
 background-image:url(afbeeldingen/bulleted-li-bg-dark.gif);
@@ -45,6 +45,11 @@ background-position:0 3px;
 background-repeat:no-repeat;
 font-size:1em;
 color:#454545;
+}
+
+form{
+    margin: 0 0 5px 15px;
+    padding-left:15px;
 }
 
 a {
@@ -176,7 +181,7 @@ float:left;
 margin:0 10px 0 0;
 padding:6px 6px 6px 10px;
 width:735px;
-font-size:.9em;
+font-size:1.3em;
 color:#000000;
 border-left:1px dashed #cccccc;
 }
