@@ -18,16 +18,17 @@
 
     function voegGebruikerToe($naam, $voornaam, $email) {
         global $db;
-        $pasww = generatePassword();
+        $pasww1 = generatePassword();
+        $pasww = md5($pasww1);
         $verstuurd = false;
         $gelukt =  $db->Execute("insert into hoorcollege_gebruiker (naam, voornaam, email, wachtwoord, niveau)
                                     values('$naam', '$voornaam', '$email', '$pasww', '1')");
         if($gelukt) {
             //gebruiker mailen
             $boodschap = "Geachte $voornaam, $naam\n\nVanaf nu kan u hoorcollges volgen op KHL - Hoorcolleges.\n"
-            . "U inlog gegevens: \n\nGebruikernaam: $email\nPasswoord: $pasww\n\nMet vriendelijke groeten.\n\n"
-            ."Het Katholieke Hogeschool Leuven.";
-            $verstuurd = mail("$email", 'KHL - Belangrijk: login gegevens: Hoorcolleges', $boodschap);
+            . "U inlog gegevens: \n\nGebruikernaam: $email\nPasswoord: $pasww1\n\nMet vriendelijke groeten.\n\n"
+            ."Het Katholieke Hogeschool Leuven.";           
+            $verstuurd = mail( "$email", "Subject: 'KHL - Belangrijk: login gegevens: Hoorcolleges'", $boodschap, "From: khl@khl.be" );
         }
         
         if(!$verstuurd) {
@@ -44,7 +45,7 @@
        $db->Execute("delete from hoorcollege_gebruiker WHERE email = '$email'");
     }
 
-    //deze functie is niet zelf geschreven, wel lichtjes aangepast, bron: http://www.laughing-buddha.net/jon/php/password/
+    //deze functie is niet zelf geschreven, bron: http://www.laughing-buddha.net/jon/php/password/
     function generatePassword ($length = 8)
     {
 
@@ -72,7 +73,7 @@
       }
 
       // done!
-      return md5($password);
+      return $password;
 
     }
 
