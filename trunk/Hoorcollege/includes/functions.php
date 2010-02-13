@@ -102,8 +102,8 @@
     function paswoordOk($email, $pw) {
         global $db;
         $resultaat = $db->Execute("select count( distinct email ) as aantal
-                                   from hoorcollege_gebruiker where email = '$email'
-                                    and wachtwoord = '$pw'");
+                                   from hoorcollege_gebruiker where email LIKE '$email'
+                                    and wachtwoord LIKE '$pw'");
 
         if($resultaat->fields["aantal"] > 0) {
             return true;
@@ -115,8 +115,7 @@
 
     function getGebruiker($email){
         global $db;
-        $resultaat = $db->Execute("select *
-                                   from hoorcollege_gebruiker where email = '$email'");
+        $resultaat = $db->GetRow("select * from hoorcollege_gebruiker where email = '$email'");
         return $resultaat;
     }
 
