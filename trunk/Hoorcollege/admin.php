@@ -16,6 +16,12 @@
             $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker');
             $TBS->Show() ;
         }
+        else if($_GET['actie'] == 'vak') {
+            //table aanmaken voor de vakkenoverzicht op vak.html
+            $TBS->LoadTemplate('./html/template.html') ;
+            $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_vak');
+            $TBS->Show() ;
+        }
         else {
             $TBS->LoadTemplate('./html/template.html') ;
             $TBS->Show() ;
@@ -57,12 +63,31 @@
                 $TBS->Show() ;
             }
         }
+        else if(isset ($_POST['knopvoegtoevak'])) { //indien men een nieuwe vak probeert aan te maken in vak.html
+            $config["pagina"] = "./admin/vak.html";
+            //controleren of vak al reeds bestaat
+            if(bestaatVak($_POST['vaknaam'])) {
+                $correct = false;
+                $foutboodschap = "Vak bestaat al!";
+            }
+            else {
+                //vak toe voegen
+                if(!voegVakToe($_POST['vaknaam'])) {
+                    $correct = false;
+                    $foutboodschap = "Vak niet toegevoegd omwille van technische problemen, probeer later nog eens!";
+                }
+            }
+        }
 
         $gebruiker = $_SESSION['gebruiker'];
         $TBS->LoadTemplate('./html/template.html') ;
-        if(!$correct) {
+        if($config["pagina"] == "./admin/student.html") {
             //tabel aanmaken voor overzicht
             $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker');
+        }
+        else if($config["pagina"] == "./admin/vak.html") {
+            //tabel aanmaken voor overzicht
+            $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_vak');
         }
         $TBS->Show() ;
     }

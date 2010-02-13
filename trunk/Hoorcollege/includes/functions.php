@@ -16,6 +16,20 @@
         }
     }
 
+    //methode om na te gaan of een vak al bestaat, wordt onder andere in admin.php gebruikt
+    function bestaatVak($vak) {
+        global $db;
+        $resultaat = $db->Execute("select count( distinct naam) as aantal
+                                   from hoorcollege_vak where naam = '$vak'");
+
+        if($resultaat->fields["aantal"] > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     function voegGebruikerToe($naam, $voornaam, $email) {
         global $db;
         $pasww1 = generatePassword();
@@ -37,6 +51,13 @@
             verwijderGebruiker($email);
         }
 
+        return $gelukt;
+    }
+
+    function voegVakToe($vak) {
+        global $db;
+        $gelukt =  $db->Execute("insert into hoorcollege_vak (naam)
+                                    values('$vak')");
         return $gelukt;
     }
 
