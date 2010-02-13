@@ -8,6 +8,7 @@
 
     $foutboodschap = '';
     $foutboodschap2 = '';
+    $foutboodschap3 = '';
 
     //dit is de main content
     $config["pagina"] = "./admin/admin.html";
@@ -103,8 +104,8 @@
         else if(isset ($_POST['toekennenstudentknop'])) { //indien men een student aan een groep wilt toekennen in groep.html
             $config["pagina"] = "./admin/groep.html";
             //validatie van toekennen van student aan groep
-            if(isStudentToegekentAanGroep($_POST['selectstudent'], $_POST['selectgroep'])) {
-                $foutboodschap2 = 'Student behoort al tot deze groep!';
+            if(isStudentToegekentAanGroep($_POST['selectstudent'])) {
+                $foutboodschap2 = 'Student behoort al tot een groep!';
             }
             else {
                 if(!kenStudentToeAanGroep($_POST['selectstudent'], $_POST['selectgroep'])) {
@@ -114,6 +115,18 @@
                     $typeboodschap = "juist";
                     $foutboodschap2 = 'Student is succesvol aan groep toegevoegd!!'; //dit is geen foutboodschap
                 }
+            }
+        }
+        else if(isset ($_POST['verwijderstudentuitgroepknop'])) { //student uit groep verwijderen in groep.html
+            $config["pagina"] = "./admin/groep.html";            
+            
+            if(!isStudentToegekentAanGroep2($_POST['selectstudentverwijder'], $_POST['selectgroepverwijder'])) {
+                $foutboodschap3 = 'Student behoort niet tot deze groep!';
+            }
+            else {
+                verwijderStudentVanGroep($_POST['selectstudentverwijder'], $_POST['selectgroepverwijder']);
+                $typeboodschap = "juist";
+                $foutboodschap3 = 'Student is succesvol verwijderd van de groep!'; //dit is geen foutboodschap
             }
         }
         
@@ -133,9 +146,14 @@
         }
         else if($config["pagina"] == "./admin/groep.html") {
             //select veld voor overzicht studenten
-            $TBS->MergeBlock('blk5', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau = 1');
+            $TBS->MergeBlock('blk5', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau = 1 GROUP BY naam, voornaam asc');
             //select veld voor overzicht groepen
-            $TBS->MergeBlock('blk6', $db, 'SELECT * FROM hoorcollege_groep');
+            $TBS->MergeBlock('blk6', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+
+            //select veld voor overzicht studenten voor te verwijderen functie
+            $TBS->MergeBlock('blk7', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau = 1 GROUP BY naam, voornaam asc');
+            //select veld voor overzicht groepen voor te verwijderen functie
+            $TBS->MergeBlock('blk8', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
         }
 
         $TBS->Show() ;

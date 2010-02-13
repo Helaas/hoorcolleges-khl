@@ -57,10 +57,23 @@
     }
 
     //methode om te controleren of een student aan een groep is toegekent
-    function isStudentToegekentAanGroep($studentId, $groepId) {
+    function isStudentToegekentAanGroep($studentId) {
          global $db;
-        $resultaat = $db->Execute("select count(*) as aantal from hoorcollege_gebruiker_volgt_vak
-                                   WHERE Gebruiker_idGebruiker = '$studentId' && Vak_idVak = '$groepId'");
+        $resultaat = $db->Execute("select count(*) as aantal from hoorcollege_gebruikergroep
+                                   WHERE Gebruiker_idGebruiker = '$studentId'");
+        if($resultaat->fields["aantal"] > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //methode om te controleren of een student aan een groep is toegekent
+    function isStudentToegekentAanGroep2($studentId, $groepId) {
+         global $db;
+        $resultaat = $db->Execute("select count(*) as aantal from hoorcollege_gebruikergroep
+                                   WHERE Gebruiker_idGebruiker = '$studentId' && Groep_idGroep = '$groepId'");
         if($resultaat->fields["aantal"] > 0) {
             return true;
         }
@@ -111,8 +124,16 @@
     //functie om student toe te voegen aan een groep
     function kenStudentToeAanGroep($studentId, $groepId) {
         global $db;
-        $gelukt =  $db->Execute("insert into hoorcollege_gebruiker_volgt_vak (Gebruiker_idGebruiker, Vak_idVak)
+        $gelukt =  $db->Execute("insert into hoorcollege_gebruikergroep (Gebruiker_idGebruiker, Groep_idGroep)
                                     values('$studentId', '$groepId')");
+        return $gelukt;
+    }
+
+    //functie om student te verwijderen uit een groep, wordt onderandere in admin.php gebruikt
+    function verwijderStudentVanGroep($studentId, $groepId) {
+        global $db;
+        $gelukt =  $db->Execute("delete from hoorcollege_gebruikergroep
+                                    where Gebruiker_idGebruiker='$studentId' && Groep_idGroep='$groepId'");
         return $gelukt;
     }
 

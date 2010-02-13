@@ -26,3 +26,22 @@
             <br>
             <input type="submit" value="Toekennen" name="toekennenstudentknop" />
     </form>
+
+    <h3>Studenten verwijderen uit een groep</h3>
+    <form action="admin.php" method="POST">
+        Student&nbsp;&nbsp;&nbsp;
+            <select name="selectstudentverwijder" >
+                <option value="[blk7.idGebruiker;block=option]">[blk7.naam;], [blk7.voornaam;]</option>
+            </select>
+            <br><br>
+        Groep:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <select name="selectgroepverwijder" >
+                <option value="[blk8.idGroep;block=option]">[blk8.naam;]</option>
+            </select>
+            <br>
+            <p id ="[onshow.typeboodschap]">
+                    [onshow.foutboodschap3]
+            </p>
+            <br>
+            <input type="submit" value="Verwijder" name="verwijderstudentuitgroepknop" />
+    </form>
