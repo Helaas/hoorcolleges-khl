@@ -100,6 +100,22 @@
                 }
             }
         }
+        else if(isset ($_POST['toekennenstudentknop'])) { //indien men een student aan een groep wilt toekennen in groep.html
+            $config["pagina"] = "./admin/groep.html";
+            //validatie van toekennen van student aan groep
+            if(isStudentToegekentAanGroep($_POST['selectstudent'], $_POST['selectgroep'])) {
+                $foutboodschap2 = 'Student behoort al tot deze groep!';
+            }
+            else {
+                if(!kenStudentToeAanGroep($_POST['selectstudent'], $_POST['selectgroep'])) {
+                    $foutboodschap2 = 'Door een technische probleem kon de actie niet uitgevoerd worden, proper later nog eens!';
+                }
+                else {
+                    $typeboodschap = "juist";
+                    $foutboodschap2 = 'Student is succesvol aan groep toegevoegd!!'; //dit is geen foutboodschap
+                }
+            }
+        }
         
         $TBS->LoadTemplate('./html/template.html');        
         //indien bepaalde subcontenten geladen moeten worden, moeten bepaalde gegevens uit de db worden gehaald
@@ -114,6 +130,12 @@
             $TBS->MergeBlock('blk3', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1');
             //select veld aanmaken voor overzicht vakken
             $TBS->MergeBlock('blk4', $db, 'SELECT * FROM hoorcollege_vak');
+        }
+        else if($config["pagina"] == "./admin/groep.html") {
+            //select veld voor overzicht studenten
+            $TBS->MergeBlock('blk5', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau = 1');
+            //select veld voor overzicht groepen
+            $TBS->MergeBlock('blk6', $db, 'SELECT * FROM hoorcollege_groep');
         }
 
         $TBS->Show() ;

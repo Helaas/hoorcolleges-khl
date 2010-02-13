@@ -8,3 +8,21 @@
             </p>
             <input type="submit" value="voegtoe" name="knopvoegtoegroep" />
         </form>
+    <h3>Studenten toekennen aan groepen</h3>
+    <form action="admin.php" method="POST">
+        Student&nbsp;&nbsp;&nbsp;
+            <select name="selectstudent" >
+                <option value="[blk5.idGebruiker;block=option]">[blk5.naam;], [blk5.voornaam;]</option>
+            </select>
+            <br><br>
+        Groep:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <select name="selectgroep" >
+                <option value="[blk6.idGroep;block=option]">[blk6.naam;]</option>
+            </select>
+            <br>
+            <p id ="[onshow.typeboodschap]">
+                    [onshow.foutboodschap2]
+            </p>
+            <br>
+            <input type="submit" value="Toekennen" name="toekennenstudentknop" />
+    </form>

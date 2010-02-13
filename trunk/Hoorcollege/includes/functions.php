@@ -56,6 +56,19 @@
         }
     }
 
+    //methode om te controleren of een student aan een groep is toegekent
+    function isStudentToegekentAanGroep($studentId, $groepId) {
+         global $db;
+        $resultaat = $db->Execute("select count(*) as aantal from hoorcollege_gebruiker_volgt_vak
+                                   WHERE Gebruiker_idGebruiker = '$studentId' && Vak_idVak = '$groepId'");
+        if($resultaat->fields["aantal"] > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     function voegGebruikerToe($naam, $voornaam, $email) {
         global $db;
         $pasww1 = generatePassword();
@@ -87,10 +100,19 @@
         return $gelukt;
     }
 
+    //functie om lector toe te kennen aan een vak
     function kenLectorToeAanVak($lectorId, $vakId) {
         global $db;
         $gelukt =  $db->Execute("insert into hoorcollege_gebruiker_beheert_vak (Gebruiker_idGebruiker, Vak_idVak)
                                     values('$lectorId', '$vakId')");
+        return $gelukt;
+    }
+
+    //functie om student toe te voegen aan een groep
+    function kenStudentToeAanGroep($studentId, $groepId) {
+        global $db;
+        $gelukt =  $db->Execute("insert into hoorcollege_gebruiker_volgt_vak (Gebruiker_idGebruiker, Vak_idVak)
+                                    values('$studentId', '$groepId')");
         return $gelukt;
     }
 
