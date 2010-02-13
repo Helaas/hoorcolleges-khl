@@ -30,6 +30,19 @@
         }
     }
 
+    //methode om te controleren of een lector een vak beheert
+    function beheertLectorVak($lectorId, $vakId) {
+        global $db;
+        $resultaat = $db->Execute("select count(*) as aantal from hoorcollege_gebruiker_beheert_vak
+                                   WHERE Gebruiker_idGebruiker = '$lectorId' && Vak_idVak = '$vakId'");
+        if($resultaat->fields["aantal"] > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     function voegGebruikerToe($naam, $voornaam, $email) {
         global $db;
         $pasww1 = generatePassword();
@@ -58,6 +71,13 @@
         global $db;
         $gelukt =  $db->Execute("insert into hoorcollege_vak (naam)
                                     values('$vak')");
+        return $gelukt;
+    }
+
+    function kenLectorToeAanVak($lectorId, $vakId) {
+        global $db;
+        $gelukt =  $db->Execute("insert into hoorcollege_gebruiker_beheert_vak (Gebruiker_idGebruiker, Vak_idVak)
+                                    values('$lectorId', '$vakId')");
         return $gelukt;
     }
 

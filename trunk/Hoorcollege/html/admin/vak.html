@@ -24,3 +24,22 @@
             <td width="25%" bgcolor="#CCCCFF"><font size="1" face="Verdana">[blk2.naam]</font></td>
           </tr>
         </table>
+
+    <h3>Lectoren toekennen aan vakken</h3>
+    <form action="admin.php" method="POST">
+        Lector:&nbsp;&nbsp;&nbsp;
+        <select name="selectlector" >
+            <option value="[blk3.idGebruiker;block=option]">[blk3.naam;], [blk3.voornaam;]</option>
+        </select>
+        <br><br>
+        Vak:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <select name="selectvak" >
+            <option value="[blk4.idVak;block=option]">[blk4.naam;]</option>
+        </select>
+        <br>
+        <p id ="fout">
+                [onshow.foutboodschap2]
+        </p>
+        <br>
+        <input type="submit" value="Toekennen" name="toekennenknop" />
+    </form>

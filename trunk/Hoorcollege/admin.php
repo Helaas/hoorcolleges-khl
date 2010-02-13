@@ -5,40 +5,25 @@
     session_start();
 
     $foutboodschap = '';
+    $foutboodschap2 = '';
 
-    if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == "99" && isset ($_GET['actie'])) {
-        //bepalen welke content geladen moet worden
-        $config["pagina"] = "./admin/" . $_GET['actie'] . ".html";
+    //dit is de main content
+    $config["pagina"] = "./admin/admin.html";
 
-        if($_GET['actie'] == 'student') {
-            //table aanmaken voor de studentenoverzicht op student.html
-            $TBS->LoadTemplate('./html/template.html') ;
-            $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker');
-            $TBS->Show() ;
-        }
-        else if($_GET['actie'] == 'vak') {
-            //table aanmaken voor de vakkenoverzicht op vak.html
-            $TBS->LoadTemplate('./html/template.html') ;
-            $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_vak');
-            $TBS->Show() ;
-        }
-        else {
-            $TBS->LoadTemplate('./html/template.html') ;
-            $TBS->Show() ;
-        }
-
-
+    if(!isset ($_SESSION['gebruiker']) || !$_SESSION['gebruiker']->getNiveau() == "99") {
+        header("location: index.php");
     }
     else if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == "99" ) {
         $correct = true;
-        //bepalen welke content geladen moet worden
-        $config["pagina"] = "./admin/admin.html";
+        //bepalen of er een sub-content geladen moet worden
+        if(isset ($_GET['actie'])) {
+            $config["pagina"] = "./admin/" . $_GET['actie'] . ".html";
+        }
 
         if(isset ($_POST['knopvoegtoe'])) {
+            $config["pagina"] = "./admin/student.html";
             //controleren of alle gegevens correct zijn            
-            if(empty ($_POST['naam']) || empty ($_POST['voornaam']) || empty ($_POST['email']) || bestaatEmail($_POST['email'])) {
-                $correct = false;
-
+            if(empty ($_POST['naam']) || empty ($_POST['voornaam']) || empty ($_POST['email']) || bestaatEmail($_POST['email'])) {                
                 $email = $_POST['email'];
                 if(bestaatEmail($email)) {
                     $foutboodschap = "Email adres is al toegekent aan een andere gebruiker!";
@@ -47,52 +32,57 @@
                     $foutboodschap = "Alle velden moeten ingevuld zijn!";
                 }
             }
-
-            if(!$correct) {                
-                //content wijzigen, omdat er een fout is, moet terug de content van student.html opgehaald worden                
-                $config["pagina"] = "./admin/student.html";
-            }
-            else {
-                $config["pagina"] = "./admin/student.html";
-                //gebruiker toevoegen aan databank
+            else {                
                 if(!voegGebruikerToe($_POST['naam'], $_POST['voornaam'], $_POST['email'])) {
                     $foutboodschap = "Gebruiker niet toegevoegd, oorzaak: mogelijk onbestaand email adres of technische problemen!";
-                }
-                $TBS->LoadTemplate('./html/template.html') ;
-                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker');
-                $TBS->Show() ;
+                }               
             }
         }
         else if(isset ($_POST['knopvoegtoevak'])) { //indien men een nieuwe vak probeert aan te maken in vak.html
             $config["pagina"] = "./admin/vak.html";
-            //controleren of vak al reeds bestaat
-            if(bestaatVak($_POST['vaknaam'])) {
-                $correct = false;
+            //validatie vak
+            if(empty ($_POST['vaknaam'])) {
+                $foutboodschap = "Vaknaam mag niet leeg zijn!";
+            }
+            else if(bestaatVak($_POST['vaknaam'])) {
                 $foutboodschap = "Vak bestaat al!";
             }
             else {
                 //vak toe voegen
-                if(!voegVakToe($_POST['vaknaam'])) {
-                    $correct = false;
+                if(!voegVakToe($_POST['vaknaam'])) {                   
                     $foutboodschap = "Vak niet toegevoegd omwille van technische problemen, probeer later nog eens!";
                 }
             }
         }
-
-        $gebruiker = $_SESSION['gebruiker'];
-        $TBS->LoadTemplate('./html/template.html') ;
+        else if(isset ($_POST['toekennenknop'])) { //indien men een lector wil toekennen aan een vak in vak.html
+            $config["pagina"] = "./admin/vak.html";
+            //validatie van de toekenning
+            if(beheertLectorVak($_POST['selectlector'], $_POST['selectvak'])) {
+                $foutboodschap2 = "Actie niet gelukt: lector is al toegekend aan dit vak of er is een technisch probleem opgedoken!";
+            }
+            else {
+                if(!kenLectorToeAanVak($_POST['selectlector'], $_POST['selectvak'])) {
+                    $foutboodschap2 = "Actie niet gelukt: waarschijnlijk te wijten aan een technisch probleem!";
+                }
+            }
+            
+        }
+        
+        $TBS->LoadTemplate('./html/template.html');        
+        //indien bepaalde subcontenten geladen moeten worden, moeten bepaalde gegevens uit de db worden gehaald
         if($config["pagina"] == "./admin/student.html") {
-            //tabel aanmaken voor overzicht
+            //tabel aanmaken voor overzicht studenten
             $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker');
         }
         else if($config["pagina"] == "./admin/vak.html") {
-            //tabel aanmaken voor overzicht
+            //tabel aanmaken voor overzicht vakken
             $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_vak');
+            //select veld aanmaken voor overzicht lectoren
+            $TBS->MergeBlock('blk3', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1');
+            //select veld aanmaken voor overzicht vakken
+            $TBS->MergeBlock('blk4', $db, 'SELECT * FROM hoorcollege_vak');
         }
+
         $TBS->Show() ;
-    }
-    else {
-        echo 'Niet ingelogd';
-    }
-  
+    }    
 ?>
