@@ -50,7 +50,7 @@
                 $config["pagina"] = "./admin/student.html";
                 //gebruiker toevoegen aan databank
                 if(!voegGebruikerToe($_POST['naam'], $_POST['voornaam'], $_POST['email'])) {
-                    $foutboodschap = "Omwille van technische problemen kon de gebruiker niet toegevoegd worden!";
+                    $foutboodschap = "Gebruiker niet toegevoegd, oorzaak: mogelijk onbestaand email adres of technische problemen!";
                 }
                 $TBS->LoadTemplate('./html/template.html') ;
                 $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker');
