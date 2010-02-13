@@ -30,6 +30,19 @@
         }
     }
 
+    //methode om na te gaan of een groep al bestaat, wordt onder andere in admin.php gebruikt
+    function bestaatGroep($groep) {
+        global $db;
+        $resultaat = $db->Execute("select count( distinct naam) as aantal
+                                   from hoorcollege_groep where naam = '$groep'");
+        if($resultaat->fields["aantal"] > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     //methode om te controleren of een lector een vak beheert
     function beheertLectorVak($lectorId, $vakId) {
         global $db;
@@ -78,6 +91,13 @@
         global $db;
         $gelukt =  $db->Execute("insert into hoorcollege_gebruiker_beheert_vak (Gebruiker_idGebruiker, Vak_idVak)
                                     values('$lectorId', '$vakId')");
+        return $gelukt;
+    }
+
+    function voegGroepToe($groep) {
+        global $db;
+        $gelukt =  $db->Execute("insert into hoorcollege_groep (naam)
+                                    values('$groep')");
         return $gelukt;
     }
 

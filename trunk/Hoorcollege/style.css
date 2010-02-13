@@ -23,6 +23,10 @@ p#fout {
     color : #800517;
 }
 
+p#juist {
+    color : #13E801;
+}
+
 strong {
 font-weight:bold;
 }
