@@ -5,18 +5,18 @@ $TBS = new clsTinyButStrong;
 
 session_start();
 
-$config["pagina"] = "AddFile.html";
+$config["pagina"] = "./FileUpload/AddFile.html";
 
  if(isset ($_SESSION['gebruiker'])) {
         $gebruiker = $_SESSION['gebruiker'];
         $gebruikerNiv = $gebruiker->getNiveau();
 
-        if($gebruikerNiv==20){
+        if($gebruikerNiv==40){
         $TBS->LoadTemplate('./html/template.html') ;
         $TBS->Show();
         }
             else {
-        $config["pagina"] = "Error1Login.html";
+        $config["pagina"] = "./FileUpload/Error1Login.html";
          $TBS->LoadTemplate('./html/template.html') ;
         $TBS->Show() ;
     }
@@ -25,7 +25,7 @@ $config["pagina"] = "AddFile.html";
     }
 
     else {
-        $config["pagina"] = "Error1Login.html";
+        $config["pagina"] = "./FileUpload/Error1Login.html";
          $TBS->LoadTemplate('./html/template.html') ;
         $TBS->Show() ;
     }

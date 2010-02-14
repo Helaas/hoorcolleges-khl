@@ -6,7 +6,7 @@ $TBS = new clsTinyButStrong;
 
 session_start();
 
-$config["pagina"] = "FileAdded.html";
+$config["pagina"] = "./FileUpload/FileAdded.html";
 $testinhoud = "";
 
 if(isset ($_SESSION['gebruiker'])) {
@@ -14,7 +14,11 @@ if(isset ($_SESSION['gebruiker'])) {
         $gebruikerNiv = $gebruiker->getNiveau();
         $gebruikerID = $gebruiker->getIdGebruiker();
 
-        if($gebruikerNiv==20){
+
+
+        if (preg_match('/^[a-z0-9\+\#]+$/iD', $_POST['vak']) && preg_match('/^[a-z0-9\+\#]+$/iD', $_POST['onderwerp'])) {
+
+        if($gebruikerNiv==40){
 
     //Kijk of de folder reeds bestaat, zoniet maak hem aan, herhaal dit voor alle subfolders
     if (!is_dir("Bibliotheek/".$gebruikerID."/")){
@@ -45,5 +49,11 @@ if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
 $TBS->LoadTemplate('./html/template.html') ;
 $TBS->Show() ;
         }
+}
+else{
+$config["pagina"] = "./FileUpload/Error2Input.html";
+$TBS->LoadTemplate('./html/template.html') ;
+$TBS->Show() ;
+}
 }
 ?>

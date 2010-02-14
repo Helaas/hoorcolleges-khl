@@ -1,6 +1,6 @@
 <?php
     include_once('./includes/gebruiker.class.php');
-    $gebruiker = new Gebruiker('2', 'Laeremans', 'Tom', 'z', 'x', '20');
+    $gebruiker = new Gebruiker('2', 'Laeremans', 'Tom', 'z', 'x', '40');
 
     session_start();
 
