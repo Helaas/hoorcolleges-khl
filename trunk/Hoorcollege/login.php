@@ -18,7 +18,7 @@ if (isset($_POST["inloggen"])){
 
                 if($gebruiker->getNiveau() == 99){                       //Wanneer gebruiker admin is
                     header('location: admin.php');
-                }else if($gebruiker->getNiveau() > 40){                  //Wanneer gebruiker lector is
+                }else if($gebruiker->getNiveau() >= 40){                  //Wanneer gebruiker lector is
                     header('location: lector.php');
                 }else{     
                     header('location: student.php');                    //Wanneer gebruiker student is
