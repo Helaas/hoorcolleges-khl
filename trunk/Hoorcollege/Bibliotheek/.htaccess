@@ -1,7 +1,1 @@
-AuthUserFile ./Hoorcollege/bibliotheek/.htpasswd
-AuthGroupFile /dev/null
-AuthName "Bibliotheek"
-AuthType Basic
-<Limit GET POST>
-require valid-user
-</Limit> 
+Options -Indexes

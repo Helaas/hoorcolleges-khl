@@ -16,7 +16,7 @@ if(isset ($_SESSION['gebruiker'])) {
 
 
 
-        if (preg_match('/^[a-z0-9\+\#]+$/iD', $_POST['vak']) && preg_match('/^[a-z0-9\+\#]+$/iD', $_POST['onderwerp'])) {
+        if (preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['vak']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['onderwerp'])) {
 
         if($gebruikerNiv==40){
 

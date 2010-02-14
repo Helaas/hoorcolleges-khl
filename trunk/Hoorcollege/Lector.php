@@ -5,7 +5,7 @@ $TBS = new clsTinyButStrong;
 
 session_start();
 
-$config["pagina"] = "./FileUpload/AddFile.html";
+$config["pagina"] = "./index.html";
 
  if(isset ($_SESSION['gebruiker'])) {
         $gebruiker = $_SESSION['gebruiker'];
