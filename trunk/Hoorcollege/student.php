@@ -16,6 +16,8 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
 
     $TBS->MergeBlock('blk1', $db, $query);
 
+    $TBS->MergeBlock('blk2', $db, $query);
+
 }else if(!isset ($_SESSION['gebruiker'])){
     header("location: login.php");
 }else{
