@@ -46,13 +46,13 @@ if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
 }
 
 
-$TBS->LoadTemplate('./html/Lector/templateLector.html') ;
+$TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
         }
 }
 else{
 $config["pagina"] = "./FileUpload/Error2Input.html";
-$TBS->LoadTemplate('./html/Lector/templateLector.html') ;
+$TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
 }
 }

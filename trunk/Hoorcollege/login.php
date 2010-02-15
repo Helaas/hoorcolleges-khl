@@ -1,10 +1,10 @@
 <?php
 include_once('./includes/kern.php');
+session_start();
 $config["pagina"] = "login.html";
- session_start();
 $TBS = new clsTinyButStrong;
 
-$foutboodschap = 'Dit is de foutboodschap';
+$foutboodschap = '';
 $fout = false;
 
 if (isset($_POST["inloggen"])){

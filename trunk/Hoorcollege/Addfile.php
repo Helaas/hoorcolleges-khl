@@ -12,7 +12,7 @@ $config["pagina"] = "./FileUpload/AddFile.html";
         $gebruikerNiv = $gebruiker->getNiveau();
 
         if($gebruikerNiv==40){
-        $TBS->LoadTemplate('./html/Lector/templateLector.html') ;
+        $TBS->LoadTemplate('./html/lector/templateLector.html') ;
         $TBS->Show();
         }
             else {
