@@ -7,7 +7,7 @@ $TBS = new clsTinyButStrong;
 
 if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
     $config["pagina"] = "./student/student.html";
-    $TBS->LoadTemplate('./html/template.html') ;
+    $TBS->LoadTemplate('./html/student/templateStudent.html') ;
     $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();
 
     //Query voor overzicht hoorcolleges
