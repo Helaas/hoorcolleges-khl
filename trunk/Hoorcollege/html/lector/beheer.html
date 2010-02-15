@@ -7,6 +7,7 @@ and open the template in the editor.
   <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="text/javascript" src="./html/Lector/Functies.js"></script>
   </head>
   <body>
 
@@ -14,21 +15,11 @@ and open the template in the editor.
 <form name="Form" method="get"  action="">
 Kies een vak:
 <br>
-<select id="Vak" name="vak" onchange="autoSubmit()">
-<option value="[blk1.naam]">[blk1.naam;block=option]</option>
-
+<select id="Vak" name="vak" onchange="autoSubmit(this.form)">
+<option value="[blk1.naam]" name="Vak">[blk1.naam;block=option]</option>
 </select>
 
 
 </form>
-       <script language="JavaScript">
-
-function autoSubmit()
-{
-   alert('hallloooo');
-}
-
-</script>
   </body>
 </html>
-
