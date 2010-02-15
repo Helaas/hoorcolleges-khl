@@ -1,8 +1,5 @@
 <?php
-include_once('./includes/kern.php');
-include_once('./includes/TinyButStrong.php');
-include_once('./includes/Gebruiker.class.php');
-$TBS = new clsTinyButStrong;
+require_once('./includes/kern.php');
 
 session_start();
 
