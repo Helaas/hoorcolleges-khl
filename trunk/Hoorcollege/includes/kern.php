@@ -23,7 +23,11 @@
 
     // Verbinden
 
-    $db->Connect("localhost", $config["bdgebruiker"], $config["dbwachtwoord"], $config["dbnaam"]);
+    //$db->Connect("localhost", $config["bdgebruiker"], $config["dbwachtwoord"], $config["dbnaam"]);
+
+    //Eens die amazon dinges proberen
+    $db->Connect("ec2-79-125-51-239.eu-west-1.compute.amazonaws.com:3700","wortel", "nutella", "hoorcolleges");
+
 
 
     ## Template en het scheiden van HTML en 
