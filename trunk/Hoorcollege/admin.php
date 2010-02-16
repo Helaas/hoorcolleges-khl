@@ -141,20 +141,38 @@
                 $foutboodschap4 = 'Studenten zijn succesvol verwijderd van de groep!'; //dit is geen foutboodschap
             }
         }
+
+        else if(isset ($_POST['toekennengroepaanvakknop'])) { //alle studenten uit groep toekennen aan een vak in vak.html
+            $config["pagina"] = "./admin/vak.html";
+            if(kenGroepToeAanVak($_POST['selectgroep'], $_POST['selectvak2'], $_POST['vakvan'])) {
+                $typeboodschap = "juist";
+                $foutboodschap3 = 'Alle leerlingen van deze groep zijn aan het vak toegekent.';
+            }
+            else {
+               $typeboodschap = "fout";
+               $foutboodschap3 = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groep correct zijn gelinkt aan het vak!';
+            }
+        }
         
         $TBS->LoadTemplate('./html/template.html');        
         //indien bepaalde subcontenten geladen moeten worden, moeten bepaalde gegevens uit de db worden gehaald
         if($config["pagina"] == "./admin/student.html") {
             //tabel aanmaken voor overzicht studenten
-            $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker');
+            $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE actief = 1');
         }
         else if($config["pagina"] == "./admin/vak.html") {
             //tabel aanmaken voor overzicht vakken
-            $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_vak');
+            $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
             //select veld aanmaken voor overzicht lectoren
-            $TBS->MergeBlock('blk3', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1');
+            $TBS->MergeBlock('blk3', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1 GROUP BY naam, voornaam asc');
             //select veld aanmaken voor overzicht vakken
-            $TBS->MergeBlock('blk4', $db, 'SELECT * FROM hoorcollege_vak');
+            $TBS->MergeBlock('blk4', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+            //select veld aanmaken voor overzicht groepen
+            $TBS->MergeBlock('blk10', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            //select veld aanmaken voor overzicht vakken
+            $TBS->MergeBlock('blk11', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+            //select veld aanmaken voor overzicht lectoren
+            $TBS->MergeBlock('blk12', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1 GROUP BY naam, voornaam asc');
         }
         else if($config["pagina"] == "./admin/groep.html") {
             //select veld voor overzicht studenten

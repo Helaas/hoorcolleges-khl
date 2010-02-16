@@ -82,11 +82,25 @@
         }
     }
 
+
     //methode om te controleren of een student aan een groep is toegekent
     function isStudentToegekentAanGroep2($studentId, $groepId) {
-         global $db;
+        global $db;
         $resultaat = $db->Execute("select count(*) as aantal from hoorcollege_gebruikergroep
                                    WHERE Gebruiker_idGebruiker = '$studentId' && Groep_idGroep = '$groepId'");
+        if($resultaat->fields["aantal"] > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //methode om na te gaan of een student aan een bepaald vak al is toegekent
+    function isStudentToegekentVak($studentId, $vakId) {
+        global $db;
+        $resultaat = $db->Execute("select count(*) as aantal from hoorcollege_gebruiker_volgt_vak
+                                   WHERE Gebruiker_idGebruiker = '$studentId' && Vak_idVak = '$vakId'");
         if($resultaat->fields["aantal"] > 0) {
             return true;
         }
@@ -100,8 +114,8 @@
         $pasww1 = generatePassword();
         $pasww = md5($pasww1);
         $verstuurd = false;
-        $gelukt =  $db->Execute("insert into hoorcollege_gebruiker (naam, voornaam, email, wachtwoord, niveau)
-                                    values('$naam', '$voornaam', '$email', '$pasww', '1')");
+        $gelukt =  $db->Execute("insert into hoorcollege_gebruiker (naam, voornaam, email, wachtwoord, niveau, actief)
+                                    values('$naam', '$voornaam', '$email', '$pasww', '1', '1')");
         if($gelukt) {
             //gebruiker mailen
             $boodschap = "Geachte $voornaam, $naam\n\nVanaf nu kan u hoorcollges volgen op KHL - Hoorcolleges.\n"
@@ -139,6 +153,22 @@
         global $db;
         $gelukt =  $db->Execute("insert into hoorcollege_gebruikergroep (Gebruiker_idGebruiker, Groep_idGroep)
                                     values('$studentId', '$groepId')");
+        return $gelukt;
+    }
+
+    //functie om groep toe te voegen aan een vak
+    function kenGroepToeAanVak($groepId, $vakId, $vanId) {
+        global $db;
+        $gelukt = true;
+        $resultaat = $db->Execute("select * from hoorcollege_gebruikergroep where Groep_idGroep = '$groepId'");
+        while (!$resultaat->EOF) {
+            $gebruikerId = $resultaat->fields["Gebruiker_idGebruiker"];
+            if(!isStudentToegekentVak($gebruikerId, $vakId)) { // geen dubbele entries
+                $gelukt = $db->Execute("insert into hoorcollege_gebruiker_volgt_vak (Gebruiker_idGebruiker, Vak_idVak, van)
+                                        values('$gebruikerId', '$vakId', '$vanId')");
+            }            
+            $resultaat->MoveNext();
+        }
         return $gelukt;
     }
 
