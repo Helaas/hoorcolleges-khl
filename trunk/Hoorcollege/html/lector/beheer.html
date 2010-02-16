@@ -13,13 +13,24 @@ and open the template in the editor.
 
 
 <form name="Form" method="get"  action="">
-Kies een vak:
+    Kies een vak:
 <br>
 <select id="Vak" name="vak" onchange="autoSubmit(this.form)">
-<option value="[blk1.naam]" name="Vak">[blk1.naam;block=option]</option>
+    <!-- Kies een eerste vak uit de vakken die deze gebruiker volgt !-->
+<option value="[blk1.idVak]" name="Vak">[blk1.naam;block=option]</option>
+</select>
+<br>
+<br>
+Kies een onderwerp:
+<br>
+<select id="Onderwerp" name="onderwerp" onchange="autoSubmit2(this.form)">
+<option  name="onderwerp"></option>
 </select>
 
-
 </form>
+
+
+
+
   </body>
 </html>
