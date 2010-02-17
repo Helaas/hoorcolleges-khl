@@ -1,0 +1,28 @@
+<h3>Studenten toekennen aan groepen</h3>
+    <br><br>
+    <form action="admin.php" method="POST">
+        <input type="hidden" name="groep" value="[onshow.groep]" readonly="true" />
+        <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
+
+        Volgende studenten worden aan het vak <em>[onshow.vak]</em> toegevoegd:<br><br>
+
+        <ul>
+            <li>
+                [blk13.student;block=li]
+            </li>
+        </ul>
+        <br><br>
+        Kies een lector die toegekent is aan het vak om dit vak te geven aan deze groep. 
+        <br><br>
+        Lector:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select id="vakvan" name="vakvan">
+                        <option value="leeg">[blk12;block=option;nodata]Nog geen lector toegekent.</option>
+                        <option value="[blk12.idGebruiker;block=option]">[blk12.naam;], [blk12.voornaam;]</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp; (lector toekennen? klik <a href="admin.php?actie=vak">hier</a>.)
+                    <br><br>
+                    <p id ="[onshow.typeboodschap]">
+                        [onshow.foutboodschap]
+                    </p>
+                    <input type="submit" value="Verder" name="toekennengroepaanvakknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleertoekennengroepaanvakknop" />
+    </form>
+

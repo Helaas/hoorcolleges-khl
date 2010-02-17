@@ -109,6 +109,11 @@
         }
     }
 
+    //methode om na ge gaan of een groep al toegekent is aan een vak
+    function isGroepToegekentAanVak($groepId, $vakId) {
+        global $db;
+    }
+
     function voegGebruikerToe($naam, $voornaam, $email) {
         global $db;
         $pasww1 = generatePassword();
