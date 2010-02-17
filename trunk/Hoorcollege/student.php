@@ -32,6 +32,7 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
     header("location: login.php");
 }else{
     $config["pagina"] = "./FileUpload/Error1Login.html";
+    $TBS->LoadTemplate('./html/template.html') ;
 }
 
 
