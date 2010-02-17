@@ -247,6 +247,22 @@
         }
     }
 
+    function antwoordOk($gebruikerid, $vraagID){
+        global $db;
+        $resultaat = $db->Execute("SELECT COUNT( idVraag ) AS aantal
+        FROM hoorcollege_vraag
+        LEFT OUTER JOIN hoorcollege_gegevenantwoord ON idVraag = Vraag_idVraag
+        WHERE Gebruiker_idGebruiker =".$gebruikerid."
+        AND juistantwoord = MogelijkAntwoord_idMogelijkAntwoord
+        AND idVraag = ".$vraagID);
+        if($resultaat->fields["aantal"] > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     function getGebruiker($email){
         global $db;
         $resultaat = $db->GetRow("select * from hoorcollege_gebruiker where email = '$email'");

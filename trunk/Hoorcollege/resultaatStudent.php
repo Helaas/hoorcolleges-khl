@@ -9,7 +9,8 @@
         $TBS->LoadTemplate('./html/student/templateStudent.html');
         $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();
         $hoorcollegeID = $_GET['hoorcollege'];
-        echo $hoorcollegeID;
+
+        echo "Is het antwoord juist? ".antwoordOk($gebruikerID, 2);
 
     }else if(!isset ($_SESSION['gebruiker'])){
         header("location: login.php");
