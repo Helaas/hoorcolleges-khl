@@ -35,18 +35,18 @@ function autoSubmit(form)
   xmlhttp.send(null);
 
  //alert(xmlhttp.responseXML);
-
+              
                 //haal optie uit de XML en voeg toe aan dropdown
                 var elems = xmlhttp.responseXML.getElementsByTagName("Onderwerp");
  		var size = elems.length;
-                while(form.onderwerp.options.length>0){
-                form.onderwerp.options[0]=null;
+                while(form.onderwerp.options.length>1){
+                form.onderwerp.options[1]=null;
                 }
-                for(i = 0; i < size; i++){
-
+                for(i = 0; i < size+1; i++){
                  //onderwerp = naam van het onderwerp, id = id van het onderwerp, gebruiker krijgt de naam te zien, de var die doorgegoven word in 'onchange' is de id
                  var inh=xmlhttp.responseXML.getElementsByTagName('Onderwerp')[i].firstChild.data;
                  var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
+                 
                  form.onderwerp.options.add( new Option(inh,id));
 
 
