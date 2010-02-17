@@ -20,17 +20,7 @@
         $resultaat->MoveNext();
     }
 
-/**
-    $vragen[1]["mogelijkantwoorden"][] = "mogelijkantwoord1";
-    $vragen[1]["mogelijkantwoorden"][] = "mogelijkantwoord2";
 
-        $vragen[2]["mogelijkantwoorden"][] = "mogelijkantwoord1";
-    $vragen[2]["mogelijkantwoorden"][] = "mogelijkantwoord2";**/
-   ?>
-    <pre>
-<?php print_r($vragen); ?>
-    </pre>
-<?php
     $TBS->LoadTemplate('./html/template.html');
     $TBS->MergeBlock("blk1",$vragen);
     $TBS->Show();
