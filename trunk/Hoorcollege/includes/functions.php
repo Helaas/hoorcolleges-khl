@@ -269,4 +269,12 @@
         return $resultaat;
     }
 
+    function heeftHoorcollegeVragen($id){
+       $id = (int)$id;
+       global $db;
+
+       $resultaat = $db->GetRow("select count(idVraag) as aantal from hoorcollege_vraag where Hoorcollege_idHoorcollege = '$id'");
+       return ($resultaat["aantal"]>=1);
+    }
+
 ?>

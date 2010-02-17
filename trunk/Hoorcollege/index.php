@@ -14,7 +14,11 @@ if(isset($_SESSION['gebruiker'])){
     }else if($_SESSION['gebruiker']->getNiveau() == 99){
         $TBS->LoadTemplate('./html/admin/templateAdmin.html');
     }
-
+    else {
+        $TBS->LoadTemplate('./html/template.html');
+        //Hier moest ergens nog rekening gehouden worden met userlevel 99 enzo
+        //Slordige code jongens, ik me maar afvragen waarom mijn index altijd leeg was
+    }
 }else{
     $TBS->LoadTemplate('./html/template.html') ;
 }
