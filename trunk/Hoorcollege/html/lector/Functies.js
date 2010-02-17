@@ -59,9 +59,8 @@ function autoSubmit2(form)
 {
 
      var vakid=form.vak.options[form.vak.options.selectedIndex].value;
-     alert(vakid);
      var ondid=form.onderwerp.options[form.onderwerp.options.selectedIndex].value;
-     alert(ondid);
+
 
 
 
@@ -91,18 +90,70 @@ function autoSubmit2(form)
 
   xmlhttp.onreadystatechange=Verwerk;
   //xmlhttp request om via php een xml pagina aan te maken met gegevens over de hoorcolleges die bij dit vak en onderwerp passen
-  xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"gevraagdOnd="+ondid, false);
+  xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"&gevraagdOnd="+ondid, false);
   xmlhttp.send(null);
 
+         
+              //Vul Tabel Op
+               //var t1=document.getElementById('t1');
+                //for (var g=0;g<size;g++){
+                //var table=document.createElement('TABLE');
+               //table.border='1';
+                 // var tbdy=document.createElement('TBODY');
+                //table.appendChild(tbdy);
+                //for (var j=0;j<2;j++){
+                //var tr=document.createElement('TR');
+                  //tbdy.appendChild(tr);
+                   //for (var k=0;k<2;k++){
+                   //var td=document.createElement('TD');
+                 //td.width='100';
+                //var inh=xmlhttp.responseXML.getElementsByTagName('Naam')[g].firstChild.data;
+                //td.appendChild(document.createTextNode(inh));
+                 //tr.appendChild(td);
+                     //}
+                       //}
+                       //t1.appendChild(table);
+                     //}
+
+                     
+                //Tabel aanmaken
+                var elems = xmlhttp.responseXML.getElementsByTagName('Naam');
+ 		var size = elems.length;
+
+                  //aanmaken titel kolom 1
+                   var titel=document.createElement('p');
+                   titel.innerHTML='Id';
+                   document.getElementById("TitelId").appendChild(titel);
+
+                   //aanmaken titel colom 2
+                   var titel2=document.createElement('p');
+                   titel2.innerHTML='Hoorcollege';
+                   document.getElementById("TitelCollege").appendChild(titel2);
+
+                   //tabel opvullen met gegevens uit de xml
+                   for(i=0;i<size;i++){
+                   var myTable = document.getElementById("myTable");
+                   var newTR = document.createElement("tr");
+                   var newName = document.createElement("td");
+                   newName.innerHTML = xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
+                   var newPhone = document.createElement("td");
+                   newPhone.innerHTML = xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data;
+                   newTR.appendChild(newName);
+                   newTR.appendChild(newPhone);
+                   myTable.appendChild(newTR);
+                   }
 
 
-              
 
-
-                
-
+               
+                   
 
 }
+
+
+
+
+
 function Verwerk()
 {
 
@@ -122,3 +173,6 @@ if(xmlhttp.readyState == 4 && xmlHttp.status == 200)
 }
 }
 }
+
+
+

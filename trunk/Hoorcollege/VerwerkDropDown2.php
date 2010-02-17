@@ -8,8 +8,7 @@
         if($gebruikerNiv==40){
     header("Content-type: text/xml");
     //gegevens uit de db halen
-    $result = $db->Execute("SELECT * from Hoorcollege_hoorcollege where idHoorcollege in (SELECT Hoorcollege_idHoorcollege FROM `hoorcollege_onderwerphoorcollege` WHERE Onderwerp_Vak_idVak=".$_GET["gevraagdVak"]."AND Onderwerp_idOnderwerp=".$_GET["gevraagdOnd"]);
-
+    $result = $db->Execute("SELECT * from Hoorcollege_hoorcollege where idHoorcollege in (SELECT Hoorcollege_idHoorcollege FROM `hoorcollege_onderwerphoorcollege` WHERE Onderwerp_Vak_idVak=".$_GET["gevraagdVak"]." AND Onderwerp_idOnderwerp=".$_GET["gevraagdOnd"].")");
     //xml file aanmaken
 $xml_file  = "<?xml version=\"1.0\"?>";
 $xml_file .= "<root>";
