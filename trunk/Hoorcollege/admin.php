@@ -9,7 +9,7 @@
     $foutboodschap = '';
     $foutboodschap2 = '';
     $foutboodschap3 = '';
-    $foutboodschap4 = '';
+    $foutboodschap4 = '';    
 
     //dit is de main content
     $config["pagina"] = "./admin/admin.html";
@@ -105,60 +105,78 @@
         else if(isset ($_POST['toekennenstudentknop'])) { //indien men een student aan een groep wilt toekennen in groep.html
             $config["pagina"] = "./admin/groep.html";
             //validatie van toekennen van student aan groep
-            if(isStudentToegekentAanGroep($_POST['selectstudent'])) {
-                $foutboodschap2 = 'Student behoort al tot een groep!';
-            }
-            else {
-                if(!kenStudentToeAanGroep($_POST['selectstudent'], $_POST['selectgroep'])) {
-                    $foutboodschap2 = 'Door een technische probleem kon de actie niet uitgevoerd worden, proper later nog eens!';
+            if($_POST['selectstudent'] != 'kies' && $_POST['selectgroep'] != 'kies') {
+                if(isStudentToegekentAanGroep($_POST['selectstudent'])) {
+                    $foutboodschap2 = 'Student behoort al tot een groep!';
                 }
                 else {
-                    $typeboodschap = "juist";
-                    $foutboodschap2 = 'Student is succesvol aan groep toegevoegd!!'; //dit is geen foutboodschap
+                    if(!kenStudentToeAanGroep($_POST['selectstudent'], $_POST['selectgroep'])) {
+                        $foutboodschap2 = 'Door een technische probleem kon de actie niet uitgevoerd worden, proper later nog eens!';
+                    }
+                    else {
+                        $typeboodschap = "juist";
+                        $foutboodschap2 = 'Student is succesvol aan groep toegevoegd!!'; //dit is geen foutboodschap
+                    }
                 }
             }
         }
         else if(isset ($_POST['verwijderstudentuitgroepknop'])) { //student uit groep verwijderen in groep.html
             $config["pagina"] = "./admin/groep.html";            
-            
-            if(!isStudentToegekentAanGroep2($_POST['selectstudentverwijder'], $_POST['selectgroepverwijder'])) {
-                $foutboodschap3 = 'Student behoort niet tot deze groep!';
-            }
-            else {
-                verwijderStudentVanGroep($_POST['selectstudentverwijder'], $_POST['selectgroepverwijder']);
-                $typeboodschap = "juist";
-                $foutboodschap3 = 'Student is succesvol verwijderd van de groep!'; //dit is geen foutboodschap
+            if($_POST['selectstudentverwijder'] != 'kies' && $_POST['selectgroepverwijder'] != 'kies') {
+                if(!isStudentToegekentAanGroep2($_POST['selectstudentverwijder'], $_POST['selectgroepverwijder'])) {
+                    $foutboodschap3 = 'Student behoort niet tot deze groep!';
+                }
+                else {
+                    verwijderStudentVanGroep($_POST['selectstudentverwijder'], $_POST['selectgroepverwijder']);
+                    $typeboodschap = "juist";
+                    $foutboodschap3 = 'Student is succesvol verwijderd van de groep!'; //dit is geen foutboodschap
+                }
             }
         }
         else if(isset ($_POST['verwijderallestudentuitgroepknop'])) { //alle studenten uit groep verwijderen in groep.html
             $config["pagina"] = "./admin/groep.html";
-            if(isGroepLeeg($_POST['selectgroepverwijderhelegroep'])) {
-                $foutboodschap4 = "Deze groep heeft geen studenten!";
-            }
-            else {
-                verwijderAlleStudentenVanGroep($_POST['selectgroepverwijderhelegroep']);
-                $typeboodschap = "juist";
-                $foutboodschap4 = 'Studenten zijn succesvol verwijderd van de groep!'; //dit is geen foutboodschap
+            if($_POST['selectgroepverwijderhelegroep'] != 'kies') {
+                if(isGroepLeeg($_POST['selectgroepverwijderhelegroep'])) {
+                    $foutboodschap4 = "Deze groep heeft geen studenten!";
+                }
+                else {
+                    verwijderAlleStudentenVanGroep($_POST['selectgroepverwijderhelegroep']);
+                    $typeboodschap = "juist";
+                    $foutboodschap4 = 'Studenten zijn succesvol verwijderd van de groep!'; //dit is geen foutboodschap
+                }
             }
         }
 
         else if(isset ($_POST['toekennengroepaanvakknop'])) { //alle studenten uit groep toekennen aan een vak in vak.html
             $config["pagina"] = "./admin/vak.html";
-            if(kenGroepToeAanVak($_POST['selectgroep'], $_POST['selectvak2'], $_POST['vakvan'])) {
-                $typeboodschap = "juist";
-                $foutboodschap3 = 'Alle leerlingen van deze groep zijn aan het vak toegekent.';
+            if($_POST['vakvan'] != 'kies') {
+
+            }
+            if(beheertLectorVak($_POST['vakvan'], $_POST['selectvak2'])) {
+                if(kenGroepToeAanVak($_POST['selectgroep'], $_POST['selectvak2'], $_POST['vakvan'])) {
+                    $typeboodschap = "juist";
+                    $foutboodschap3 = 'Alle leerlingen van deze groep zijn aan het vak toegekent.';
+                }
+                else {
+                   $typeboodschap = "fout";
+                   $foutboodschap3 = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groep correct zijn gelinkt aan het vak!';
+                }
+            }
+            else if($_POST['selectgroep'] != 'kies' && $_POST['selectvak2'] != 'kies' && $_POST['vakvan'] != 'kies') {
+                $typeboodschap = "fout";
+                $foutboodschap3 = 'Deze lector beheert dit vak niet, gelieve lector eerst toe te kennen aan het vak!';
             }
             else {
-               $typeboodschap = "fout";
-               $foutboodschap3 = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groep correct zijn gelinkt aan het vak!';
+                $typeboodschap = "fout";
+                $foutboodschap3 = 'U heeft niet alle velden geselecteerd!';
             }
         }
         
-        $TBS->LoadTemplate('./html/template.html');        
+        $TBS->LoadTemplate('./html/admin/templateAdmin.html');
         //indien bepaalde subcontenten geladen moeten worden, moeten bepaalde gegevens uit de db worden gehaald
         if($config["pagina"] == "./admin/student.html") {
             //tabel aanmaken voor overzicht studenten
-            $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE actief = 1');
+            $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE actief = 1 GROUP BY naam, voornaam asc');
         }
         else if($config["pagina"] == "./admin/vak.html") {
             //tabel aanmaken voor overzicht vakken
@@ -171,8 +189,9 @@
             $TBS->MergeBlock('blk10', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
             //select veld aanmaken voor overzicht vakken
             $TBS->MergeBlock('blk11', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
-            //select veld aanmaken voor overzicht lectoren
+            //select veld aanmaken voor overzicht lectoren            
             $TBS->MergeBlock('blk12', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1 GROUP BY naam, voornaam asc');
+           
         }
         else if($config["pagina"] == "./admin/groep.html") {
             //select veld voor overzicht studenten
