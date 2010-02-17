@@ -1,6 +1,14 @@
 <?php
     include_once('kern.php');
-
+    
+    
+    //methode om de naam van een groep te bekomen via de id
+    function getVakNameViaId($vakId) {
+        global $db;
+        $resultaat = $db->Execute("select naam as naam
+                                   from hoorcollege_vak where idVak = '$vakId'");
+        return $resultaat->fields["naam"];
+    }
 
     //methode om na te gaan of een gebruiker met deze email al bestaat
     function bestaatEmail($email) {
@@ -112,6 +120,21 @@
     //methode om na ge gaan of een groep al toegekent is aan een vak
     function isGroepToegekentAanVak($groepId, $vakId) {
         global $db;
+        $gekent = false;
+        $resultaat = $db->Execute("select Gebruiker_idGebruiker from hoorcollege_gebruikergroep where Groep_idGroep = '$groepId'");
+        while (!$resultaat->EOF && !$gekent) {
+            $gebruikerId = $resultaat->fields["Gebruiker_idGebruiker"];
+            $res2 = $db->Execute("select count(Gebruiker_idGebruiker) as aantal from hoorcollege_gebruiker_volgt_vak
+                                  where Gebruiker_idGebruiker = '$gebruikerId' && Vak_idVak = '$vakId'");
+            if($res2->fields["aantal"] > 0) {
+                $gekent = true;
+            }
+            else {
+                $resultaat->MoveNext();
+            }
+        }
+        return $gekent;
+
     }
 
     function voegGebruikerToe($naam, $voornaam, $email) {

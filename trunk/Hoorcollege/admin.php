@@ -152,49 +152,54 @@
                 $config["pagina"] = "./admin/toekennengroepaanvak.html";
                 $groep = $_POST['selectgroep'];
                 $vak = $_POST['selectvak2'];
+                $vaknaam = getVakNameViaId($_POST['selectvak2']);
             }
             else {
                 $config["pagina"] = "./admin/vak.html";
             }
         }
-        else if(isset ($_POST['toekennengroepaanvakknop'])) { //alle studenten uit groep toekennen aan een vak in vak.html
-            /*$config["pagina"] = "./admin/vak.html";
-            if($_POST['vakvan'] != 'kies') {
-
-            }
-            if(beheertLectorVak($_POST['vakvan'], $_POST['selectvak2'])) {
-                if(kenGroepToeAanVak($_POST['selectgroep'], $_POST['selectvak2'], $_POST['vakvan'])) {
-                    $typeboodschap = "juist";
-                    $foutboodschap3 = 'Alle leerlingen van deze groep zijn aan het vak toegekent.';
+        else if(isset ($_POST['toekennengroepaanvakknop'])) { //alle studenten uit groep toekennen aan een vak in vak.html           
+            $config["pagina"] = "./admin/vak.html";
+            if(!isGroepToegekentAanVak($_POST['groep'], $_POST['vak'])) {
+                if(beheertLectorVak($_POST['vakvan'], $_POST['vak'])) {
+                    if(kenGroepToeAanVak($_POST['groep'], $_POST['vak'], $_POST['vakvan'])) {
+                        $typeboodschap = "juist";
+                        $foutboodschap3 = 'Alle leerlingen van deze groep zijn aan het vak toegekent.';
+                    }
+                    else {
+                       $typeboodschap = "fout";
+                       $foutboodschap3 = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groep correct zijn gelinkt aan het vak!';
+                    }
                 }
-                else {
-                   $typeboodschap = "fout";
-                   $foutboodschap3 = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groep correct zijn gelinkt aan het vak!';
-                }
-            }
-            else if($_POST['selectgroep'] != 'kies' && $_POST['selectvak2'] != 'kies' && $_POST['vakvan'] != 'kies') {
-                $typeboodschap = "fout";
-                $foutboodschap3 = 'Deze lector beheert dit vak niet, gelieve lector eerst toe te kennen aan het vak!';
             }
             else {
                 $typeboodschap = "fout";
-                $foutboodschap3 = 'U heeft niet alle velden geselecteerd!';
-            }*/
-            $config["pagina"] = "./admin/vak.html";
-            if(beheertLectorVak($_POST['vakvan'], $_POST['vak'])) {
-                if(kenGroepToeAanVak($_POST['groep'], $_POST['vak'], $_POST['vakvan'])) {
-                    $typeboodschap = "juist";
-                    $foutboodschap3 = 'Alle leerlingen van deze groep zijn aan het vak toegekent.';
-                }
-                else {
-                   $typeboodschap = "fout";
-                   $foutboodschap3 = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groep correct zijn gelinkt aan het vak!';
-                }
+                $foutboodschap3 = 'Actie niet gelukt: één of meerdere studenten zijn al aan dit vak toegekent, gelieve eerst de groep te ontkoppelen van dit vak vooraleerst dit te voltooien!';
             }
         }
         else if(isset ($_POST['annuleertoekennengroepaanvakknop'])) {
             header('location: admin.php?actie=vak');
         }
+        else if(isset ($_POST['verderontkoppelengroepvanvakknop'])) {
+            if(isGroepToegekentAanVak($_POST['selectgroep2'], $_POST['selectvak3'])) {
+                if($_POST['selectgroep2'] != 'kies' && $_POST['selectvak3'] != 'kies') {
+                    $config["pagina"] = "./admin/ontkoppelengroepvanvak.html";
+                    $groep = $_POST['selectgroep2'];
+                    $vak = $_POST['selectvak3'];
+                    $vaknaam = getVakNameViaId($_POST['selectvak3']);
+                }
+                else {
+                    $config["pagina"] = "./admin/vak.html";
+                }
+            }
+            else {
+                $config["pagina"] = "./admin/vak.html";
+                $typeboodschap = "fout";
+                $foutboodschap4 = 'Groep is niet aan dit vak gelinkt!';
+            }
+        }
+
+
         
         $TBS->LoadTemplate('./html/admin/templateAdmin.html');
         //indien bepaalde subcontenten geladen moeten worden, moeten bepaalde gegevens uit de db worden gehaald
@@ -212,8 +217,11 @@
             //select veld aanmaken voor overzicht groepen
             $TBS->MergeBlock('blk10', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
             //select veld aanmaken voor overzicht vakken
-            $TBS->MergeBlock('blk11', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');            
-           
+            $TBS->MergeBlock('blk11', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');  
+            //select veld aanmaken voor overzicht groepen
+            $TBS->MergeBlock('blk14', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            //select veld aanmaken voor overzicht vakken
+            $TBS->MergeBlock('blk15', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
         }
         else if($config["pagina"] == "./admin/groep.html") {
             //select veld voor overzicht studenten
@@ -238,6 +246,14 @@
                                             GROUP BY g.naam, g.voornaam ASC");
             //overzicht alle leerlingen van een groep
             $TBS->MergeBlock('blk13', $db, "SELECT CONCAT( g.naam, ', ', g.voornaam ) AS student
+                                            FROM hoorcollege_gebruiker g
+                                            LEFT JOIN hoorcollege_gebruikergroep gr ON g.idGebruiker = gr.Gebruiker_idGebruiker
+                                            WHERE gr.Groep_idGroep = '$groep'
+                                            GROUP BY g.naam, g.voornaam ASC");
+        }
+        else if($config["pagina"] == "./admin/ontkoppelengroepvanvak.html") {
+            //overzicht alle leerlingen van een groep
+            $TBS->MergeBlock('blk15', $db, "SELECT CONCAT( g.naam, ', ', g.voornaam ) AS student
                                             FROM hoorcollege_gebruiker g
                                             LEFT JOIN hoorcollege_gebruikergroep gr ON g.idGebruiker = gr.Gebruiker_idGebruiker
                                             WHERE gr.Groep_idGroep = '$groep'

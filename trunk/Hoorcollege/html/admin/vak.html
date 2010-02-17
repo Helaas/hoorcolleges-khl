@@ -53,6 +53,33 @@
             <input type="submit" value="Toekennen" name="toekennenknop" />
         </form>
 
+    <h3>Studenten ontkoppelen van vakken</h3>
+        <h4>Een hele groep ontkoppelen van een vak</h4>
+             <form action="admin.php" method="POST">
+                Groep:&nbsp;&nbsp;&nbsp;
+                <select name="selectgroep2" >
+                    <option value="kies">--- kies ---</option>
+                    <option value="[blk14.idGroep;block=option]">[blk14.naam;]</option>
+                </select>
+                <br><br>
+
+                Vak:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="selectvak3" >
+                     <option value="kies">--- kies ---</option>
+                    <option value="[blk15.idVak;block=option]">[blk15.naam;]</option>
+                </select>
+                <br><br>
+
+                <p id ="[onshow.typeboodschap]">
+                        [onshow.foutboodschap4]
+                </p>
+                <br>
+                <input type="submit" value="Verder" name="verderontkoppelengroepvanvakknop" />
+            </form>
+
+        
+        <h4>Individueel</h4>
+
     <h3>Overzicht vakken</h3>
         <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
               <tr>
