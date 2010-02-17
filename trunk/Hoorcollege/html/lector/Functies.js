@@ -42,7 +42,7 @@ function autoSubmit(form)
                 while(form.onderwerp.options.length>1){
                 form.onderwerp.options[1]=null;
                 }
-                for(i = 0; i < size+1; i++){
+                for(i = 0; i < size; i++){
                  //onderwerp = naam van het onderwerp, id = id van het onderwerp, gebruiker krijgt de naam te zien, de var die doorgegoven word in 'onchange' is de id
                  var inh=xmlhttp.responseXML.getElementsByTagName('Onderwerp')[i].firstChild.data;
                  var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
@@ -58,10 +58,48 @@ function autoSubmit(form)
 function autoSubmit2(form)
 {
 
+     var vakid=form.vak.options[form.vak.options.selectedIndex].value;
+     alert(vakid);
+     var ondid=form.onderwerp.options[form.onderwerp.options.selectedIndex].value;
+     alert(ondid);
 
-  var Onderwerp=form.onderwerp.options[form.onderwerp.options.selectedIndex].value;
-  alert(Onderwerp);
 
+
+ var xmlhttp;
+
+     try {
+    // Mozilla / Safari / IE7
+         xmlhttp = new XMLHttpRequest();
+     } catch (e) {
+          // IE
+           var XMLHTTP_IDS = new Array('MSXML2.XMLHTTP.5.0',
+                                    'MSXML2.XMLHTTP.4.0',
+                                    'MSXML2.XMLHTTP.3.0',
+                                    'MSXML2.XMLHTTP',
+                                    'Microsoft.XMLHTTP' );
+         var success = false;
+        for (var i=0;i < XMLHTTP_IDS.length && !success; i++) {
+             try {
+                  xmlhttp = new ActiveXObject(XMLHTTP_IDS[i]);
+                    success = true;
+               } catch (e) {}
+         }
+        if (!success) {
+             throw new Error('Unable to create XMLHttpRequest.');
+         }
+    }
+
+  xmlhttp.onreadystatechange=Verwerk;
+  //xmlhttp request om via php een xml pagina aan te maken met gegevens over de hoorcolleges die bij dit vak en onderwerp passen
+  xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"gevraagdOnd="+ondid, false);
+  xmlhttp.send(null);
+
+
+
+              
+
+
+                
 
 
 }
