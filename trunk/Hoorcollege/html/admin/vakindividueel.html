@@ -1,0 +1,18 @@
+<h2>Admin sectie</h2>
+    <h3>Studenten aan vak toevoegen</h3>
+    <form action="admin.php" method="POST">
+        <ul>
+            <li>[blk20;block=li;nodata]Geen resultaat.</li>
+            <li><input type="checkbox" name="checkbox[]" value="[blk20.idGebruiker]" /> [blk20.naam;block=li], [blk20.voornaam;block=li]</li>
+
+        </ul>
+        <br><br>
+         Vak:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="selectvak3" >
+                     <option value="kies">--- kies ---</option>
+                    <option value="[blk21.idVak;block=option]">[blk21.naam;]</option>
+                </select>
+                <br><br>
+        <input type="submit" value="Verder" name="toekennenselectiefaanvakknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleervakindividueel" />
+    </form>
+    

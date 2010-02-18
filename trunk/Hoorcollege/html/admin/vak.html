@@ -32,7 +32,38 @@
                 <input type="submit" value="Verder" name="verdertoekennengroepaanvakknop" />
             </form>
 
-        <h4>Individueel</h4>
+        <h4>Selectief</h4>
+            <form action="admin.php" method="POST">
+             Filter opties:<br><br>
+             <input type="radio" name="filteropties" value="naam" checked/>
+            Namen:
+             <select name="selectNaamBegintMet">
+                <option value="A-B">A-B</option>
+                <option value="C-D">C-D</option>
+                <option value="E-F">E-F</option>
+                <option value="G-H">G-H</option>
+                <option value="I-J">I-J</option>
+                <option value="K-L">K-L</option>
+                <option value="M-N">M-N</option>
+                <option value="O-P">O-P</option>
+                <option value="Q-R">Q-R</option>
+                <option value="S-T">S-T</option>
+                <option value="U-V">U-V</option>
+                <option value="W-X">W-X</option>
+                <option value="Y-Z">Y-Z</option>
+            </select>
+            <br><br>
+            <input type="radio" name="filteropties" value="groep"/>
+            Groep:
+            <select name="selectKlas">
+                <option value="zonder">zonder groep</option>
+                <option value="[blk18.idGroep;block=option]">[blk18.naam]</option>
+            </select>
+            <br><br><br>
+            <input type="submit" value="Verder" name="verderVakIndivudueel"/>
+        </form>
+
+
 
     <h3>Lectoren toekennen aan vakken</h3>
         <form action="admin.php" method="POST">
