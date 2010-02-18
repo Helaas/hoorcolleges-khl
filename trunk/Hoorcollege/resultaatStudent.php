@@ -6,7 +6,7 @@ $TBS = new clsTinyButStrong;
 
 if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
     //Controle van $_Get['hoorcollege']
-    if(controleerNummer($_GET['hoorcollege'])) {
+    if(ingevoerdNummerOk($_GET['hoorcollege'])) {
         $config["pagina"] = "./student/resultaatStudent.html";
         $TBS->LoadTemplate('./html/student/templateStudent.html');
         $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();

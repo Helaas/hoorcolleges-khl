@@ -350,7 +350,7 @@
         return $antwoordTekst->fields["antwoord"];
     }
 
-    function controleerNummer($string){
+    function ingevoerdNummerOk($string){
         $type = 'is_numeric'.$type;
         if(!$type($string)){
             return FALSE;
@@ -360,7 +360,7 @@
             return FALSE;
         }
         //Nagaan dat de string niet overdreven lang is
-        elseif(strlen($string) > 10){
+        elseif(strlen($string) > 10 || strlen($string) < 1){
             return FALSE;
         }
         else{
