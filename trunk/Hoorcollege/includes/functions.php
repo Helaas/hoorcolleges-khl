@@ -291,7 +291,7 @@
         }
     }
 
-    function antwoordJuist($gebruikerid, $vraagID){
+    function antwoordOk($gebruikerid, $vraagID){
         global $db;
         $resultaat = $db->Execute("SELECT COUNT( idVraag ) AS aantal
         FROM hoorcollege_vraag
