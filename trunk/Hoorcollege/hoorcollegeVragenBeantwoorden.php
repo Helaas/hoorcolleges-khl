@@ -12,15 +12,22 @@
 
             $hoorcollegeNaam = getHoorcollegeNaam($_GET["hoorcollege"]);
 
-            $vragen = array();
-             $resultaat = $db->Execute('SELECT * FROM hoorcollege_vraag');
+             $vraagids = "";
+             $vragen = array();
+             $resultaat = $db->Execute('SELECT * FROM hoorcollege_vraag where Hoorcollege_idHoorcollege='.((int)$_GET["hoorcollege"]));
              while (!$resultaat->EOF) {
+                $vraagids .= $resultaat->fields["idVraag"].",";
                 $vragen[$resultaat->fields["idVraag"]]["vraagstelling"] =  $resultaat->fields["vraagstelling"];
                 $vragen[$resultaat->fields["idVraag"]]["id"] =  $resultaat->fields["idVraag"];
                 $resultaat->MoveNext();
             }
 
-             $resultaat = $db->Execute('SELECT * FROM hoorcollege_mogelijkantwoord');
+            if (strlen($vraagids) > 0){
+                $vraagids = substr_replace($vraagids,"",-1);
+            }
+
+
+             $resultaat = $db->Execute('SELECT * FROM hoorcollege_mogelijkantwoord where Vraag_idVraag in('.$vraagids.')');
              while (!$resultaat->EOF) {
                 $vragen[$resultaat->fields["Vraag_idVraag"]]["mogelijkantwoorden"][] = array ("antwoord" => $resultaat->fields["antwoord"],
                    "id" => $resultaat->fields["idMogelijkAntwoord"] );
@@ -29,11 +36,13 @@
             $TBS->LoadTemplate('./html/template.html');
             $TBS->MergeBlock("blk1",$vragen);
          } else { //vragen verwerken
-            //TODO: De antwoorden inserten in de databank
-
-            $fout["reden"] = "Nog niet geïmplementeerd";
-            $fout["inhoud"] = "Vragen inserten we hier";
-            $config["pagina"] = "./algemeneFout.html";
+            foreach ($_POST['antwoorden'] as $key => $value) {
+                $db->Execute("INSERT INTO hoorcollege_gegevenantwoord (idGegevenAntwoord,Gebruiker_idGebruiker, Vraag_idVraag, MogelijkAntwoord_idMogelijkAntwoord) VALUES (NULL, '" . (int)$_SESSION['gebruiker']->getIdGebruiker() . "', '" . (int)$key . "', '" . (int)$value . "')");
+            }
+            $boodschap["reden"] = "Vragen beantwoorden";
+            $boodschap["inhoud"] = "Uw antwoorden zijn met succes opgeslagen.";
+            $boodschap["link"] = "index.php";
+            $config["pagina"] = "./algemeneBoodschap.html";
             $TBS->LoadTemplate('./html/template.html');
          }
         } else {
