@@ -176,13 +176,11 @@
                 $typeboodschap = "fout";
                 $foutboodschap3 = 'Actie niet gelukt: één of meerdere studenten zijn al aan dit vak toegekent, gelieve eerst de groep te ontkoppelen van dit vak vooraleerst dit te voltooien!';
             }
-        }
-        else if(isset ($_POST['annuleertoekennengroepaanvakknop'])) {
-            header('location: admin.php?actie=vak');
-        }
-        else if(isset ($_POST['verderontkoppelengroepvanvakknop'])) {
-            if(isGroepToegekentAanVak($_POST['selectgroep2'], $_POST['selectvak3'])) {
-                if($_POST['selectgroep2'] != 'kies' && $_POST['selectvak3'] != 'kies') {
+        }        
+        else if(isset ($_POST['verderontkoppelengroepvanvakknop'])) {            
+            $config["pagina"] = "./admin/vak.html";
+            if($_POST['selectgroep2'] != 'kies' && $_POST['selectvak3'] != 'kies') {
+                if(isGroepToegekentAanVak($_POST['selectgroep2'], $_POST['selectvak3'])) {
                     $config["pagina"] = "./admin/ontkoppelengroepvanvak.html";
                     $groep = $_POST['selectgroep2'];
                     $vak = $_POST['selectvak3'];
@@ -190,13 +188,24 @@
                 }
                 else {
                     $config["pagina"] = "./admin/vak.html";
+                    $typeboodschap = "fout";
+                    $foutboodschap4 = 'Groep is niet aan dit vak gelinkt!';
                 }
             }
-            else {
-                $config["pagina"] = "./admin/vak.html";
-                $typeboodschap = "fout";
-                $foutboodschap4 = 'Groep is niet aan dit vak gelinkt!';
+        }
+        else if(isset ($_POST['ontkoppelengroepvanvakknop'])) {
+            $config["pagina"] = "./admin/vak.html";
+            if(ontkoppelGroepVanVak($_POST['groep'], $_POST['vak'])) {
+                $typeboodschap = "juist";
+                $foutboodschap4 = 'Alle leden van deze groep zijn succesvol van het vak ontkoppeld!'; // dit is geen foutboodschap
             }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap4 = 'Actie werd mogelijk niet of niet volledig uitgevoerd, mogelijk door een technisch probleem!';
+            }
+        }
+        else if(isset ($_POST['annuleertoekennengroepaanvakknop']) || isset ($_POST['annuleerontkoppelengroepvanvakknop'])) {
+            header('location: admin.php?actie=vak');
         }
 
 

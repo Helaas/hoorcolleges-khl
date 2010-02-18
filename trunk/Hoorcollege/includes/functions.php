@@ -216,6 +216,22 @@
         return $gelukt;
     }
 
+    //functie om de al de leden van een groep te ontkoppelen van een vak
+    function ontkoppelGroepVanVak($groepId, $vakId) {
+        global $db;
+        $gelukt = true;
+        $resultaat = $db->Execute("select * from hoorcollege_gebruikergroep where Groep_idGroep = '$groepId'");
+        while (!$resultaat->EOF) {
+            $gebruikerId = $resultaat->fields["Gebruiker_idGebruiker"];
+            if(isStudentToegekentVak($gebruikerId, $vakId)) { // nagaan of deze persoon wel in de groep zit
+                $gelukt = $db->Execute("delete from hoorcollege_gebruiker_volgt_vak
+                                        where Gebruiker_idGebruiker = '$gebruikerId' && Vak_idVak = '$vakId'");
+            }
+            $resultaat->MoveNext();
+        }
+        return $gelukt;
+    }
+
     function voegGroepToe($groep) {
         global $db;
         $gelukt =  $db->Execute("insert into hoorcollege_groep (naam)
