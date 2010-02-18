@@ -18,18 +18,19 @@
                 $idVraag = $resultaat->fields["idVraag"];
                 $vragen[$resultaat->fields[$idVraag]]["vraagstelling"] =  $resultaat->fields["vraagstelling"];
                 $vragen[$resultaat->fields[$idVraag]]["id"] =  $resultaat->fields["idVraag"];
-                $vragen[$resultaat->fields[$idVraag]]["juistAntwoord"] =  $resultaat->fields["juistantwoord"];
+                $vragen[$resultaat->fields[$idVraag]]["juistAntwoord"] = getAntwoord($resultaat->fields["juistantwoord"]);
                 $resultaat->MoveNext();
             }
 
-        $resultaat2 = $db->Execute('SELECT * FROM hoorcollege_gegevenantwoord WHERE Vraag_idVraag = '.$idVraag.'
+        $resultaat = $db->Execute('SELECT * FROM hoorcollege_gegevenantwoord WHERE Vraag_idVraag = '.$idVraag.'
              AND Gebruiker_idGebruiker = '.$gebruikerID);
-
-            $gegevenAntwoord = $resultaat2->fields["MogelijkAntwoord_idMogelijkAntwoord"];
-            $antwoordJuist = antwoordOk($gebruikerID, $idVraag);
-            $vragen[$resultaat->fields[$idVraag]]["gegevenAntwoord"] = $gegevenAntwoord;
-            $vragen[$resultaat->fields[$idVraag]]["juist"] = $antwoordJuist;
-
+        while (!$resultaat->EOF) {
+            $vragen[$resultaat->fields[$idVraag]]["gegevenAntwoord"] = getAntwoord($resultaat->fields["MogelijkAntwoord_idMogelijkAntwoord"]);
+            $vragen[$resultaat->fields[$idVraag]]["juist"] = antwoordJuist($gebruikerID, $idVraag);
+        
+            $resultaat->MoveNext();
+        }
+        echo $vragen[$idVraag];
         $TBS->MergeBlock("blk1",$vragen);
 
     }else if(!isset ($_SESSION['gebruiker'])){

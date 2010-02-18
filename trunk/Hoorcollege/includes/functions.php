@@ -291,7 +291,7 @@
         }
     }
 
-    function antwoordOk($gebruikerid, $vraagID){
+    function antwoordJuist($gebruikerid, $vraagID){
         global $db;
         $resultaat = $db->Execute("SELECT COUNT( idVraag ) AS aantal
         FROM hoorcollege_vraag
@@ -341,6 +341,15 @@
         $resultaat = $db->GetRow("SELECT naam FROM hoorcollege_hoorcollege WHERE idHoorcollege = ".$id);
         return $resultaat["naam"];
     }
+
+    function getAntwoord($mogelijkAntwoordID){
+        global $db;
+        $antwoordTekst = $db->Execute('SELECT antwoord
+                                       FROM  hoorcollege_mogelijkantwoord
+                                       WHERE idMogelijkAntwoord = '.$mogelijkAntwoordID);
+        return $antwoordTekst->fields["antwoord"];
+    }
+
 
 
 ?>
