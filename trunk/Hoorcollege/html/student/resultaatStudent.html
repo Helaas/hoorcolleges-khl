@@ -9,6 +9,20 @@ and open the template in the editor.
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   </head>
   <body>
-    TODO write content
+    <h2>Overzicht vragen hoorcollege '[onshow.naamHoorcollege]'</h2>
+        <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+          <tr>
+            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Vraag</font></b></td>
+            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Juist antwoord</font></b></td>
+            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Gegeven antwoord</font></b></td>
+            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Juist/Fout?</font></b></td>
+          </tr>
+          <tr>
+            <td width="25%"><font size="1" face="Verdana">[blk1.vraagstelling;block=tr]</font></td>
+            <td width="25%"><font size="1" face="Verdana">[blk1.juistAntwoord]</font></td>
+            <td width="25%"><font size="1" face="Verdana">[blk1.gegevenAntwoord]</font></td>
+            <td width="25%"><font size="1" face="Verdana">[blk1.juist;if  [val]=1;then 'Juist';else  'Fout']</font></td>
+          </tr>
+        </table>
   </body>
 </html>
