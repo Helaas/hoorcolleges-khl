@@ -369,5 +369,21 @@
         }
     }
 
+    function magGebruikerVragenBeantwoorden($gebruikerID, $hoorcollegeID){
+        global $db;
+        $gebruikerID = (int)$gebruikerID;
+        $hoorcollegeID = (int)$hoorcollegeID;
+        
+        $hoorcol_gebruiker = array();
+        $resultaat = $db->Execute('SELECT Hoorcollege_idHoorcollege AS id
+                                   FROM hoorcollege_gebruikerhoorcollege
+                                    WHERE Gebruiker_idGebruiker ='.$gebruikerID);
+        while (!$resultaat->EOF) {
+            $hoorcol_gebruiker[] = $resultaat->fields["id"];
+            $resultaat->MoveNext();
+        }
+
+        return in_array($hoorcollegeID,$hoorcol_gebruiker);
+    }
 
 ?>

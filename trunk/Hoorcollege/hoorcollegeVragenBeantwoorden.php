@@ -1,10 +1,10 @@
 <?php
     include_once('./includes/kern.php');
     session_start();
-
+    
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){ //student is ingelogged
 
-     if (isset($_GET["hoorcollege"]) && heeftHoorcollegeVragen($_GET["hoorcollege"]) && !heeftGebruikerVragenGemaakt($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])){
+     if (isset($_GET["hoorcollege"]) && heeftHoorcollegeVragen($_GET["hoorcollege"]) && magGebruikerVragenBeantwoorden($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]) && !heeftGebruikerVragenGemaakt($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])){
 
          if (!isset($_POST["submit"])){ //vragen tonen
 
