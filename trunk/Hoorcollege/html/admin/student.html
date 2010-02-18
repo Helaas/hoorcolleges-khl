@@ -12,24 +12,40 @@
         </form>
     
     <h3>Overzicht studenten</h3>
-
-        <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
-          <tr>
-            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Id</font></b></td>
-            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Voornaam</font></b></td>
-            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Achternaam</font></b></td>
-            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Niveau</font></b></td>
-          </tr>
-          <tr>
-            <td width="25%"><font size="1" face="Verdana">[blk1.idGebruiker;block=tr]</font></td>
-            <td width="25%"><font size="1" face="Verdana">[blk1.voornaam]</font></td>
-            <td width="25%"><font size="1" face="Verdana">[blk1.naam]</font></td>
-            <td width="25%"><font size="1" face="Verdana">[blk1.niveau]</font></td>
-          </tr>
-          <tr>
-            <td width="25%" bgcolor="#CCCCFF"><font size="1" face="Verdana">[blk1.idGebruiker;block=tr]</font></td>
-            <td width="25%" bgcolor="#CCCCFF"><font size="1" face="Verdana">[blk1.voornaam]</font></td>
-            <td width="25%" bgcolor="#CCCCFF"><font size="1" face="Verdana">[blk1.naam]</font></td>
-            <td width="25%" bgcolor="#CCCCFF"><font size="1" face="Verdana">[blk1.niveau]</font></td>
-          </tr>
-        </table>
+        <form action="admin.php" method="POST">
+             Filter opties:<br><br>
+             <input type="radio" name="filteropties" value="naam" checked/>
+            Naam:
+             <select name="selectNaamBegintMet">              
+                <option value="A-B">A-B</option>
+                <option value="C-D">C-D</option>
+                <option value="E-F">E-F</option>
+                <option value="G-H">G-H</option>
+                <option value="I-J">I-J</option>
+                <option value="K-L">K-L</option>
+                <option value="M-N">M-N</option>
+                <option value="O-P">O-P</option>
+                <option value="Q-R">Q-R</option>
+                <option value="S-T">S-T</option>
+                <option value="U-V">U-V</option>
+                <option value="W-X">W-X</option>
+                <option value="Y-Z">Y-Z</option>
+            </select>
+            <br><br>
+            <input type="radio" name="filteropties" value="groep"/>
+            Groep:
+            <select name="selectKlas">                
+                <option value="zonder">zonder groep</option>
+                <option value="[blk16.idGroep;block=option]">[blk16.naam]</option>
+            </select>
+            <br><br><br>
+            <input type="submit" value="Toon" name="toonFilterRes"/>
+        </form>
+    
+        <br><br>        
+        <ul>
+            <li>[blk17;block=li;nodata]Geen resultaat.</li>
+            <li>[blk17.naam;block=li], [blk17.voornaam;block=li]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?detailsGebruikerId=[blk17.idGebruiker]">details</a></li>
+        </ul>
+    
+    

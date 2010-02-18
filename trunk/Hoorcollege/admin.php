@@ -204,6 +204,9 @@
                 $foutboodschap4 = 'Actie werd mogelijk niet of niet volledig uitgevoerd, mogelijk door een technisch probleem!';
             }
         }
+        else if(isset ($_POST['toonFilterRes'])) {
+            $config["pagina"] = "./admin/student.html";
+        }
         else if(isset ($_POST['annuleertoekennengroepaanvakknop']) || isset ($_POST['annuleerontkoppelengroepvanvakknop'])) {
             header('location: admin.php?actie=vak');
         }
@@ -215,6 +218,49 @@
         if($config["pagina"] == "./admin/student.html") {
             //tabel aanmaken voor overzicht studenten
             $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE actief = 1 GROUP BY naam, voornaam asc');
+            //dropdown opvullen voor filter selectie klas
+            $TBS->MergeBlock('blk16', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+
+            if(!isset ($_POST['toonFilterRes'])) {
+                $TBS->MergeBlock('blk17', $db, "SELECT * FROM hoorcollege_gebruiker
+                                                WHERE actief = 1 AND (naam LIKE 'A%' OR naam LIKE 'B%')
+                                                GROUP BY naam, voornaam asc");
+            }
+            else if(isset ($_POST['toonFilterRes'])) {
+                if($_POST['filteropties'] == 'naam') {
+                    $letters = explode("-", $_POST['selectNaamBegintMet']);
+                    $l1 = $letters[0];
+                    $l2 = $letters[1];                                 
+                    $TBS->MergeBlock('blk17', $db, "SELECT * FROM hoorcollege_gebruiker
+                                            WHERE actief = 1 AND (naam LIKE '$l1%' OR naam LIKE '$l2%')
+                                            GROUP BY naam, voornaam asc");
+                }
+                else if($_POST['filteropties'] == 'groep') {
+                    if($_POST['selectKlas'] != 'zonder') {
+                        $k = $_POST['selectKlas'];
+                        $TBS->MergeBlock('blk17', $db, "SELECT *
+                                                    FROM hoorcollege_gebruiker g
+                                                    LEFT JOIN hoorcollege_gebruikergroep gr ON g.idGebruiker = gr.Gebruiker_idGebruiker
+                                                    WHERE gr.Groep_idGroep = '$k'
+                                                    GROUP BY g.naam, g.voornaam ASC");
+                    }
+                    else  {
+                        $TBS->MergeBlock('blk17', $db, "SELECT * FROM hoorcollege_gebruiker
+                                                        WHERE idGebruiker NOT IN
+                                                        (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruiker_volgt_vak)");
+                    }
+                }
+                /*
+                if($_POST['selectNaamBegintMet'] != 'kies' && $_POST['selectKlas'] != 'kies' && $_POST['selectKlas'] != 'zonder') {
+                     $TBS->MergeBlock('blk17', $db, "SELECT *
+                                                    FROM hoorcollege_gebruiker g
+                                                    LEFT JOIN hoorcollege_gebruikergroep gr ON g.idGebruiker = gr.Gebruiker_idGebruiker
+                                                    WHERE gr.Groep_idGroep = '$k'
+                                                    AND (g.naam LIKE '$l1%' OR g.naam LIKE '$l2%')
+                                                    GROUP BY g.naam, g.voornaam ASC");
+                }*/
+            }
+            
         }
         else if($config["pagina"] == "./admin/vak.html") {
             //tabel aanmaken voor overzicht vakken

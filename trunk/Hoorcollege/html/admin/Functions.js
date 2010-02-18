@@ -18,3 +18,12 @@ function maakDropDown(dropDown) {
         */
     }    
 }
+
+function redirectNaamBegintMet(dropDown) {    
+    var gekozenLetters = dropDown.options[dropDown.selectedIndex].text;    
+    window.location = "admin.php?actie=student&naam=" + gekozenLetters;
+    //var dr = document.getElementById('selectNaamBegintMet');
+    //dr.selectedIndex = 2;
+}
+
+

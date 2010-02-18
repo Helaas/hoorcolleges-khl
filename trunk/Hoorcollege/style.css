@@ -56,6 +56,11 @@ form{
     padding-left:15px;
 }
 
+ul {
+    margin: 0 0 5px 15px;
+    padding-left:15px;
+}
+
 a {
 color:#6E312A;
 text-decoration:underline;
