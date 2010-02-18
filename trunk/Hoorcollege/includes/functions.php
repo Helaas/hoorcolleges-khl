@@ -305,4 +305,26 @@
        return ($resultaat["aantal"]>=1);
     }
 
+    function heeftGebruikerVragenGemaakt($gebruikersID, $hoorcollegeID){
+       $gebruikersID = (int)$gebruikersID;
+       $hoorcollegeID = (int)$hoorcollegeID;
+       global $db;
+
+       $resultaat = $db->GetRow("SELECT count( *  ) as aantal
+                                FROM hoorcollege_gegevenantwoord 
+                                INNER JOIN hoorcollege_vraag ON ( Vraag_idVraag )
+                                WHERE Hoorcollege_idHoorcollege =". $gebruikersID . " 
+                                AND Gebruiker_idGebruiker =". $hoorcollegeID);
+       return ($resultaat["aantal"]>=1);
+    }
+
+    function getHoorcollegeNaam($id){
+        $id = (int)$id;
+        global $db;
+
+        $resultaat = $db->GetRow("SELECT naam FROM hoorcollege_hoorcollege WHERE idHoorcollege = ".$id);
+        return $resultaat["naam"];
+    }
+
+
 ?>

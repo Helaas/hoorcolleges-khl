@@ -1,3 +1,9 @@
-<div><strong>Vraag [blk1.#]: </strong>[blk1.vraagstelling;block=div;sub1=mogelijkantwoorden]
-    <div><input type="radio" name="[blk1.id]" value="[blk1_sub1.id]" [blk1_sub1.#;if  [val]=1;then 'checked';else  ''] /> [blk1_sub1.antwoord;block=div]</div>
-</div>
+<h2>Vragen voor "[onload.hoorcollegeNaam]"</h2>
+<form action="[onshow..script_name]?hoorcollege=[onshow._GET.hoorcollege]" method="POST">
+    <div><br /><strong>Vraag [blk1.#]: </strong>[blk1.vraagstelling;block=div;sub1=mogelijkantwoorden]
+        <div><input type="radio" name="[blk1.id]" value="[blk1_sub1.id]" [blk1_sub1.#;if  [val]=1;then 'checked';else  ''] /> [blk1_sub1.antwoord;block=div]</div>
+    </div>
+    <br />
+    <input type="submit" value="Verzenden" name="submit" />
+
+</form>
