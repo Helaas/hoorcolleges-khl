@@ -7,23 +7,13 @@ and open the template in the editor.
   <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script type="text/javascript" src="./html/Lector/Functies.js"></script>
-<style type="text/css">
-table {width:80%}
-.col0 {width:5%}
-.col1 {width:50%}
-.col2 {width:10%}
-.col3 {width:25%}
-.col4 {width:10%}
-</style>
+    <script type="text/javascript" src="./html/Lector/Functies.js"></script>
   </head>
   <body>
-
-
-<form name="Form" method="get"  action="">
+ <form name="Form" method="get"  action="">
     Kies een vak:
 <br>
-<select id="Vak" name="vak" onchange="autoSubmit(this.form)">
+<select id="Vak" name="vak" onchange="autoSubmitBeheer(this.form)">
     <!-- Kies een eerste vak uit de vakken die deze gebruiker volgt !-->
     <option value="" name="Vak">--Selecteer een vak--</option>
 <option value="[blk1.idVak]" name="Vak">[blk1.naam;block=option]</option>
@@ -34,39 +24,9 @@ table {width:80%}
 <div id="kiesond"></div>
 <br>
 <br>
-<br>
+
+
 
 </form>
-
-
-
-<br><br>
-      <form>
-
-      <table id="myTable">
-
-      <tr>
-
-      <th id="TitelId"></th>
-
-      <th colspan="2" id="TitelCollege"></th>
-
-      </tr>
-
-      <tr>
-
-          <td></td>
-
-
-
-      </tr>
-
-      </table>
-  
-      </form>
-
-
-
-
   </body>
 </html>
