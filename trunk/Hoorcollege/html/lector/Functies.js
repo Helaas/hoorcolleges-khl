@@ -129,6 +129,16 @@ function autoSubmitBeheer(form)
                  sel.options.add( new Option(inh,id));
                 }
 
+
+                var knop= document.createElement('input');
+                knop.setAttribute('type','button');
+                knop.setAttribute('name','CreateOnd');
+                knop.setAttribute('value','Voeg een nieuw onderwerp toe');
+                knop.onclick = voegOndToe;
+                document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
+                document.getElementById('kiesond').appendChild(knop);
+                
+
 }
 
 
@@ -229,6 +239,61 @@ if(xmlhttp.readyState == 4 && xmlHttp.status == 200)
                  form.onderwerp.options.add( new Option(inh,id));
 }
 }
+}
+
+
+function voegOndToe(){
+
+var vakid= document.Form.vak.options[document.Form.vak.options.selectedIndex].value;
+var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
+
+                var form = document.createElement('form');
+
+                //Veld om de naam van het onderwerp in te geven
+                var iveld= document.createElement('input');
+                iveld.setAttribute('type','text');
+                iveld.setAttribute('name','onderwerp');
+                iveld.setAttribute('value','Geef hier de naam van het onderwerp in..');
+                iveld.setAttribute('size','38');
+                form.appendChild(iveld);
+
+                //hidden field dat onderwerid bijhoudt
+                var hveld1= document.createElement('input');
+                hveld1.setAttribute('type','hidden');
+                hveld1.setAttribute('name','onderwerpID');
+                hveld1.setAttribute('value',ondid);
+                form.appendChild(hveld1);
+
+                //hidden field dat vakid bijhoudt
+                var hveld2= document.createElement('input');
+                hveld2.setAttribute('type','hidden');
+                hveld2.setAttribute('name','vakID');
+                hveld2.setAttribute('value',vakid);
+                form.appendChild(hveld2);
+
+                form.setAttribute('method', 'POST');
+                form.setAttribute('action', 'VoegOnderwerpToe.php');
+                var subm= document.createElement('input');
+                subm.setAttribute('type', 'submit');
+                subm.setAttribute('name','submitknop');
+                subm.setAttribute('value','Voeg Toe!');
+
+                form.appendChild(subm);
+                document.getElementById("onderwerpform").appendChild(form);
+
+}
+
+function deleteForm() {
+
+
+
+
+var form=document.getElementById("onderwerpform");
+
+
+
+document.removeChild(form);
+
 }
 
 
