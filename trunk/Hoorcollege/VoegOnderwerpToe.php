@@ -18,9 +18,17 @@ if(isset ($_SESSION['gebruiker'])) {
             
  if (preg_match('/^[0-9]+$/iD', $_POST['vakID']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['onderwerp'])) {
 //voeg toe
-    $tekstinhoud = "Het onderwerp ".$_POST['onderwerp'].$_POST['vakID']." werd toegevoegd";
-    $db->Execute("INSERT INTO `hoorcolleges`.`hoorcollege_onderwerp` (`idOnderwerp`, `naam`, `Vak_idVak`) VALUES (NULL, '".$_POST['onderwerp']."', '".$_POST['vakID']."')");
-     $config["pagina"] = "./Lector/OndToegevoegd.html";
+    
+
+    $result= $db->Execute("select * from hoorcollege_onderwerp where vak_idVak=".$_POST["vakID"]." AND naam=\"".$_POST['onderwerp']."\"");
+    if($result->fields["naam"]==null){
+    $db->Execute("INSERT INTO hoorcollege_onderwerp (idOnderwerp, naam, Vak_idVak) VALUES (NULL, '".$_POST['onderwerp']."', '".$_POST['vakID']."')");
+    $Titel="Onderwerp toevoegen";
+    $tekstinhoud = "Het onderwerp ".'"'.$_POST['onderwerp'].'"'." werd toegevoegd";
+    }
+    else{$tekstinhoud = "Het onderwerp werd niet toegevoegd omdat er al een onderwerp met deze naam bestaat.";}
+     $Titel="Foutmelding";
+     $config["pagina"] = "./Lector/Boodschap.html";
 
 
 $TBS->LoadTemplate('./html/lector/templateLector.html') ;
@@ -28,8 +36,9 @@ $TBS->Show() ;
         }
 else{
     //Geen Speciale Tekens toegestaan
-
-$config["pagina"] = "./Lector/OndToegevoegd.html";
+$Titel="Foutmelding";
+$tekstinhoud = "Het onderwerp werd niet toegevoegd omdat het speciale tekens bevat.";
+$config["pagina"] = "./Lector/Boodschap.html";
 $TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
 }
