@@ -1,6 +1,8 @@
 <?php
 
     $config["server"] = true; //True = Thuisservers | false = web-k
+    $fout = false;
+    
     if ($_SERVER["SERVER_NAME"] == "www.web-k.be") $config["server"] = false;
 
     ## SQL en SQL abstractie

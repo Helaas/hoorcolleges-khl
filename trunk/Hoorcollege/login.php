@@ -5,7 +5,6 @@ $config["pagina"] = "login.html";
 $TBS = new clsTinyButStrong;
 
 $foutboodschap = '';
-$fout = false;
 
 if (isset($_POST["inloggen"])){
     $email = $_POST['email'];
