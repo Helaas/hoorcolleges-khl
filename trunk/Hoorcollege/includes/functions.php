@@ -17,7 +17,37 @@
                                    from hoorcollege_gebruiker where idGebruiker = '$gebruikerId'");
         return $resultaat->fields["naam"];
     }
+    //Functie voor het nakijken van een ingevoerd nummer:
+    //- is de string wel degelijk numeric en gevuld?
+    //- is de string niet verdacht lang?
+    //Onder andere gebruikt voor het controleren van het hoorcollegeID bij student
+    function validateNumber($string){
+        $type = 'is_numeric';
+        if(!$type($string)){
+            return FALSE;
+        }
+        //Nagaan of er iets in de string staat
+        elseif(empty($string)){
+            return FALSE;
+        }
+        //Nagaan dat de string niet overdreven lang is
+        elseif(strlen($string) > 10 || strlen($string) < 1){
+            return FALSE;
+        }
+        else{
+            //Alles ok
+            return TRUE;
+        }
+    }
 
+    function validateEmail($email){
+        if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     //methode om na te gaan of een gebruiker met deze email al bestaat
     function bestaatEmail($email) {
         global $db;
