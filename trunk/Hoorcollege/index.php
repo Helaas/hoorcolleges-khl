@@ -2,6 +2,9 @@
 include_once('./includes/kern.php');
 session_start();
 
+$foutboodschap = '';
+$fout = false;
+
 if (isset($_POST["bepaalOverzicht"])){
     if($_SESSION['gebruiker']->getNiveau() == 99){
         header("location:admin.php");

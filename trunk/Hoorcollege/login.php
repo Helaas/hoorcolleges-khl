@@ -16,6 +16,7 @@ if (isset($_POST["inloggen"])){
          if(bestaatEmail($email)){
             //Nagaan of paswoord juist is
             if(paswoordOk($email, $paswoord)){
+                
                 $resultaat = getGebruiker($email);
                 $gebruiker = new Gebruiker($resultaat['idGebruiker'], $resultaat['naam'], $resultaat['voornaam'], $resultaat['email'], $resultaat['wachtwoord'], $resultaat['niveau']);
                 $_SESSION['gebruiker'] = $gebruiker;
