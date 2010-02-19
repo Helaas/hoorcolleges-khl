@@ -180,12 +180,33 @@ function autoSubmit2(form)
   xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"&gevraagdOnd="+ondid, false);
   xmlhttp.send(null);
 
- 
+                 var myTable = document.getElementById("myTable");
 
-                     
-                //Tabel aanmaken
-                var elems = xmlhttp.responseXML.getElementsByTagName('Naam');
- 		var size = elems.length;
+
+                 //Huidige tabel leegmaken om hem te vervangen met een nieuwe
+                 while ( myTable.firstChild ){myTable.removeChild( myTable.firstChild );}
+
+                   //grootte xml bestand opvragen
+                   var elems = xmlhttp.responseXML.getElementsByTagName('Naam');
+ 		   var size = elems.length;
+                 
+                  if(size>0){
+                   var TR1 = document.createElement("tr");
+                   var TH1 = document.createElement("th");
+
+                   TH1.id='TitelId';
+                   TR1.appendChild(TH1);
+
+
+                   var TH2 = document.createElement("th");
+                   TH2.id='TitelCollege';
+                   TR1.appendChild(TH2);
+
+                   myTable.appendChild(TR1);
+
+                  
+
+
 
                   //aanmaken titel kolom 1
                    var titel=document.createElement('p');
@@ -197,17 +218,31 @@ function autoSubmit2(form)
                    titel2.innerHTML='Hoorcollege';
                    document.getElementById("TitelCollege").appendChild(titel2);
 
+
+
+
+                   
+                   
                    //tabel opvullen met gegevens uit de xml
                    for(i=0;i<size;i++){
-                   var myTable = document.getElementById("myTable");
                    var newTR = document.createElement("tr");
+                   var newId = document.createElement("td");
+                   newId.innerHTML = xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
                    var newName = document.createElement("td");
-                   newName.innerHTML = xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
-                   var newPhone = document.createElement("td");
-                   newPhone.innerHTML = xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data;
+                   newName.innerHTML = xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data;
+                   newTR.appendChild(newId);
                    newTR.appendChild(newName);
-                   newTR.appendChild(newPhone);
                    myTable.appendChild(newTR);
+                   }
+                  }
+
+                   else{
+                   var nieuweTR = document.createElement("tr");
+                   var msg = document.createElement("td");
+                   msg.appendChild(document.createTextNode('Dit onderwerp heeft geen hoorcolleges'));
+                   nieuweTR.appendChild(msg);
+                   myTable.appendChild(nieuweTR);
+
                    }
 
 
