@@ -1,33 +1,51 @@
 <?php
+include_once('./includes/TinyButStrong.php');
+include_once('./includes/gebruiker.class.php');
 include_once('./includes/kern.php');
+$TBS = new clsTinyButStrong;
+
 session_start();
 
-$TBS = new clsTinyButStrong;
-$config["pagina"] = "./lector/OndToegevoegd.html";
+$config["pagina"] = "./FileUpload/Error1Login.html";
+$tekstinhoud = "";
 
-
-//IfSucces->
-//$tekstinhoud="Het onderwerp ".$_POST['onderwerp'].$_POST['vakID'].$_POST['onderwerpID']." werd toegevoegd";
-
-//Code voor toevoegen van het gekozen onderwerp indien het voldoet aan enkele voorwaarden(validatie), + 'are you sure' check?
-//voor query zie TODO file
-
-if(isset($_SESSION['gebruiker'])){
-    if($_SESSION['gebruiker']->getNiveau() == 1){
-        $TBS->LoadTemplate('./html/student/templateStudent.html');
-    }else if($_SESSION['gebruiker']->getNiveau() == 40){
+if(isset ($_SESSION['gebruiker'])) {
+        $gebruiker = $_SESSION['gebruiker'];
+        $gebruikerNiv = $gebruiker->getNiveau();
+        $gebruikerID = $gebruiker->getIdGebruiker();
 
 
 
-        $TBS->LoadTemplate('./html/lector/templateLector.html');
-    }else if($_SESSION['gebruiker']->getNiveau() == 99){
-        $TBS->LoadTemplate('./html/admin/templateAdmin.html');
-    }
-}else{
-    $TBS->LoadTemplate('./html/template.html') ;
-}
+        if($gebruikerNiv==40){
+            
+ if (preg_match('/^[0-9]+$/iD', $_POST['vakID']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['onderwerp'])) {
+//voeg toe
+    $tekstinhoud = "Het onderwerp ".$_POST['onderwerp'].$_POST['vakID']." werd toegevoegd";
+    $db->Execute("INSERT INTO `hoorcolleges`.`hoorcollege_onderwerp` (`idOnderwerp`, `naam`, `Vak_idVak`) VALUES (NULL, '".$_POST['onderwerp']."', '".$_POST['vakID']."')");
+     $config["pagina"] = "./Lector/OndToegevoegd.html";
 
 
+$TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
+        }
+else{
+    //Geen Speciale Tekens
 
+$config["pagina"] = "./FileUpload/Error2Input.html";
+$TBS->LoadTemplate('./html/lector/templateLector.html') ;
+$TBS->Show() ;
+}
+}
+    else {
+        $config["pagina"] = "./FileUpload/Error1Login.html";
+         $TBS->LoadTemplate('./html/template.html') ;
+        $TBS->Show() ;
+    }
+
+    }
+    else {
+        $config["pagina"] = "./FileUpload/Error1Login.html";
+         $TBS->LoadTemplate('./html/template.html') ;
+        $TBS->Show() ;
+    }
 ?>

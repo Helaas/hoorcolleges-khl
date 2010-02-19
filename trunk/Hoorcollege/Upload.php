@@ -56,4 +56,9 @@ $TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
 }
 }
+    else {
+        $config["pagina"] = "./FileUpload/Error1Login.html";
+         $TBS->LoadTemplate('./html/template.html') ;
+        $TBS->Show() ;
+    }
 ?>

@@ -278,6 +278,7 @@ var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].va
                 subm.setAttribute('type', 'submit');
                 subm.setAttribute('name','submitknop');
                 subm.setAttribute('value','Voeg Toe!');
+                subm.disabled=true;
 
                 form.appendChild(subm);
                 document.getElementById("onderwerpform").appendChild(form);
