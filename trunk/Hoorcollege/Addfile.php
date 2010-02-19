@@ -1,6 +1,6 @@
 <?php
 include_once('./includes/TinyButStrong.php');
-include_once('./includes/gebruiker.class.php');
+include_once('./includes/Gebruiker.class.php');
 $TBS = new clsTinyButStrong;
 
 session_start();
