@@ -329,8 +329,9 @@
        $resultaat = $db->GetRow("SELECT count( *  ) as aantal
                                 FROM hoorcollege_gegevenantwoord 
                                 INNER JOIN hoorcollege_vraag ON ( Vraag_idVraag )
-                                WHERE Hoorcollege_idHoorcollege =". $gebruikersID . " 
-                                AND Gebruiker_idGebruiker =". $hoorcollegeID);
+                                WHERE Hoorcollege_idHoorcollege =". $hoorcollegeID . "
+                                AND Gebruiker_idGebruiker =".$gebruikersID."
+                                AND Vraag_idVraag in (select idVraag from hoorcollege_vraag where Hoorcollege_idHoorcollege = ". $hoorcollegeID . ")");
        return ($resultaat["aantal"]>=1);
     }
 
