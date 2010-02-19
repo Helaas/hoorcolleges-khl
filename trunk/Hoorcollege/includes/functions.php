@@ -352,7 +352,7 @@
     }
 
     function ingevoerdNummerOk($string){
-        $type = 'is_numeric'.$type;
+        $type = 'is_numeric';
         if(!$type($string)){
             return FALSE;
         }
