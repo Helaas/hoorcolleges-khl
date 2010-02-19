@@ -248,13 +248,14 @@ var vakid= document.Form.vak.options[document.Form.vak.options.selectedIndex].va
 var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
 
                 var form = document.createElement('form');
-
+                form.name=('OndForm');
                 //Veld om de naam van het onderwerp in te geven
                 var iveld= document.createElement('input');
                 iveld.setAttribute('type','text');
                 iveld.setAttribute('name','onderwerp');
                 iveld.setAttribute('value','Geef hier de naam van het onderwerp in..');
                 iveld.setAttribute('size','38');
+                iveld.onkeyup=function(){valideerInput(this.form);};
                 form.appendChild(iveld);
 
                 //hidden field dat onderwerid bijhoudt
@@ -296,5 +297,25 @@ document.removeChild(form);
 
 }
 
+function valideerInput(form){
+var reg = new RegExp("^[a-zA-Z0-9\+\#\ \_]+$");
+var inp= document.OndForm.onderwerp.value;
+
+var MijnDiv=document.getElementById("foutmelding")
+
+if(reg.test(inp)){
+while ( MijnDiv.firstChild ){MijnDiv.removeChild( MijnDiv.firstChild );}
+document.OndForm.submitknop.disabled=false;
+}
+else{
+    document.OndForm.submitknop.disabled=true;
+    while ( MijnDiv.firstChild ){MijnDiv.removeChild( MijnDiv.firstChild );}
+     var err=document.createElement('p');
+     err.id='fout';
+     var txt= document.createTextNode("Het onderwerp mag geen speciale tekens bevatten en moet ingevuld zijn.");
+     err.appendChild(txt);
+     MijnDiv.appendChild(err);
+}
+}
 
 
