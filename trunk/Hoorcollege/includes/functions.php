@@ -17,6 +17,7 @@
                                    from hoorcollege_gebruiker where idGebruiker = '$gebruikerId'");
         return $resultaat->fields["naam"];
     }
+    
     //Functie voor het nakijken van een ingevoerd nummer:
     //- is de string wel degelijk numeric en gevuld?
     //- is de string niet verdacht lang?
@@ -48,7 +49,7 @@
         }
     }
     
-    //methode om na te gaan of een gebruiker met deze email al bestaat
+    //Functie om na te gaan of een gebruiker met deze email al bestaat
     function bestaatEmail($email) {
         global $db;
         $resultaat = $db->Execute("select count( distinct email ) as aantal
@@ -314,7 +315,7 @@
 
     }
 
-    //functie om na te gaan of het paswoord juist is
+    //Functie om na te gaan of het paswoord juist is
     function paswoordOk($email, $pw) {
         global $db;
         $resultaat = $db->Execute("select count( distinct email ) as aantal
@@ -329,6 +330,7 @@
         }
     }
 
+    //Functie om na te gaan of het ingegeven antwoord van de student juist of fout is
     function antwoordOk($gebruikerid, $vraagID){
         global $db;
         $resultaat = $db->Execute("SELECT COUNT( idVraag ) AS aantal
