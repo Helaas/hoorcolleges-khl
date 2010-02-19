@@ -21,7 +21,7 @@ if(isset ($_SESSION['gebruiker'])) {
     //Geen Speciale Tekens toegestaan
 $Titel="Foutmelding";
 $tekstinhoud = "Onderwerpen konden niet opgevraagd worden, probeer het later opnieuw.";
-$config["pagina"] = "./Lector/Boodschap.html";
+$config["pagina"] = "./lector/Boodschap.html";
 $TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
 }
