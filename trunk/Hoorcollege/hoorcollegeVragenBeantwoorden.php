@@ -39,6 +39,8 @@
             foreach ($_POST['antwoorden'] as $key => $value) {
                 $db->Execute("INSERT INTO hoorcollege_gegevenantwoord (idGegevenAntwoord,Gebruiker_idGebruiker, Vraag_idVraag, MogelijkAntwoord_idMogelijkAntwoord) VALUES (NULL, '" . (int)$_SESSION['gebruiker']->getIdGebruiker() . "', '" . (int)$key . "', '" . (int)$value . "')");
             }
+            //Reedsbekeken op true zetten
+            $db->Execute('UPDATE hoorcollege_gebruikerhoorcollege SET  reedsBekeken = 1 WHERE Gebruiker_idGebruiker = '.((int)$_SESSION['gebruiker']->getIdGebruiker()).' AND  Hoorcollege_idHoorcollege = '.((int)$_GET["hoorcollege"]));
             $boodschap["reden"] = "Vragen beantwoorden";
             $boodschap["inhoud"] = "Uw antwoorden zijn met succes opgeslagen.";
             $boodschap["link"] = "index.php";
