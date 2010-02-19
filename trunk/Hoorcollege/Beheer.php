@@ -13,14 +13,24 @@ if(isset ($_SESSION['gebruiker'])) {
     $TBS->LoadTemplate('./html/Lector/templateLector.html');
     $TBS->MergeBlock("blk1",$db,$q);
     $TBS->Show();
-        }
-                  else {
+        }else if($_SESSION['gebruiker']->getNiveau() == 1){
+        $config["pagina"] = "./FileUpload/Error1Login.html";
+        $TBS->LoadTemplate('./html/student/templateStudent.html');
+         $TBS->Show() ;
+    }else if($_SESSION['gebruiker']->getNiveau() == 99){
+        $config["pagina"] = "./FileUpload/Error1Login.html";
+        $TBS->LoadTemplate('./html/admin/templateAdmin.html');
+         $TBS->Show() ;
+    }
+
+    else {
         $config["pagina"] = "./FileUpload/Error1Login.html";
          $TBS->LoadTemplate('./html/template.html') ;
         $TBS->Show() ;
+    }
 
     }
-}
+
             else {
         $config["pagina"] = "./FileUpload/Error1Login.html";
          $TBS->LoadTemplate('./html/template.html') ;

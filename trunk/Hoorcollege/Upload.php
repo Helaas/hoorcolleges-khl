@@ -16,9 +16,12 @@ if(isset ($_SESSION['gebruiker'])) {
 
 
 
-        if (preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['vak']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['onderwerp'])) {
+     
 
-        if($gebruikerNiv==40){
+        if($gebruikerNiv==40 ){
+            //Folder mag geen speciale tekens zoals een punt bevatten, anders zou een vak als .NET bvb een hidden folder aanmaken
+         if (preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['vak']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['onderwerp'])) {
+
 
     //Kijk of de folder reeds bestaat, zoniet maak hem aan, herhaal dit voor alle subfolders
     if (!is_dir("Bibliotheek/".$gebruikerID."/")){
@@ -49,13 +52,31 @@ if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
 $TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
         }
-}
 else{
 $config["pagina"] = "./FileUpload/Error2Input.html";
 $TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
 }
 }
+
+//Users met onvoldoende privileges voor deze pagina een foutpagina tonen
+    else if($_SESSION['gebruiker']->getNiveau() == 1){
+        $config["pagina"] = "./FileUpload/Error1Login.html";
+        $TBS->LoadTemplate('./html/student/templateStudent.html');
+         $TBS->Show() ;
+    }else if($_SESSION['gebruiker']->getNiveau() == 99){
+        $config["pagina"] = "./FileUpload/Error1Login.html";
+        $TBS->LoadTemplate('./html/admin/templateAdmin.html');
+         $TBS->Show() ;
+    }
+
+    else {
+        $config["pagina"] = "./FileUpload/Error1Login.html";
+         $TBS->LoadTemplate('./html/template.html') ;
+        $TBS->Show() ;
+    }
+
+    }
     else {
         $config["pagina"] = "./FileUpload/Error1Login.html";
          $TBS->LoadTemplate('./html/template.html') ;
