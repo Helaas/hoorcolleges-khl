@@ -18,6 +18,7 @@ $config["pagina"] = "index.html";
 
 
 if(isset($_SESSION['gebruiker'])){
+    //Bepalen welke template laden (afhankelijk van niveau gebruiker)
     if($_SESSION['gebruiker']->getNiveau() == 1){
         $TBS->LoadTemplate('./html/student/templateStudent.html');
     }else if($_SESSION['gebruiker']->getNiveau() == 40){
@@ -27,8 +28,6 @@ if(isset($_SESSION['gebruiker'])){
     }
     else {
         $TBS->LoadTemplate('./html/template.html');
-        //Hier moest ergens nog rekening gehouden worden met userlevel 99 enzo
-        //Slordige code jongens, ik me maar afvragen waarom mijn index altijd leeg was
     }
 }else{
     $TBS->LoadTemplate('./html/template.html') ;

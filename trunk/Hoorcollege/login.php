@@ -10,7 +10,11 @@ $fout = false;
 if (isset($_POST["inloggen"])){
     $email = $_POST['email'];
     $paswoord = md5($_POST['paswoord']);
-   if(bestaatEmail($email)){
+    //Validatie van emailadres
+    if(validateEmail($email)){
+         //Nagaan of gebruiker bestaat
+         if(bestaatEmail($email)){
+            //Nagaan of paswoord juist is
             if(paswoordOk($email, $paswoord)){
                 $resultaat = getGebruiker($email);
                 $gebruiker = new Gebruiker($resultaat['idGebruiker'], $resultaat['naam'], $resultaat['voornaam'], $resultaat['email'], $resultaat['wachtwoord'], $resultaat['niveau']);
@@ -23,7 +27,6 @@ if (isset($_POST["inloggen"])){
                 }else{     
                     header('location: student.php');                    //Wanneer gebruiker student is
                 }
-
             }else{
                $fout = true;
                $foutboodschap = 'Fout wachtwoord';
@@ -31,6 +34,10 @@ if (isset($_POST["inloggen"])){
     }else{
           $fout = true;
           $foutboodschap = 'Gelieve u eerst te registreren';
+    }
+    }else{
+        $fout = true;
+        $foutboodschap = 'Ongeldig emailadres!';
     }
 }
 
