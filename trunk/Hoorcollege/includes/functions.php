@@ -223,6 +223,17 @@
         return $gelukt;
     }
 
+    //functie om een student toe te kennen aan een vak
+    function kenStudentToeAanVak($studentId, $vakId, $van) {
+        global $db;
+        $gelukt = true;
+        if(!isStudentToegekentVak($studentId, $vakId)) {
+            $gelukt = $db->Execute("insert into hoorcollege_gebruiker_volgt_vak (Gebruiker_idGebruiker, Vak_idVak, van)
+                                        values('$studentId', '$vakId', '$van')");
+        }
+        return $gelukt;
+    }
+
     //functie om groep toe te voegen aan een vak
     function kenGroepToeAanVak($groepId, $vakId, $vanId) {
         global $db;

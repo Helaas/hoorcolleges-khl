@@ -9,7 +9,8 @@
     $foutboodschap = '';
     $foutboodschap2 = '';
     $foutboodschap3 = '';
-    $foutboodschap4 = '';    
+    $foutboodschap4 = '';
+    $foutboodschap5 = '';
 
     //dit is de main content
     $config["pagina"] = "./admin/admin.html";
@@ -219,21 +220,36 @@
         else if(isset ($_POST['verdertoekennenselectiefaanvakknop'])) {
             $config["pagina"] = "./admin/toekennenselectiefaanvak.html";
             $vak = $_POST['selectvak3'];
-            $vaknaam = getVakNameViaId($_POST['selectvak3']);
-            $count = count($_POST['checkbox']);
-            for($i=0; $i < $count; $i++) {
-                echo $_POST['checkbox'][$i];
-            }
+            $vaknaam = getVakNameViaId($_POST['selectvak3']);            
         }
         else if(isset ($_POST['toekennenselectiefaanvakknop'])) {
-            $config["pagina"] = "./admin/admin.html";
-            echo $_POST['vak'];
-            $ch = $_POST['checkbox'];
-            $count = count($ch);
-            for($i=0; $i < $count; $i++) {
-                echo $ch[$i];
+            $config["pagina"] = "./admin/vak.html";
+            if($_POST['vakvan'] != 'leeg') {                
+                $vak = $_POST['vak'];
+                $van = $_POST['vakvan'];
+                $ch = unserialize($_POST['checkbox2']);
+                $count = count($ch);
+
+                $gelukt = true;
+                for($i=0; $i < $count; $i++) {
+                    $gelukt = kenStudentToeAanVak($ch[$i], $vak, $van);
+                }
+
+                if($gelukt) {
+                    $typeboodschap = "juist";
+                    $foutboodschap5 = 'Alle geselecteerden zijn aan het vak toegevoegd!'; // dit is geen foutboodschap
+                }
+                else {
+                    $typeboodschap = "fout";
+                    $foutboodschap5 = 'Technisch probleem, mogelijk is niet iedereen toegekent aan het vak, gelieve manueel te controleren';
+                }
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap5 = 'Er moet eerst een lector toegekent worden aan het vak!';
             }
         }
+        
 
 
         
@@ -271,7 +287,7 @@
                     else  {
                         $TBS->MergeBlock('blk17', $db, "SELECT * FROM hoorcollege_gebruiker
                                                         WHERE niveau = 1 AND idGebruiker NOT IN
-                                                        (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruiker_volgt_vak)");
+                                                        (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikergroep)");
                     }
                 }                
             }            
@@ -355,7 +371,7 @@
                     else  {
                         $TBS->MergeBlock('blk20', $db, "SELECT * FROM hoorcollege_gebruiker
                                                         WHERE niveau = 1 AND idGebruiker NOT IN
-                                                        (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruiker_volgt_vak)");
+                                                        (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikergroep)");
                     }
                 }
             }
@@ -369,7 +385,7 @@
                                             GROUP BY g.naam, g.voornaam ASC");
             //veld aanmaken voor de overzicht van gekozen studenten
             $namen = array();
-            $checkbox= serialize($_POST['checkbox']);
+            $checkbox2 = serialize($_POST['checkbox']);            
             $count = count($_POST['checkbox']);
             for($i=0; $i < $count; $i++) {                
                 $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);                
