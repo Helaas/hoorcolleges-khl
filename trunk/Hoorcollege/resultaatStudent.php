@@ -7,7 +7,7 @@ $TBS = new clsTinyButStrong;
 if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
     //Controle van $_Get['hoorcollege']
     if(ingevoerdNummerOk($_GET['hoorcollege'])) {
-            if (heeftHoorcollegeVragen($_GET["hoorcollege"]) && magGebruikerVragenBeantwoorden($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])){
+            if (heeftHoorcollegeVragen($_GET["hoorcollege"]) && magGebruikerVragenBeantwoorden($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]) && heeftGebruikerVragenGemaakt($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])){
                 $config["pagina"] = "./student/resultaatStudent.html";
                 $TBS->LoadTemplate('./html/student/templateStudent.html');
                 $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();
@@ -40,7 +40,7 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
                 $TBS->MergeBlock("blk1",$vragen);
             } else {
                 $fout["reden"] = "Geen resultaten beschikbaar";
-                $fout["inhoud"] = "Dit hoorcollege heeft geen vragen, of u mag de vragen niet bekijken.";
+                $fout["inhoud"] = "Dit u hebt nog geen vragen beantwoordt voor dit hoorcollege, dit hoorcollege heeft geen vragen, of u mag de vragen niet bekijken.";
                 $config["pagina"] = "./algemeneFout.html";
                 $TBS->LoadTemplate('./html/template.html');
             }
