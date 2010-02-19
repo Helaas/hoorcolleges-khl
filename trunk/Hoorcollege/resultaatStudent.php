@@ -24,13 +24,7 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
                     $resultaat->MoveNext();
                 }
 
-                //Join nodig voor wanneer de student zelf het hoorcollegeId verandert naar
-                //een ander hoorcollegeId dat nog niet volledig gemaakt werd.
-                //De student krijgt door de join  een lege tabel te zien
-                $resultaat = $db->Execute('SELECT * FROM hoorcollege_gegevenantwoord
-                                            LEFT OUTER JOIN hoorcollege_vraag ON Vraag_idVraag = idVraag
-                                            WHERE Gebruiker_idGebruiker = '.$gebruikerID.'
-                                            AND Hoorcollege_idHoorcollege = '.$_GET['hoorcollege']);
+                $resultaat = $db->Execute('SELECT * FROM hoorcollege_gegevenantwoord WHERE Gebruiker_idGebruiker = '.$gebruikerID);
                 while (!$resultaat->EOF) {
                     $vragen[$resultaat->fields["Vraag_idVraag"]]["gegevenAntwoord"] = getAntwoord($resultaat->fields["MogelijkAntwoord_idMogelijkAntwoord"]);
                     $vragen[$resultaat->fields["Vraag_idVraag"]]["juist"] = antwoordOk($gebruikerID, $resultaat->fields["Vraag_idVraag"]);
@@ -42,13 +36,13 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
                 $fout["reden"] = "Geen resultaten beschikbaar";
                 $fout["inhoud"] = "U heeft nog geen vragen beantwoordt voor dit hoorcollege, dit hoorcollege heeft geen vragen, of u mag de vragen niet bekijken.";
                 $config["pagina"] = "./algemeneFout.html";
-                $TBS->LoadTemplate('./html/template.html');
+                $TBS->LoadTemplate('./html/student/templateStudent.html');
             }
     }else {
         $fout["reden"] = "Technische reden";
         $fout["inhoud"] = "Er is een technische fout opgetreden.";
         $config["pagina"] = "./algemeneFout.html";
-        $TBS->LoadTemplate('./html/template.html') ;
+        $TBS->LoadTemplate('./html/student/templateStudent.html') ;
     }
 }else if(!isset ($_SESSION['gebruiker'])) {
     header("location: login.php");

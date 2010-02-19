@@ -33,7 +33,7 @@
                    "id" => $resultaat->fields["idMogelijkAntwoord"] );
                 $resultaat->MoveNext();
             }
-            $TBS->LoadTemplate('./html/template.html');
+            $TBS->LoadTemplate('./html/student/templateStudent.html');
             $TBS->MergeBlock("blk1",$vragen);
          } else { //vragen verwerken
             foreach ($_POST['antwoorden'] as $key => $value) {
@@ -45,13 +45,13 @@
             $boodschap["inhoud"] = "Uw antwoorden zijn met succes opgeslagen.";
             $boodschap["link"] = "index.php";
             $config["pagina"] = "./algemeneBoodschap.html";
-            $TBS->LoadTemplate('./html/template.html');
+            $TBS->LoadTemplate('./html/student/templateStudent.html');
          }
         } else {
             $fout["reden"] = "Geen vragen beschikbaar";
             $fout["inhoud"] = "U hebt de multiple choice vragen voor dit hoorcollege reeds ingevuld, er zijn geen vragen beschikbaar voor dit hoorcollege of u bent niet gemachtigd om de vragen van dit hoorcollege te bekijken.";
             $config["pagina"] = "./algemeneFout.html";
-            $TBS->LoadTemplate('./html/template.html');
+            $TBS->LoadTemplate('./html/student/templateStudent.html');
         }
     } else { //geen student / niet ingelogged
         $config["pagina"] = "./FileUpload/Error1Login.html";
