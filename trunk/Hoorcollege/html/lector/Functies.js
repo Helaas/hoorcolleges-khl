@@ -113,6 +113,7 @@ function autoSubmitBeheer(form)
                  document.getElementById("kiesond").appendChild(brk);
                  var sel=document.createElement('select');
                  sel.name='Ond';
+                 sel.onchange=function(){GenHoorcollButton(this.form);};
                  var opt1= document.createElement("option");
                  opt1.text='--Selecteer een onderwerp--';
                  opt1.value=0;
@@ -352,6 +353,23 @@ else{
      err.appendChild(txt);
      MijnDiv.appendChild(err);
 }
+}
+
+function GenHoorcollButton(form){
+
+   var vakid= document.Form.vak.options[document.Form.vak.options.selectedIndex].value;
+   var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
+
+
+                      var Hdiv=document.getElementById("HoorcollegeToevoegen")
+                      //while ( Hdiv.firstChild ){Hdiv.removeChild( Hdiv.firstChild );}
+                      var txt=document.createElement('p');
+                      var inh= document.createTextNode("------ Hier komt de functionaliteit voor het toevoegen van een hoorcollege aan het gekozen onderwerp ------");
+                      txt.appendChild(inh);
+                      Hdiv.appendChild(txt);
+                
+
+
 }
 
 
