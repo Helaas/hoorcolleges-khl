@@ -10,6 +10,14 @@
         return $resultaat->fields["naam"];
     }
 
+    //methode om de naam van een gebruiker te bekomen via de id
+    function getGebruikerNaamViaId($gebruikerId) {
+        global $db;
+        $resultaat = $db->Execute("select concat(naam, ', ', voornaam) as naam
+                                   from hoorcollege_gebruiker where idGebruiker = '$gebruikerId'");
+        return $resultaat->fields["naam"];
+    }
+
     //methode om na te gaan of een gebruiker met deze email al bestaat
     function bestaatEmail($email) {
         global $db;

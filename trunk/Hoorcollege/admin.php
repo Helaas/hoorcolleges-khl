@@ -216,9 +216,23 @@
         else if(isset ($_POST['verderVakIndivudueel'])) {
             $config["pagina"] = "./admin/vakindividueel.html";
         }
-        else if(isset ($_POST['toekennenselectiefaanvakknop'])) {
+        else if(isset ($_POST['verdertoekennenselectiefaanvakknop'])) {
             $config["pagina"] = "./admin/toekennenselectiefaanvak.html";
             $vak = $_POST['selectvak3'];
+            $vaknaam = getVakNameViaId($_POST['selectvak3']);
+            $count = count($_POST['checkbox']);
+            for($i=0; $i < $count; $i++) {
+                echo $_POST['checkbox'][$i];
+            }
+        }
+        else if(isset ($_POST['toekennenselectiefaanvakknop'])) {
+            $config["pagina"] = "./admin/admin.html";
+            echo $_POST['vak'];
+            $ch = $_POST['checkbox'];
+            $count = count($ch);
+            for($i=0; $i < $count; $i++) {
+                echo $ch[$i];
+            }
         }
 
 
@@ -353,7 +367,16 @@
                                             LEFT JOIN hoorcollege_gebruiker_beheert_vak AS hb ON g.idGebruiker = hb.Gebruiker_idGebruiker
                                             WHERE g.niveau !=1 && hb.Vak_idVak = '$vak'
                                             GROUP BY g.naam, g.voornaam ASC");
+            //veld aanmaken voor de overzicht van gekozen studenten
+            $namen = array();
+            $checkbox= serialize($_POST['checkbox']);
+            $count = count($_POST['checkbox']);
+            for($i=0; $i < $count; $i++) {                
+                $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);                
+            }            
+            $TBS->MergeBlock('blk23',$namen);
         }
+        
 
         $TBS->Show() ;
     }    

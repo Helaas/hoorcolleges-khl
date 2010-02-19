@@ -1,14 +1,13 @@
 <h3>Studenten toekennen aan vakken</h3>
     <br><br>
-    <form action="admin.php" method="POST">
-        <input type="hidden" name="groep" value="[onshow.groep]" readonly="true" />
-        <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
-
+    <form action="admin.php" method="POST">        
+        <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />       
+        <input type="hidden" name="checkbox" value="[onshow.checkbox]" readonly="true" />
         Volgende studenten worden aan het vak <em>[onshow.vaknaam]</em> toegevoegd:<br><br>
 
         <ul>
             <li>
-                [blk13.student;block=li]
+                [blk23.val;block=li]
             </li>
         </ul>
         <br><br>
