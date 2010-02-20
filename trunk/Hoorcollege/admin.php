@@ -275,6 +275,27 @@
                 $foutboodschap5 = 'Technisch probleem, mogelijk is niet iedereen verwijdert, gelieve manueel te controleren';
             }           
         }
+        else if(isset ($_POST['lectortotadminpromoveren'])) {
+            $config["pagina"] = "./admin/lector.html";
+            if(promoveerLector($_POST['selectlector']) && $_POST['selectlector'] != 'kies') {
+                $typeboodschap = "juist";
+                $foutboodschap = 'Lector is succesvol gepromoveerd!'; // dit is geen foutboodschap
+            }
+            else if($_POST['selectlector'] == 'kies') {
+                $typeboodschap = "fout";
+                $foutboodschap = 'U moet een lector selecteren!';
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Actie werd onderbroken door een technisch probleem!';
+            }
+        }
+        else if(isset ($_GET['detailsLectorId'])) {
+            $config["pagina"] = "./admin/lectorDetails.html";
+        }
+
+
+
 
 
         
@@ -458,6 +479,23 @@
                 $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);
             }
             $TBS->MergeBlock('blk28',$namen);
+        }
+        else if($config["pagina"] == "./admin/lector.html") {
+           //select veld aanmaken voor overzicht lectoren
+            $TBS->MergeBlock('blk29', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau = 40 GROUP BY naam, voornaam asc');
+            //overzicht alle lectoren
+            $TBS->MergeBlock('blk30', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1 GROUP BY naam, voornaam asc');
+        }
+        else if($config["pagina"] == "./admin/lectorDetails.html") {
+            $id = $_GET['detailsLectorId'];
+            //overzicht van persoonlijke gegevens
+            $TBS->MergeBlock('blk32', $db, "SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1 AND idGebruiker = '$id' GROUP BY naam, voornaam asc");
+            //overzicht alle vakken van een lector
+            $TBS->MergeBlock('blk31', $db, "SELECT v.naam as naam
+                                            FROM hoorcollege_vak v
+                                            LEFT JOIN hoorcollege_gebruiker_beheert_vak bv ON v.idVak = bv.Vak_idVak
+                                            WHERE bv.Gebruiker_idGebruiker = '$id'
+                                            GROUP BY v.naam ASC");
         }
         
 

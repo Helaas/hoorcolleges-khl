@@ -1,0 +1,23 @@
+<h2>Admin sectie</h2>
+    <h3>Lectoren promoveren tot admin</h3>
+        <form action="admin.php" method="POST">
+            Lector:&nbsp;&nbsp;&nbsp;
+            <select name="selectlector" >
+                <option value="kies">--- Kies ---</option>
+                <option value="[blk29.idGebruiker;block=option]">[blk29.naam;], [blk29.voornaam;]</option>
+            </select>
+            <br><br>            
+            <p id ="[onshow.typeboodschap]">
+                    [onshow.foutboodschap]
+            </p>
+            <br>
+            <input type="submit" value="Promoveren" name="lectortotadminpromoveren" />
+        </form>
+
+    <h3>Overzicht lectoren</h3>
+        <ul>
+            <li>[blk30;block=li;nodata]Geen resultaat.</li>
+            <li>[blk30.naam;block=li], [blk30.voornaam;block=li]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?detailsLectorId=[blk30.idGebruiker]">details</a></li>
+        </ul>
+    <br><br>
+    <a href="admin.php">Terug</a>

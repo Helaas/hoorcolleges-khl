@@ -315,6 +315,12 @@
         return $db->Execute("update hoorcollege_gebruiker set actief = '0' where idGebruiker = '$studentId'");
     }
 
+    //methode om een lector te promoveren tot een admin
+    function promoveerLector($idGebruiker) {
+        global $db;
+        return $db->Execute("update hoorcollege_gebruiker set niveau = '99' where idGebruiker = '$idGebruiker'");
+    }
+
     //deze functie is niet zelf geschreven, bron: http://www.laughing-buddha.net/jon/php/password/
     function generatePassword ($length = 8)
     {
