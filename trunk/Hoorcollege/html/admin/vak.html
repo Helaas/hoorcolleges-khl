@@ -116,17 +116,10 @@
         <h4>Individueel</h4>
 
     <h3>Overzicht vakken</h3>
-        <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
-              <tr>
-                <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Id</font></b></td>
-                <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Naam</font></b></td>
-              </tr>
-              <tr>
-                <td width="25%"><font size="1" face="Verdana">[blk2.idVak;block=tr]</font></td>
-                <td width="25%"><font size="1" face="Verdana">[blk2.naam]</font></td>
-              </tr>
-              <tr>
-                <td width="25%" bgcolor="#CCCCFF"><font size="1" face="Verdana">[blk2.idVak;block=tr]</font></td>
-                <td width="25%" bgcolor="#CCCCFF"><font size="1" face="Verdana">[blk2.naam]</font></td>
-              </tr>
-        </table>
+        <ul>
+            <li>[blk2;block=li;nodata]Geen resultaat.</li>
+            <li>[blk2.naam;block=li]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?detailsVakId=[blk2.idVak]">details</a></li>
+        </ul>
+    <br><br>
+    <a href="admin.php">Terug</a>
+

@@ -293,7 +293,9 @@
         else if(isset ($_GET['detailsLectorId'])) {
             $config["pagina"] = "./admin/lectorDetails.html";
         }
-
+        else if(isset ($_GET['detailsVakId'])) {
+            $config["pagina"] = "./admin/vakDetails.html";
+        }
 
 
 
@@ -496,6 +498,21 @@
                                             LEFT JOIN hoorcollege_gebruiker_beheert_vak bv ON v.idVak = bv.Vak_idVak
                                             WHERE bv.Gebruiker_idGebruiker = '$id'
                                             GROUP BY v.naam ASC");
+        }
+        else if($config["pagina"] == "./admin/vakDetails.html") {
+            $id = $_GET['detailsVakId'];
+            //overzicht om de beheerderders van een vak te tonen
+            $TBS->MergeBlock('blk33', $db, "SELECT *
+                                            FROM hoorcollege_gebruiker g
+                                            LEFT JOIN hoorcollege_gebruiker_beheert_vak bv ON g.idGebruiker = bv.Gebruiker_idGebruiker
+                                            WHERE bv.Vak_idVak = '$id'");
+
+            //overzicht van alle studenten die het vak volgen
+            $TBS->MergeBlock('blk34', $db, "SELECT g.naam, g.voornaam
+                                            FROM hoorcollege_gebruiker g
+                                            LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
+                                            WHERE vv.Vak_idVak = '$id'
+                                            GROUP BY g.naam, g.voornaam ASC");
         }
         
 
