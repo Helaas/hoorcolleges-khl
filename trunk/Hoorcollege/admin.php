@@ -103,39 +103,7 @@
                     $foutboodschap = 'Groep is succesvol aangemaakt!'; //dit is geen foutboodschap
                 }
             }
-        }
-        else if(isset ($_POST['toekennenstudentknop'])) { //indien men een student aan een groep wilt toekennen in groep.html
-            $config["pagina"] = "./admin/groep.html";
-
-            //validatie van toekennen van student aan groep
-            if($_POST['selectstudent'] != 'kies' && $_POST['selectgroep'] != 'kies') {
-                if(isStudentToegekentAanGroep($_POST['selectstudent'])) {
-                    $foutboodschap2 = 'Student behoort al tot een groep!';
-                }
-                else {
-                    if(!kenStudentToeAanGroep($_POST['selectstudent'], $_POST['selectgroep'])) {
-                        $foutboodschap2 = 'Door een technische probleem kon de actie niet uitgevoerd worden, proper later nog eens!';
-                    }
-                    else {
-                        $typeboodschap = "juist";
-                        $foutboodschap2 = 'Student is succesvol aan groep toegevoegd!!'; //dit is geen foutboodschap
-                    }
-                }
-            }            
-        }
-        else if(isset ($_POST['verwijderstudentuitgroepknop'])) { //student uit groep verwijderen in groep.html
-            $config["pagina"] = "./admin/groep.html";            
-            if($_POST['selectstudentverwijder'] != 'kies' && $_POST['selectgroepverwijder'] != 'kies') {
-                if(!isStudentToegekentAanGroep2($_POST['selectstudentverwijder'], $_POST['selectgroepverwijder'])) {
-                    $foutboodschap3 = 'Student behoort niet tot deze groep!';
-                }
-                else {
-                    verwijderStudentVanGroep($_POST['selectstudentverwijder'], $_POST['selectgroepverwijder']);
-                    $typeboodschap = "juist";
-                    $foutboodschap3 = 'Student is succesvol verwijderd van de groep!'; //dit is geen foutboodschap
-                }
-            }
-        }
+        }        
         else if(isset ($_POST['verwijderallestudentuitgroepknop'])) { //alle studenten uit groep verwijderen in groep.html
             $config["pagina"] = "./admin/groep.html";
             if($_POST['selectgroepverwijderhelegroep'] != 'kies') {
@@ -334,7 +302,73 @@
                 $foutboodschap6 = 'Technisch probleem, mogelijk is niet iedereen ontkoppeld, gelieve manueel te controleren';
             }       
         }
+        else if(isset ($_POST['studentenselectiefvangroepontkopppelen'])) {
+            if($_POST['selectgroep'] == 'kies') {
+                $config["pagina"] = "./admin/groep.html";
+                $typeboodschap = "fout";
+                $foutboodschap6 = 'U moet een groep selecteren!';
+            }
+            else {
+                $config["pagina"] = "./admin/studentenkoppelenselectiefvangroep.html";
+                $groep = $_POST['selectgroep'];
+                $groepnaam = getGroepNameViaId($groep);
+            }
+        }
+        else if(isset ($_POST['verderstudentenontkoppelenselectiefvangroep'])) {
+            $config["pagina"] = "./admin/overzichtstudentenontkoppelenvangroepselectief.html";
+            $groep = $_POST['groep'];
+            $groepnaam = getGroepNameViaId($groep);
+        }
+        else if(isset ($_POST['ontkopelgeselecteerdenvangroep'])) {
+            $config["pagina"] = "./admin/groep.html";
+            $idgroep = $_POST['groep'];
+            $ch = unserialize($_POST['checkbox2']);
+            $count = count($ch);
 
+            $gelukt = true;
+            for($i=0; $i < $count; $i++) {
+                $gelukt = verwijderStudentVanGroep($ch[$i], $idgroep);
+            }
+
+            if($gelukt) {
+                $typeboodschap = "juist";
+                $foutboodschap6 = 'Alle geselecteerden zijn ontkoppeld!'; // dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap6 = 'Technisch probleem, mogelijk is niet iedereen ontkoppeld, gelieve manueel te controleren';
+            }
+        }
+        else if(isset ($_POST['verderGroepIndivudueel'])) {
+            $config["pagina"] = "./admin/groepindividueel.html";
+        }
+        else if(isset ($_POST['verdertoekennenselectiefaangroepknop'])) {
+            $config["pagina"] = "./admin/toekennenselectiefaangroep.html";
+            $groep = $_POST['groep'];
+            $groepnaam = getGroepNameViaId($groep);
+        }
+        else if(isset ($_POST['toekennenselectiefaangroepknop'])) {
+            $config["pagina"] = "./admin/groep.html";
+            
+            $groep = $_POST['groep'];
+            
+            $ch = unserialize($_POST['checkbox2']);
+            $count = count($ch);
+
+            $gelukt = true;
+            for($i=0; $i < $count; $i++) {
+                $gelukt = kenStudentToeAanGroep($ch[$i], $groep);
+            }
+
+            if($gelukt) {
+                $typeboodschap = "juist";
+                $foutboodschap5 = 'Alle geselecteerden zijn aan de groep toegevoegd!'; // dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap5 = 'Technisch probleem, mogelijk is niet iedereen toegekent aan de groep, gelieve manueel te controleren';
+            }            
+        }
 
 
 
@@ -404,16 +438,12 @@
 
         }
         else if($config["pagina"] == "./admin/groep.html") {
-            //select veld voor overzicht studenten
-            $TBS->MergeBlock('blk5', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau = 1 GROUP BY naam, voornaam asc');
-            //select veld voor overzicht groepen
+            //overzicht van alle groepen
+            $TBS->MergeBlock('blk5', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            //dropdown opvullen voor filter selectie klas
             $TBS->MergeBlock('blk6', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
-
-            //select veld voor overzicht studenten voor te verwijderen functie
-            $TBS->MergeBlock('blk7', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau = 1 GROUP BY naam, voornaam asc');
-            //select veld voor overzicht groepen voor te verwijderen functie
-            $TBS->MergeBlock('blk8', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
-
+            //overzicht alle groepen
+            $TBS->MergeBlock('blk7', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
             //select veld voor overzicht groepen voor te verwijderen alle studenten uit groep functie
             $TBS->MergeBlock('blk9', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
         }
@@ -551,7 +581,7 @@
                                             WHERE bv.Vak_idVak = '$id'");
 
             //overzicht van alle studenten die het vak volgen
-            $TBS->MergeBlock('blk34', $db, "SELECT g.naam, g.voornaam
+            $TBS->MergeBlock('blk34', $db, "SELECT g.naam, g.voornaam, g.idGebruiker
                                             FROM hoorcollege_gebruiker g
                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
                                             WHERE vv.Vak_idVak = '$id'
@@ -586,6 +616,47 @@
                 $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);
             }
             $TBS->MergeBlock('blk43',$namen);
+        }
+        else if($config["pagina"] == "./admin/studentenkoppelenselectiefvangroep.html") {
+            $idGroep = '';
+            $TBS->MergeBlock('blk6', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
+                                           FROM hoorcollege_gebruiker g
+                                           LEFT JOIN hoorcollege_gebruikergroep gg ON g.idGebruiker = gg.Gebruiker_idGebruiker
+                                           WHERE gg.Groep_idGroep = '$groep'");
+        }
+        else if($config["pagina"] == "./admin/overzichtstudentenontkoppelenvangroepselectief.html") {
+            //veld aanmaken voor de overzicht van gekozen studenten
+            $namen = array();
+            $checkbox2 = serialize($_POST['checkbox']);
+            $count = count($_POST['checkbox']);
+            for($i=0; $i < $count; $i++) {
+                $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);
+            }
+            $TBS->MergeBlock('blk50',$namen);
+        }
+        else if($config["pagina"] == "./admin/groepindividueel.html") {
+            if(isset ($_POST['verderGroepIndivudueel'])) {
+                //select veld aanmaken voor overzicht groepen
+                $TBS->MergeBlock('blk61', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+             
+                $letters = explode("-", $_POST['selectNaamBegintMet']);
+                $l1 = $letters[0];
+                $l2 = $letters[1];
+                $TBS->MergeBlock('blk60', $db, "SELECT * FROM hoorcollege_gebruiker
+                                  WHERE actief = 1 AND niveau = 1 AND (naam LIKE '$l1%' OR naam LIKE '$l2%')
+                                  GROUP BY naam, voornaam asc");
+                             
+            }
+        }
+        else if($config["pagina"] == "./admin/toekennenselectiefaangroep.html") {            
+            //veld aanmaken voor de overzicht van gekozen studenten
+            $namen = array();
+            $checkbox2 = serialize($_POST['checkbox']);
+            $count = count($_POST['checkbox']);
+            for($i=0; $i < $count; $i++) {
+                $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);
+            }
+            $TBS->MergeBlock('blk65',$namen);
         }
 
         $TBS->Show() ;

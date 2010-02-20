@@ -1,0 +1,14 @@
+<h2>Admin sectie</h2>
+<h3>Studenten ontkoppelen</h3>
+    <br><br>
+    <form action="admin.php" method="POST">
+        <input type="hidden" name="groep" value="[onshow.groep]" readonly="true" />
+        Selecteer studenten om te ontkoppelen van de groep [onshow.groepnaam]:<br><br>
+        <ul>
+            <li>[blk6;block=li;nodata]Geen resultaat.</li>
+            <li><input type="checkbox" name="checkbox[]" value="[blk6.idGebruiker]" /> [blk6.naam;block=li], [blk6.voornaam;block=li]</li>
+
+        </ul>
+        <br><br>
+        <input type="submit" value="Verder" name="verderstudentenontkoppelenselectiefvangroep" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+    </form>

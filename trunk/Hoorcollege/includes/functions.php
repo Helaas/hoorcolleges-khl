@@ -2,11 +2,19 @@
     include_once('kern.php');
     
     
-    //methode om de naam van een groep te bekomen via de id
+    //methode om de naam van een vak te bekomen via de id
     function getVakNameViaId($vakId) {
         global $db;
         $resultaat = $db->Execute("select naam as naam
                                    from hoorcollege_vak where idVak = '$vakId'");
+        return $resultaat->fields["naam"];
+    }
+
+    //methode om de naam van een groep te bekomen via de id
+    function getGroepNameViaId($groepId) {
+        global $db;
+        $resultaat = $db->Execute("select naam as naam
+                                   from hoorcollege_groep where idGroep = '$groepId'");
         return $resultaat->fields["naam"];
     }
 

@@ -9,47 +9,51 @@
             <input type="submit" value="voegtoe" name="knopvoegtoegroep" />
         </form>
     <h3>Studenten toekennen aan groepen</h3>
-    <form action="admin.php" method="POST">
-        Student&nbsp;&nbsp;&nbsp;
-            <select name="selectstudent" >
-                <option value="kies">--- kies ---</option>
-                <option value="[blk5.idGebruiker;block=option]">[blk5.naam;], [blk5.voornaam;]</option>
-            </select>
-            <br><br>
-        Groep:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <select name="selectgroep" >
-                <option value="kies">--- kies ---</option>
-                <option value="[blk6.idGroep;block=option]">[blk6.naam;]</option>
-            </select>
+        <form action="admin.php" method="POST">
             <br>
+             Filter opties:<br><br>             
+             Namen:
+             <select name="selectNaamBegintMet">
+                <option value="A-B">A-B</option>
+                <option value="C-D">C-D</option>
+                <option value="E-F">E-F</option>
+                <option value="G-H">G-H</option>
+                <option value="I-J">I-J</option>
+                <option value="K-L">K-L</option>
+                <option value="M-N">M-N</option>
+                <option value="O-P">O-P</option>
+                <option value="Q-R">Q-R</option>
+                <option value="S-T">S-T</option>
+                <option value="U-V">U-V</option>
+                <option value="W-X">W-X</option>
+                <option value="Y-Z">Y-Z</option>
+            </select>
+            <br><br><br>
             <p id ="[onshow.typeboodschap]">
-                    [onshow.foutboodschap2]
+                    [onshow.foutboodschap5]
             </p>
             <br>
-            <input type="submit" value="Toekennen" name="toekennenstudentknop" />
-    </form>
+            <input type="submit" value="Verder" name="verderGroepIndivudueel"/>
+        </form>
 
     <h3>Studenten verwijderen uit een groep</h3>
-        <h4>Indivudueel</h4>
+        <h4>Selectief</h4>
             <form action="admin.php" method="POST">
-                Student&nbsp;&nbsp;&nbsp;
-                    <select name="selectstudentverwijder" >
-                        <option value="kies">--- kies ---</option>
-                        <option value="[blk7.idGebruiker;block=option]">[blk7.naam;], [blk7.voornaam;]</option>
+                Groep:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select name="selectgroep" >
+                         <option value="kies">--- kies ---</option>
+                        <option value="[blk5.idGroep;block=option]">[blk5.naam;]</option>
                     </select>
                     <br><br>
-                Groep:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <select name="selectgroepverwijder" >
-                        <option value="kies">--- kies ---</option>
-                        <option value="[blk8.idGroep;block=option]">[blk8.naam;]</option>
-                    </select>
-                    <br>
-                    <p id ="[onshow.typeboodschap]">
-                            [onshow.foutboodschap3]
-                    </p>
-                    <br>
-                    <input type="submit" value="Verwijder" name="verwijderstudentuitgroepknop" />
+                <p id ="[onshow.typeboodschap]">
+                        [onshow.foutboodschap6]
+                </p>
+                <br>
+                <input type="submit" value="Verder" name="studentenselectiefvangroepontkopppelen"/>
             </form>
+
+            
+            
         <h4>Hele groep leegmaken</h4>
         <form action="admin.php" method="POST">
             Groep:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -65,5 +69,12 @@
                     <input type="submit" value="Verwijder" name="verwijderallestudentuitgroepknop" />
         </form>
        <br><br>
+
+       <h3>Overzicht groepen</h3>
+        <ul>
+            <li>[blk7;block=li;nodata]Geen resultaat.</li>
+            <li>[blk7.naam;block=li]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?detailsGroepId=[blk7.idGroep]">details</a></li>
+        </ul>
+        <br><br>
         <a href="admin.php">Terug</a>
 

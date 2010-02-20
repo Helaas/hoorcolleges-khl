@@ -1,0 +1,17 @@
+<h2>Admin sectie</h2>
+    <h3>Studenten aan groep toevoegen</h3>
+    <form action="admin.php" method="POST">
+        <ul>
+            <li>[blk60;block=li;nodata]Geen resultaat.</li>
+            <li><input type="checkbox" name="checkbox[]" value="[blk60.idGebruiker]" /> [blk60.naam;block=li], [blk60.voornaam;block=li]</li>
+
+        </ul>
+        <br><br>
+        Groep:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select name="groep">
+                        <option value="leeg">[blk61;block=option;nodata]Nog geen groep aangemaakt.</option>
+                        <option value="[blk61.idGroep;block=option]">[blk61.naam;]</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp; (groep aanmaken? klik <a href="admin.php?actie=groep">hier</a>.)
+                    <br><br>
+        <input type="submit" value="Verder" name="verdertoekennenselectiefaangroepknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleervakindividueel" />
+    </form>
