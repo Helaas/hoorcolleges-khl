@@ -1,0 +1,18 @@
+<h2>Admin sectie</h2>
+    <h3>Studenten ontkoppelen van een vak</h3>
+        <form action="admin.php" method="POST">
+            <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
+            <input type="hidden" name="checkbox2" value="[onshow.checkbox2]" readonly="true" />
+            Volgende studenten worden ontkoppeld van het vak <em>[onshow.vaknaam]</em>:<br><br>
+
+            <ul>
+                <li>
+                    [blk43.val;block=li]
+                </li>
+            </ul>
+            <br><br>            
+            <p id ="[onshow.typeboodschap]">
+                [onshow.foutboodschap]
+            </p>
+            <input type="submit" value="Ontkoppelen" name="ontkopelgeselecteerdenvanvak" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+        </form>

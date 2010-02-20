@@ -11,6 +11,7 @@
     $foutboodschap3 = '';
     $foutboodschap4 = '';
     $foutboodschap5 = '';
+    $foutboodschap6 = '';
 
     //dit is de main content
     $config["pagina"] = "./admin/admin.html";
@@ -296,6 +297,43 @@
         else if(isset ($_GET['detailsVakId'])) {
             $config["pagina"] = "./admin/vakDetails.html";
         }
+        else if(isset ($_POST['studentenselectiefontkoppelen'])) {            
+            if($_POST['selectvak5'] == 'kies') {
+                $config["pagina"] = "./admin/vak.html";
+                $typeboodschap = "fout";
+                $foutboodschap6 = 'U moet een vak kiezen!';
+            }
+            else {
+                $config["pagina"] = "./admin/studentenkoppelenselectief.html";                
+                $vak = $_POST['selectvak5'];
+                $vaknaam = getVakNameViaId($vak);
+            }
+        }
+        else if(isset ($_POST['verderstudentenontkoppelenselectief'])) {
+            $config["pagina"] = "./admin/overzichtstudentenkoppelenselectief.html";
+            $vak = $_POST['vak'];
+            $vaknaam = getVakNameViaId($vak);
+        }
+        else if(isset ($_POST['ontkopelgeselecteerdenvanvak'])) {
+            $config["pagina"] = "./admin/vak.html";
+            $idVak = $_POST['vak'];
+            $ch = unserialize($_POST['checkbox2']);
+            $count = count($ch);
+
+            $gelukt = true;
+            for($i=0; $i < $count; $i++) {
+                $gelukt = ontkoppelStudentVanVak($ch[$i], $idVak);
+            }
+
+            if($gelukt) {
+                $typeboodschap = "juist";
+                $foutboodschap6 = 'Alle geselecteerden zijn ontkoppeld!'; // dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap6 = 'Technisch probleem, mogelijk is niet iedereen ontkoppeld, gelieve manueel te controleren';
+            }       
+        }
 
 
 
@@ -359,6 +397,11 @@
             $TBS->MergeBlock('blk15', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
             //dropdown opvullen voor filter selectie klas
             $TBS->MergeBlock('blk18', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            //dropdown opvullen voor filter selectie klas
+            $TBS->MergeBlock('blk40', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            //select veld aanmaken voor overzicht vakken
+            $TBS->MergeBlock('blk41', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+
         }
         else if($config["pagina"] == "./admin/groep.html") {
             //select veld voor overzicht studenten
@@ -525,6 +568,24 @@
                                             WHERE vv.Gebruiker_idGebruiker = '$id'
                                             GROUP BY v.naam ASC");
             
+        }
+        else if($config["pagina"] == "./admin/studentenkoppelenselectief.html") {
+            //overzicht van alle studenten die het vak volgen
+            $TBS->MergeBlock('blk42', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
+                                            FROM hoorcollege_gebruiker g
+                                            LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
+                                            WHERE vv.Vak_idVak = '$vak'
+                                            GROUP BY g.naam, g.voornaam ASC");              
+        }
+        else if($config["pagina"] == "./admin/overzichtstudentenkoppelenselectief.html") {
+            //veld aanmaken voor de overzicht van gekozen studenten
+            $namen = array();
+            $checkbox2 = serialize($_POST['checkbox']);
+            $count = count($_POST['checkbox']);
+            for($i=0; $i < $count; $i++) {
+                $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);
+            }
+            $TBS->MergeBlock('blk43',$namen);
         }
 
         $TBS->Show() ;

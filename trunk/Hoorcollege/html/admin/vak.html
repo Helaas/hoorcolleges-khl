@@ -113,7 +113,21 @@
             </form>
 
         
-        <h4>Individueel</h4>
+        <h4>Selectief</h4>
+           <form action="admin.php" method="POST">             
+            Vak:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="selectvak5" >
+                     <option value="kies">--- kies ---</option>
+                    <option value="[blk41.idVak;block=option]">[blk41.naam;]</option>
+                </select>
+                <br><br>
+            <p id ="[onshow.typeboodschap]">
+                    [onshow.foutboodschap6]
+            </p>
+            <br>
+            <input type="submit" value="Verder" name="studentenselectiefontkoppelen"/>
+        </form>
+        
 
     <h3>Overzicht vakken</h3>
         <ul>

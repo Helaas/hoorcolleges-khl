@@ -284,6 +284,7 @@
 
     //methode om een student te ontkoppelen van een vak
     function ontkoppelStudentVanVak($gebruikerId, $vakId) {
+        global $db;
         return $db->Execute("delete from hoorcollege_gebruiker_volgt_vak
                              where Gebruiker_idGebruiker = '$gebruikerId' && Vak_idVak = '$vakId'");
     }

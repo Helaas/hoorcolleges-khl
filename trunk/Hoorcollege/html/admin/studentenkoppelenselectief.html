@@ -1,0 +1,14 @@
+<h2>Admin sectie</h2>
+<h3>Studenten ontkoppelen</h3>
+    <br><br>
+    <form action="admin.php" method="POST">        
+        <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
+        Selecteer studenten om te ontkoppelen van het vak [onshow.vaknaam]:<br><br>
+        <ul>
+            <li>[blk42;block=li;nodata]Geen resultaat.</li>
+            <li><input type="checkbox" name="checkbox[]" value="[blk42.idGebruiker]" /> [blk42.naam;block=li], [blk42.voornaam;block=li]</li>
+
+        </ul>
+        <br><br>
+        <input type="submit" value="Verder" name="verderstudentenontkoppelenselectief" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+    </form>
