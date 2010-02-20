@@ -514,7 +514,18 @@
                                             WHERE vv.Vak_idVak = '$id'
                                             GROUP BY g.naam, g.voornaam ASC");
         }
-        
+        else if($config["pagina"] == "./admin/detailsstudent.html") {
+            $id = $_GET['detailsGebruikerId'];
+            //overzicht persoonlijke gegevens
+            $TBS->MergeBlock('blk35', $db, "SELECT * FROM hoorcollege_gebruiker WHERE idGebruiker = '$id' GROUP BY naam, voornaam asc");
+            //overzicht van alle vakken die de student volgt
+            $TBS->MergeBlock('blk36', $db, "SELECT v.naam, vv.van
+                                            FROM hoorcollege_vak v
+                                            LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON v.idVak = vv.Vak_idVak
+                                            WHERE vv.Gebruiker_idGebruiker = '$id'
+                                            GROUP BY v.naam ASC");
+            
+        }
 
         $TBS->Show() ;
     }    
