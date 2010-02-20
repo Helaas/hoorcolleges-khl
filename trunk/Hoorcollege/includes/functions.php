@@ -282,6 +282,19 @@
         return $gelukt;
     }
 
+    //methode om een student te ontkoppelen van een vak
+    function ontkoppelStudentVanVak($gebruikerId, $vakId) {
+        return $db->Execute("delete from hoorcollege_gebruiker_volgt_vak
+                             where Gebruiker_idGebruiker = '$gebruikerId' && Vak_idVak = '$vakId'");
+    }
+
+    //methode om een student te ontkoppelen van alle vakken, wordt gebruikt bij het verwijderen van een student(inactief)
+    function ontkoppelStudentVanAlleVakken($gebruikerId) {
+        global $db;
+        $db->Execute("delete from hoorcollege_gebruiker_volgt_vak
+                      where Gebruiker_idGebruiker = '$gebruikerId'");
+    }
+
     function voegGroepToe($groep) {
         global $db;
         $gelukt =  $db->Execute("insert into hoorcollege_groep (naam)
@@ -289,9 +302,17 @@
         return $gelukt;
     }
 
+    //deze functie verwijdert effectief een gebruiker, wordt enkel gebruikt indien blijkt dat een email niet bestaat, bij toevoegen van gebruiker door admin
     function verwijderGebruiker($email) {
        global $db;       
        $db->Execute("delete from hoorcollege_gebruiker WHERE email = '$email'");
+    }
+
+    //methode om een student te verwijderen, eigenlijk wordt die enkel op inactief gezet, ma niet effectief verwijderd
+    function verwijderStudent($studentId) {
+        global $db;
+        ontkoppelStudentVanAlleVakken($studentId);
+        return $db->Execute("update hoorcollege_gebruiker set actief = '0' where idGebruiker = '$studentId'");
     }
 
     //deze functie is niet zelf geschreven, bron: http://www.laughing-buddha.net/jon/php/password/

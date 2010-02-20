@@ -10,6 +10,43 @@
             </p>
             <input type="submit" value="voegtoe" name="knopvoegtoe" />
         </form>
+
+    <h3>Studenten verwijderen</h3>
+        <form action="admin.php" method="POST">
+             Filter opties:<br><br>
+             <input type="radio" name="filteropties" value="naam" checked/>
+            Namen:
+             <select name="selectNaamBegintMet">
+                <option value="A-B">A-B</option>
+                <option value="C-D">C-D</option>
+                <option value="E-F">E-F</option>
+                <option value="G-H">G-H</option>
+                <option value="I-J">I-J</option>
+                <option value="K-L">K-L</option>
+                <option value="M-N">M-N</option>
+                <option value="O-P">O-P</option>
+                <option value="Q-R">Q-R</option>
+                <option value="S-T">S-T</option>
+                <option value="U-V">U-V</option>
+                <option value="W-X">W-X</option>
+                <option value="Y-Z">Y-Z</option>
+            </select>
+            <br><br>
+            <input type="radio" name="filteropties" value="groep"/>
+            Groep:
+            <select name="selectKlas">
+                <option value="zonder">zonder groep</option>
+                <option value="[blk27.idGroep;block=option]">[blk27.naam]</option>
+            </select>
+            <br><br><br>
+            <p id ="[onshow.typeboodschap]">
+                    [onshow.foutboodschap5]
+            </p>
+            <br>
+            <input type="submit" value="Verder" name="studentenverwijderen"/>
+        </form>
+
+        
     
     <h3>Overzicht studenten</h3>
         <form action="admin.php" method="POST">

@@ -249,7 +249,32 @@
                 $foutboodschap5 = 'Er moet eerst een lector toegekent worden aan het vak!';
             }
         }
-        
+        else if(isset ($_POST['studentenverwijderen'])) {
+            $config["pagina"] = "./admin/verwijderenstudent.html";
+        }
+        else if(isset ($_POST['verderstudentenverwijderen'])) {
+            $config["pagina"] = "./admin/overzichtteverwijderenstudenten.html";            
+        }
+        else if(isset ($_POST['bevestigingverwijderstudentenknop'])) {
+            $config["pagina"] = "./admin/student.html";
+
+            $ch = unserialize($_POST['checkbox2']);
+            $count = count($ch);
+
+            $gelukt = true;
+            for($i=0; $i < $count; $i++) {                
+                $gelukt = verwijderStudent($ch[$i]);
+            }
+
+            if($gelukt) {
+                $typeboodschap = "juist";
+                $foutboodschap5 = 'Alle geselecteerden zijn verwijderd!'; // dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap5 = 'Technisch probleem, mogelijk is niet iedereen verwijdert, gelieve manueel te controleren';
+            }           
+        }
 
 
         
@@ -290,7 +315,9 @@
                                                         (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikergroep)");
                     }
                 }                
-            }            
+            }
+            //dropdown opvullen voor filter selectie klas
+            $TBS->MergeBlock('blk27', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
         }
         else if($config["pagina"] == "./admin/vak.html") {
             //tabel aanmaken voor overzicht vakken
@@ -391,6 +418,46 @@
                 $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);                
             }            
             $TBS->MergeBlock('blk23',$namen);
+        }
+        else if($config["pagina"] == "./admin/verwijderenstudent.html") {
+            if(isset ($_POST['studentenverwijderen'])) {
+                //select veld aanmaken voor overzicht vakken
+                $TBS->MergeBlock('blk25', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+
+                if($_POST['filteropties'] == 'naam') {
+                    $letters = explode("-", $_POST['selectNaamBegintMet']);
+                    $l1 = $letters[0];
+                    $l2 = $letters[1];
+                    $TBS->MergeBlock('blk26', $db, "SELECT * FROM hoorcollege_gebruiker
+                                            WHERE actief = 1 AND niveau = 1 AND (naam LIKE '$l1%' OR naam LIKE '$l2%')
+                                            GROUP BY naam, voornaam asc");
+                }
+                else if($_POST['filteropties'] == 'groep') {
+                    if($_POST['selectKlas'] != 'zonder') {
+                        $k = $_POST['selectKlas'];
+                        $TBS->MergeBlock('blk26', $db, "SELECT *
+                                                    FROM hoorcollege_gebruiker g
+                                                    LEFT JOIN hoorcollege_gebruikergroep gr ON g.idGebruiker = gr.Gebruiker_idGebruiker
+                                                    WHERE gr.Groep_idGroep = '$k' AND g.niveau = '1'
+                                                    GROUP BY g.naam, g.voornaam ASC");
+                    }
+                    else  {
+                        $TBS->MergeBlock('blk26', $db, "SELECT * FROM hoorcollege_gebruiker
+                                                        WHERE niveau = 1 AND idGebruiker NOT IN
+                                                        (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikergroep)");
+                    }
+                }
+            }
+        }
+        else if($config["pagina"] == "./admin/overzichtteverwijderenstudenten.html") {            
+            //veld aanmaken voor de overzicht van gekozen studenten
+            $namen = array();
+            $checkbox2 = serialize($_POST['checkbox']);
+            $count = count($_POST['checkbox']);
+            for($i=0; $i < $count; $i++) {
+                $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);
+            }
+            $TBS->MergeBlock('blk28',$namen);
         }
         
 
