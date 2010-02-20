@@ -1,0 +1,14 @@
+<h2>Admin sectie</h2>
+    <h3>Studenten ontkoppelen van een groep</h3>
+        <form action="admin.php" method="POST">
+            <input type="hidden" name="groep" value="[onshow.groep]" readonly="true" />
+            Volgende studenten worden ontkoppeld van de groep <em>[onshow.groepnaam]</em>:<br><br>
+
+            <ul>
+                <li>
+                    [blk80.student;block=li]
+                </li>
+            </ul>
+            <br><br>            
+            <input type="submit" value="Ontkoppelen" name="allestudentenontkoppelenvangroepknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+        </form>
