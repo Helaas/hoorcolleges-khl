@@ -26,9 +26,10 @@ if(isset ($_SESSION['gebruiker'])) {
     $Titel="Onderwerp toevoegen";
     $tekstinhoud = "Het onderwerp ".'"'.$_POST['onderwerp'].'"'." werd toegevoegd";
     }
-    else{$tekstinhoud = "Het onderwerp werd niet toegevoegd omdat er al een onderwerp met deze naam bestaat.";}
+    else{$tekstinhoud = "Het onderwerp werd niet toegevoegd omdat er al een onderwerp met deze naam bestaat.";
      $Titel="Foutmelding";
      $config["pagina"] = "./Lector/Boodschap.html";
+    }
 
 
 $TBS->LoadTemplate('./html/lector/templateLector.html') ;
