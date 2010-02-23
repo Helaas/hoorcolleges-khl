@@ -27,7 +27,7 @@ if(isset ($_SESSION['gebruiker'])) {
     $Titel="Categorie toevoegen";
     $tekstinhoud = "De categorie ".'"'.$_POST['veld1'].'"'." werd toegevoegd";
     }
-    else{$tekstinhoud = "Het onderwerp werd niet toegevoegd omdat er al een onderwerp met deze naam bestaat.";
+    else{$tekstinhoud = "De categorie werd niet toegevoegd omdat er al een categorie met deze naam bestaat.";
      $Titel="Foutmelding";
      $config["pagina"] = "./Lector/Boodschap.html";
     }

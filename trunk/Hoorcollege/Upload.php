@@ -20,25 +20,20 @@ if(isset ($_SESSION['gebruiker'])) {
 
         if($gebruikerNiv==40 ){
             //Folder mag geen speciale tekens zoals een punt bevatten, anders zou een vak als .NET bvb een hidden folder aanmaken
-         if (preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['vak']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['onderwerp'])) {
-
+         if (preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['cat']) && preg_match('/^[0-9]+$/iD', $_SESSION['gebruiker']->getIdGebruiker()) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['bestandsnaam'])) {
 
     //Kijk of de folder reeds bestaat, zoniet maak hem aan, herhaal dit voor alle subfolders
     if (!is_dir("Bibliotheek/".$gebruikerID."/")){
         mkdir("Bibliotheek/".$gebruikerID, 0777);
     }
 
-    if (!is_dir("Bibliotheek/".$gebruikerID."/".$_POST['vak']."/")){
-        mkdir("Bibliotheek/".$gebruikerID."/".$_POST['vak'], 0777);
-    }
-
-        if (!is_dir("Bibliotheek/".$gebruikerID."/".$_POST['vak']."/".$_POST['onderwerp']."/")){
-        mkdir("Bibliotheek/".$gebruikerID."/".$_POST['vak']."/".$_POST['onderwerp'], 0777);
+    if (!is_dir("Bibliotheek/".$gebruikerID."/".$_POST['cat']."/")){
+        mkdir("Bibliotheek/".$gebruikerID."/".$_POST['cat'], 0777);
     }
 
 
 //Path waar het bestand heen moet
-$target_path = "Bibliotheek/".$gebruikerID."/".$_POST['vak']."/".$_POST['onderwerp']."/";
+$target_path = "Bibliotheek/".$gebruikerID."/".$_POST['cat']."/";
 $target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
 
 //Code voor het verplaatsen/kopiëren van het tijdelijke bestand naar de server+pagina weergeven

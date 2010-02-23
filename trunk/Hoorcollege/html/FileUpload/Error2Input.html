@@ -10,22 +10,9 @@ and open the template in the editor.
   </head>
   <body>
   <h2>Foutmelding</h2>
-      <p><Strong>Gelieve geen speciale tekens te gebruiken.</Strong></p>
+      <p><Strong>Gelieve geen speciale tekens te gebruiken in de bestandsnaam.</Strong></p>
 
       <br>
       <br>
-
- <form enctype="multipart/form-data" action="Upload.php" method="POST">
-Vak:<br />
-<input name="vak" type="txt" value="[var._POST.vak;noerr]"/><br /><br />
-Onderwerp:<br />
-<input name="onderwerp" type="txt" value="[var._POST.onderwerp;noerr]"/><br />
-<br />
-<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
-Kies een bestand: <input name="uploadedfile" type="file" /><br />
-
-
-<input type="submit" value="Upload File" />
-</form>
   </body>
 </html>
