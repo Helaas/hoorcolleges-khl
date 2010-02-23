@@ -1,11 +1,14 @@
 
 
-function submitCommentaar(form){
-    var commentaar = form.commentaar.value;
+function submitCommentaar(){
+    var commentaar = commentaar.value;
     var xHRObjectCommentToevoegen = new XMLHttpRequest();
-    xHRObjectCommentToevoegen.open("POST", "commentaarToevoegen.php",true);
+    xHRObjectCommentToevoegen.setRequestHeader('Content-Type', 'text/xml');
+    xHRObjectCommentToevoegen.send("commentaar = '"+ commentaar + "'");
+    xHRObjectCommentToevoegen.open("POST", "commentaarToevoegen.php",false);
+
     xHRObjectCommentToevoegen.onreadystatechange = getDataCommentToevoegen; // callback
-    xHRObjectCommentToevoegen.send(null);
+
 }
 
 
