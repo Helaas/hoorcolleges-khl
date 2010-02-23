@@ -6,6 +6,12 @@
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){ //student is ingelogged
 
         if (isset($_GET["hoorcollege"]) && is_numeric($_GET["hoorcollege"]) && magGebruikerHoorcollegeZien($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])){
+
+            //pagina ingeladen dus het hoorcollege is al "bekeken"
+            zetHoorcollegeBekeken($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]);
+
+            print_r(getHoorcollegeInformatie($_GET["hoorcollege"]));
+
             $config["pagina"] = "./hoorcollege/temp.html";
             $TBS->LoadTemplate('./html/student/templateStudent.html');
         } else {

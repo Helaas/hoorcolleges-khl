@@ -498,4 +498,27 @@
         return in_array($hoorcollegeID,$hoorcol_gebruiker);
     }
 
+    function zetHoorcollegeBekeken($gebruikerID, $hoorcollegeID){
+        global $db;
+        $gebruikerID = (int)$gebruikerID;
+        $hoorcollegeID = (int)$hoorcollegeID;
+
+        $resultaat = $db->Execute('UPDATE hoorcollege_gebruikerhoorcollege
+                                    SET reedsBekeken = 1
+                                    WHERE Gebruiker_idGebruiker  = ' . $gebruikerID . '
+                                    AND Hoorcollege_idHoorcollege  = '.$hoorcollegeID);
+        return $resultaat;
+    }
+
+    function getHoorcollegeInformatie($hoorcollegeID){
+        global $db;
+        $hoorcollegeID = (int)$hoorcollegeID;
+
+       $resultaat = $db->GetRow('SELECT *
+                                    FROM hoorcollege_hoorcollege
+                                    WHERE idHoorcollege = '.$hoorcollegeID);
+
+       return $resultaat;
+
+    }
 ?>
