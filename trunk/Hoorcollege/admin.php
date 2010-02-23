@@ -8,7 +8,12 @@
 
     $config["pagina"] = verwerkPagina();
 
+    //foutafhandeling
     $typeboodschap = "fout";
+    
+    if(isset ($_GET['foutboodschap'])) {
+        $foutboodschap = $_GET['foutboodschap'];
+    }
 
     if(isset ($_POST['terug']) || isset ($_POST['annuleer'])) {
         $config["pagina"] = "./admin/admin.html";
@@ -76,14 +81,13 @@
             }
         }
         else if(isset ($_POST['verdertoekennengroepaanvakknop'])) {
-            if($_POST['selectvak'] != 'kies') {
-                $checkbox2 = serialize($_POST['checkboxGroepen']);
-                $config["pagina"] = "./admin/toekennengroepaanvak.html";                
+            if($_POST['selectvak'] != 'kies' && count($_POST['checkboxGroepen']) > 0) {
+                $checkbox2 = serialize($_POST['checkboxGroepen']);                
                 $vak = $_POST['selectvak'];
                 $vaknaam = getVakNameViaId($_POST['selectvak']);
             }
-            else {
-                $config["pagina"] = "./admin/groepVak.html";
+            else {                
+                header("location: admin.php?pagina=groepVak&foutboodschap=U dient een groep en een vak te kiezen!");
             }
         }
         else if(isset ($_POST['toekennengroepaanvakknop'])) { //alle studenten uit groep toekennen aan een vak in vak.html            
