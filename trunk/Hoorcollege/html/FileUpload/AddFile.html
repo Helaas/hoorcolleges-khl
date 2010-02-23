@@ -1,12 +1,21 @@
 <h2>File Upload</h2>
 
 <!-- Upload segment, roept Upload.php op, max file size = value -->
-<form enctype="multipart/form-data" action="Upload.php" method="POST">
-Vak:<br />
-<input name="vak" type="txt" /><br /><br />
-Onderwerp:<br />
-<input name="onderwerp" type="txt"  /><br />
-<br />
+<form name="Form" action="Upload.php" method="POST">
+
+ Kies een Categorie:
+<br>
+<select id="Categorie" name="cat" onchange="">
+<option value="" name="cat">--Selecteer een categorie--</option>
+<option value="[blk1.idBibliotheekCategorie]" name="Cat">[blk1.naam;block=option]</option>
+</select>
+<input name="CreateCat" type="button" value="Voeg een nieuwe categorie toe" onclick="voegCatToe()" />
+<div id="createCategorie"></div>
+<br>
+<br>
+<div id="foutmelding"></div>
+<br>
+<br>
 <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 Kies een bestand: <input name="uploadedfile" type="file" /><br />
 

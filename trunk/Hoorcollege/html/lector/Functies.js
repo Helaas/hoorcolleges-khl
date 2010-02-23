@@ -1,4 +1,4 @@
-function autoSubmit(form)
+function autoSubmit(form,var1)
 {
 
 
@@ -46,7 +46,9 @@ function autoSubmit(form)
                  document.getElementById("kiesond").appendChild(brk);
                  var sel=document.createElement('select');
                  sel.name='Ond';
+                 if(var1=='autoSubmit2'){
                  sel.onchange=function(){autoSubmit2(this.form);};
+                 }
                  var opt1= document.createElement("option");
                  opt1.text='--Selecteer een onderwerp--';
                  opt1.value=0;
@@ -288,7 +290,7 @@ var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].va
                 //Veld om de naam van het onderwerp in te geven
                 var iveld= document.createElement('input');
                 iveld.setAttribute('type','text');
-                iveld.setAttribute('name','onderwerp');
+                iveld.setAttribute('name','veld1');
                 iveld.setAttribute('value','Geef hier de naam van het onderwerp in..');
                 iveld.setAttribute('size','38');
                 iveld.onkeyup=function(){valideerInput(this.form);};
@@ -321,6 +323,31 @@ var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].va
 
 }
 
+function voegCatToe(){
+
+                var form = document.createElement('form');
+                form.name=('CatForm');
+                //Veld om de naam van het onderwerp in te geven
+                var iveld= document.createElement('input');
+                iveld.setAttribute('type','text');
+                iveld.setAttribute('name','veld1');
+                iveld.setAttribute('value','Geef hier de naam van de categorie in..');
+                iveld.setAttribute('size','38');
+                iveld.onkeyup=function(){valideerInput(this.form);};
+                form.appendChild(iveld);
+
+                form.setAttribute('method', 'POST');
+                form.setAttribute('action', 'VoegCategorieToe.php');
+                var subm= document.createElement('input');
+                subm.setAttribute('type', 'submit');
+                subm.setAttribute('name','submitknop');
+                subm.setAttribute('value','Voeg Toe!');
+                subm.disabled=true;
+
+                form.appendChild(subm);
+                document.getElementById("createCategorie").appendChild(form);
+}
+
 function deleteForm() {
 
 
@@ -336,16 +363,15 @@ document.removeChild(form);
 
 function valideerInput(form){
 var reg = new RegExp("^[a-zA-Z0-9\+\#\ \_]+$");
-var inp= document.OndForm.onderwerp.value;
-
+var inp= form.veld1.value;
 var MijnDiv=document.getElementById("foutmelding")
 
 if(reg.test(inp)){
 while ( MijnDiv.firstChild ){MijnDiv.removeChild( MijnDiv.firstChild );}
-document.OndForm.submitknop.disabled=false;
+form.submitknop.disabled=false;
 }
 else{
-    document.OndForm.submitknop.disabled=true;
+    form.submitknop.disabled=true;
     while ( MijnDiv.firstChild ){MijnDiv.removeChild( MijnDiv.firstChild );}
      var err=document.createElement('p');
      err.id='fout';
@@ -354,6 +380,8 @@ else{
      MijnDiv.appendChild(err);
 }
 }
+
+
 
 function GenHoorcollButton(form){
 

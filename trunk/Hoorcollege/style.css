@@ -27,6 +27,11 @@ p#juist {
     color : #13E801;
 }
 
+table#myTable{
+   width:80%;
+}
+
+
 strong {
 font-weight:bold;
 }

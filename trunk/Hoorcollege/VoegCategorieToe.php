@@ -15,17 +15,17 @@ if(isset ($_SESSION['gebruiker'])) {
         $gebruikerID = $gebruiker->getIdGebruiker();
 
         if($gebruikerNiv==40){
-            
- if (preg_match('/^[0-9]+$/iD', $_POST['vakID']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['veld1'])) {
-//voeg toe
-    
 
-    $result= $db->Execute("select * from hoorcollege_onderwerp where vak_idVak=".$_POST["vakID"]." AND naam=\"".$_POST['veld1']."\"");
+ if (preg_match('/^[0-9]+$/iD', $gebruikerID) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['veld1'])) {
+//voeg toe
+
+
+    $result= $db->Execute("select * from hoorcollege_bibliotheekcategorie where Gebruiker_idGebruiker=".$gebruikerID." AND naam=\"".$_POST['veld1']."\"");
     if($result->fields["naam"]==null){
-    $db->Execute("INSERT INTO hoorcollege_onderwerp (idOnderwerp, naam, Vak_idVak) VALUES (NULL, '".$_POST['veld1']."', '".$_POST['vakID']."')");
+    $db->Execute("INSERT INTO hoorcollege_bibliotheekcategorie (naam, Gebruiker_idGebruiker) VALUES ('".$_POST['veld1']."', '".$gebruikerID."')");
     $config["pagina"] = "./Lector/Boodschap.html";
-    $Titel="Onderwerp toevoegen";
-    $tekstinhoud = "Het onderwerp ".'"'.$_POST['veld1'].'"'." werd toegevoegd";
+    $Titel="Categorie toevoegen";
+    $tekstinhoud = "De categorie ".'"'.$_POST['veld1'].'"'." werd toegevoegd";
     }
     else{$tekstinhoud = "Het onderwerp werd niet toegevoegd omdat er al een onderwerp met deze naam bestaat.";
      $Titel="Foutmelding";
