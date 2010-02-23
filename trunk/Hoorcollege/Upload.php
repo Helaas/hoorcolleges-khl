@@ -48,9 +48,19 @@ $TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
         }
 else{
+    if(!preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['cat'])){
+        $Titel="Foutmelding";
+        $tekstinhoud="U heeft geen categorie geselecteerd.";
+
+        $config["pagina"] = "./lector/Boodschap.html";
+        $TBS->LoadTemplate('./html/lector/templateLector.html') ;
+        $TBS->Show() ;
+    }
+    else{
 $config["pagina"] = "./FileUpload/Error2Input.html";
 $TBS->LoadTemplate('./html/lector/templateLector.html') ;
 $TBS->Show() ;
+    }
 }
 }
 

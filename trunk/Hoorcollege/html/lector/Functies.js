@@ -282,8 +282,10 @@ if(xmlhttp.readyState == 4 && xmlHttp.status == 200)
 
 function voegOndToe(){
 
-var vakid= document.Form.vak.options[document.Form.vak.options.selectedIndex].value;
-var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
+ while ( document.getElementById("onderwerpform").firstChild ){document.getElementById("onderwerpform").removeChild( document.getElementById("onderwerpform").firstChild );}
+
+                var vakid= document.Form.vak.options[document.Form.vak.options.selectedIndex].value;
+                var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
 
                 var form = document.createElement('form');
                 form.name=('OndForm');
@@ -324,6 +326,8 @@ var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].va
 }
 
 function voegCatToe(){
+
+     while ( document.getElementById("createCategorie").firstChild ){document.getElementById("createCategorie").removeChild( document.getElementById("createCategorie").firstChild );}
 
                 var form = document.createElement('form');
                 form.name=('CatForm');
