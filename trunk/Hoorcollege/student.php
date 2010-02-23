@@ -11,13 +11,13 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
     $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();
 
     //Query voor overzicht hoorcolleges nog te bekijken
-    $queryNogTeBekijken = 'SELECT idHoorcollege, naam, vbc
+    $queryNogTeBekijken = 'SELECT idHoorcollege, naam
                           FROM hoorcollege_hoorcollege LEFT OUTER JOIN hoorcollege_gebruikerhoorcollege
                           ON Hoorcollege_idHoorcollege = idHoorcollege
                           WHERE Gebruiker_idGebruiker = '.$gebruikerID.' AND reedsBekeken = false';
 
     //Query voor overzicht hoorcolleges reeds bekeken
-    $queryReedsBekeken = 'SELECT idHoorcollege, naam, vbc
+    $queryReedsBekeken = 'SELECT idHoorcollege, naam
                          FROM hoorcollege_hoorcollege LEFT OUTER JOIN hoorcollege_gebruikerhoorcollege
                          ON Hoorcollege_idHoorcollege = idHoorcollege
                          WHERE Gebruiker_idGebruiker = '.$gebruikerID.' AND reedsBekeken = true';
