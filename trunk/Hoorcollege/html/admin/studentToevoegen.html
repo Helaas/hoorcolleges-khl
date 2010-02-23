@@ -1,0 +1,12 @@
+> <a class="nav" href="admin.php">admin</a> > studenten toevoegen<br><br><br>
+<h2>Studenten toevoegen</h2>
+    <form action="admin.php?pagina=studentToevoegen" method="POST">
+            Naam: <br><br><input type="text" name="naam" value="[onshow._POST.naam;noerr]" size="30" /><br><br>
+            Voornaam: <br><br><input type="text" name="voornaam" value="[onshow._POST.voornaam;noerr]" size="30" /><br><br>
+            Email: <br><br><input type="text" name="email" value="[onshow._POST.email;noerr]" size="30" /><br><br><br>
+
+            <p id ="[onshow.typeboodschap;noerr]">
+                [onshow.foutboodschap;noerr]
+            </p>
+            <input type="submit" value="Voeg toe" name="knopvoegtoestudent" /> 
+        </form>

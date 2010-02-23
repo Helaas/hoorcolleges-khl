@@ -10,6 +10,14 @@
         return $resultaat->fields["naam"];
     }
 
+    //function om de id van een vak te weten te komen
+    function getIdViaName($naam) {
+        global $db;
+        $resultaat = $db->Execute("select idVak
+                                   from hoorcollege_vak where naam = '$naam'");
+        return $resultaat->fields["idVak"];
+    }
+
     //methode om de naam van een groep te bekomen via de id
     function getGroepNameViaId($groepId) {
         global $db;

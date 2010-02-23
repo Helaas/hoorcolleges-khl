@@ -1,14 +1,15 @@
+> <a class="nav" href="admin.php?actie=admin">admin</a> > <a class="nav" href="admin.php?pagina=groepVak">groepen aan vak</a> > bevestiging groepen aan vak<br><br><br>
 <h3>Studenten toekennen aan vakken</h3>
     <br><br>
-    <form action="admin.php" method="POST">
-        <input type="hidden" name="groep" value="[onshow.groep]" readonly="true" />
+    <form action="admin.php?pagina=admin" method="POST">
         <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
+        <input type="hidden" name="checkbox2" value="[onshow.checkbox2]" readonly="true" />
 
-        Volgende studenten worden aan het vak <em>[onshow.vaknaam]</em> toegevoegd:<br><br>
+        Studenten van de volgende groepen worden aan het vak <em>[onshow.vaknaam]</em> toegevoegd:<br><br>
 
         <ul>
             <li>
-                [blk13.student;block=li]
+                [blk1.val;block=li]
             </li>
         </ul>
         <br><br>
@@ -18,10 +19,10 @@
                     <select id="vakvan" name="vakvan">
                         <option value="leeg">[blk12;block=option;nodata]Nog geen lector toegekent.</option>
                         <option value="[blk12.idGebruiker;block=option]">[blk12.naam;], [blk12.voornaam;]</option>
-                    </select>&nbsp;&nbsp;&nbsp;&nbsp; (lector toekennen? klik <a href="admin.php?actie=vak">hier</a>.)
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp; 
                     <br><br>
-                    <p id ="[onshow.typeboodschap]">
-                        [onshow.foutboodschap]
+                    <p id ="[onshow.typeboodschap;noerr]">
+                        [onshow.foutboodschap;noerr]
                     </p>
                     <input type="submit" value="Verder" name="toekennengroepaanvakknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleertoekennengroepaanvakknop" />
     </form>

@@ -1,3 +1,4 @@
+
 function maakDropDown(dropDown) {
     var gekozenVak = dropDown.options[dropDown.selectedIndex].text;
     var id = dropDown.options[dropDown.selectedIndex].value; //het id van het vak dat gekozen is
