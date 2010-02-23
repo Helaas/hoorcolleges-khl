@@ -476,9 +476,9 @@
 
     function voegCommentaarToe($gebruikerID, $hoorcollegeId, $tekst){
         global $db;
-        $db->Execute('INSERT INTO web_k_be.hoorcollege_reactie
+        $db->Execute("INSERT INTO hoorcollege_reactie
             (idReactie, Hoorcollege_idHoorcollege, Gebruiker_idGebruiker, inhoud)
-            VALUES (NULL, '.$hoorcollegeId.','.$gebruikerID.', "'.$tekst.'")');
+            VALUES (NULL, '$hoorcollegeId','$gebruikerID', '$tekst')");
     }
 
 ?>
