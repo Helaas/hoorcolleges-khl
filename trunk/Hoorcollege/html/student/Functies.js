@@ -1,9 +1,11 @@
+var xHRObjectCommentToevoegen = null; //aanmaken van xHRObject
+var aantal= 0;
+var gebruikers=new Array();
+var commentaren=new Array();
 
-function submitCommentaar(){
-    alert("Alert int submitCommentaar");
-    var commentaar = commentaar.value;
-
-    var xHRObjectCommentToevoegen = null; //aanmaken van xHRObject
+function submitCommentaar(form){
+    var commentaar = form.commentaar.value;
+    
     // initialisatie van het xHRObject browser-onafhankelijk
     if (window.XMLHttpRequest) {
         xHRObjectCommentToevoegen = new XMLHttpRequest();
@@ -12,26 +14,22 @@ function submitCommentaar(){
     if (window.ActiveXObject) {
         xHRObjectCommentToevoegen = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xHRObjectCommentToevoegen.onreadystatechange = getDataCommentToevoegen; // callback
-    xHRObjectCommentToevoegen.open("POST", "verwerkCommentaarToevoegen.php",true);
-    xHRObjectCommentToevoegen.setRequestHeader('Content-Type', 'text/xml');
-    xHRObjectCommentToevoegen.send("commentaar = '"+ commentaar + "'");
 
-    
-  
+    xHRObjectCommentToevoegen.onreadystatechange = getDataCommentToevoegen; // callback
+    xHRObjectCommentToevoegen.open("GET", "verwerkCommentaarToevoegen.php?commentaar="+commentaar,true);
+    xHRObjectCommentToevoegen.send(null);
+
 }
 
 
 
 
 function getDataCommentToevoegen(){
-    alert("Komt in Callback");
-    if (xHRObjectCommentToevoegen.readyState == 4 && xHRObjectCommentToevoegen.status == 200) {
-        var serverResponse = xHRObjectCommentToevoegen.responseXML;
-        var gebruikers = serverResponse.getElementsByTagName("Gebruiker");
-        var commentaren = serverResponse.getElementsByTagName("Tekst");
-        var aantal = commentaren.length;
-
+    if(xHRObjectCommentToevoegen.readyState == 4 && xHRObjectCommentToevoegen.status == 200){
+        gebruikers = xHRObjectCommentToevoegen.responseXML.getElementsByTagName("Gebruiker");
+        commentaren = xHRObjectCommentToevoegen.responseXML.getElementsByTagName("Tekst");
+        aantal = commentaren.length;
+        alert("Aantal: " + aantal);
         for(i = 0; i < aantal; i++){
             var commentElement = document.createElement('div');
 
@@ -46,6 +44,7 @@ function getDataCommentToevoegen(){
             document.getElementById("commentaren").appendChild(commentElement);
 
         }
+ 
     }
 }
 
