@@ -4,7 +4,7 @@ session_start();
 
 $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();
 //Nog even standaard hoorcollegeID
-$hoorcollegeID = 1;
+$hoorcollegeID = $_GET["hoorcollege"];
 
 //Inhoud commentaar moet ik nog controleren
 $commentaar = $_GET["commentaar"];
