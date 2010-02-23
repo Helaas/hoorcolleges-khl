@@ -12,37 +12,35 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
     //Nog even standaard hoorcollegeID
     $hoorcollegeID = 1;
 
-    //aangeven dat het antwoord een xml bestand is
-    header("Content-type: text/xml");
 
-    
-    if($_POST) {
-        //Inhoud commentaar moet ik nog controleren
-       
-        $commentaar = $_POST['commentaar'];
-        voegCommentaarToe($gebruikerID, $hoorcollegeID, $commentaar);
+    if($_GET){
+    //Inhoud commentaar moet ik nog controleren
 
-        $alleCommentarenVanHoorcollege = $db->Execute("select * from hoorcollege_reactie where hoorcollege_idHoorcollege=".$hoorcollegeID);
+    $commentaar = $_GET['commentaar'];
+    echo $commentaar;
+    voegCommentaarToe($gebruikerID, $hoorcollegeID, $commentaar);
 
-        //xml file aanmaken
-        $xml_file  = "<?xml version=\"1.0\"?>";
-        $xml_file .= "<root>";
+    $alleCommentarenVanHoorcollege = $db->Execute("select * from hoorcollege_reactie where hoorcollege_idHoorcollege=".$hoorcollegeID);
 
-        while (!$alleCommentarenVanHoorcollege->EOF) {
-            $gebruiker = getGebruikerNaamViaId($alleCommentarenVanHoorcollege->fields["Gebruiker_idGebruiker"]);
-            $xml_file .= "<div>";
-            $xml_file .= "<Gebruiker>".$gebruiker."</Gebruiker>";
-            $xml_file .= "<Tekst>".$alleCommentarenVanHoorcollege->fields["inhoud"]."</Tekst>";
-            $xml_file .= "</div>";
-            $alleCommentarenVanHoorcollege->MoveNext();
-        }
+    //xml file aanmaken
+    $xml_file  = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n";
+    $xml_file .= "<root>";
 
-        $xml_file .= "</root>";
+    while (!$alleCommentarenVanHoorcollege->EOF) {
+        $gebruiker = getGebruikerNaamViaId($alleCommentarenVanHoorcollege->fields["Gebruiker_idGebruiker"]);
+        $xml_file .= "<div>";
+        $xml_file .= "<Gebruiker>".$gebruiker."</Gebruiker>";
+        $xml_file .= "<Tekst>".$alleCommentarenVanHoorcollege->fields["inhoud"]."</Tekst>";
+        $xml_file .= "</div>";
+        $alleCommentarenVanHoorcollege->MoveNext();
+    }
 
-        echo $xml_file;
+    $xml_file .= "</root>";
 
+    echo $xml_file;
 
     }
+
 
 
 }else if(!isset ($_SESSION['gebruiker'])) {
