@@ -2,6 +2,6 @@
 
     <p>E-mail: <input type="text" name="email" value="[onshow._POST.email;noerr]" style="font-size: 0.9em; width: 80px;" /></p>
     <p>Wachtwoord: <input type="password" name="paswoord" value="[onshow._POST.paswoord;noerr]" style="font-size: 0.9em; width: 80px;" /></p>
-    <p id ="fout">[onshow.foutboodschap][onload_1;block=p;when [var.fout]==1]</p>
+    <p id ="fout">[onshow.foutboodschap][onload_1;block=p;when [var.fout;noerr]==1]</p>
     <input type="submit" name ="inloggen" value="inloggen" style="font-size: 0.9em; padding: 0;" />
 </form>
