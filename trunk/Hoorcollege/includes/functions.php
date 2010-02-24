@@ -529,4 +529,17 @@
        return $resultaat;
 
     }
+
+    function heeftHoorcollegeVBC($gebruikerID, $hoorcollegeID){
+        global $db;
+        $gebruikerID = (int)$gebruikerID;
+        $hoorcollegeID = (int)$hoorcollegeID;
+
+         $resultaat = $db->GetRow('SELECT VBCVerplicht
+                                    FROM hoorcollege_gebruikerhoorcollege
+                                    WHERE Gebruiker_idGebruiker = '. $gebruikerID .'
+                                    AND Hoorcollege_idHoorcollege = '.$hoorcollegeID);
+
+        return $resultaat["VBCVerplicht"];
+    }
 ?>

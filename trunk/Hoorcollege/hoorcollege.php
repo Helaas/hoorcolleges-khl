@@ -10,7 +10,12 @@
             //pagina ingeladen dus het hoorcollege is al "bekeken"
             zetHoorcollegeBekeken($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]);
 
-            print_r(getHoorcollegeInformatie($_GET["hoorcollege"]));
+            $hoorcolInfo = getHoorcollegeInformatie($_GET["hoorcollege"]);
+            $hoorcolInfo["VBC_aantal"] = $hoorcolInfo["VBC_aantal"] == "1" ? "true" : "false"; //ik wil letterlijk de strings
+            $hoorcolInfo["VBC_geluid"] = $hoorcolInfo["VBC_geluid"] == "1" ? "true" : "false"; //ik wil letterlijk de strings
+            $hoorcolInfo["heeftVragen"] = heeftHoorcollegeVragen($_GET["hoorcollege"])  == true ? "true" : "false"; //ik wil letterlijk de strings
+            $hoorcolInfo["heeftVBC"] = heeftHoorcollegeVBC($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]) == "1" ? "true" : "false"; //ik wil letterlijk de strings
+            
 
             $config["pagina"] = "./hoorcollege/temp.html";
             $TBS->LoadTemplate('./html/student/templateStudent.html');
