@@ -1,0 +1,28 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentVak">studenten aan vak</a> > <a class="nav" href="javascript:javascript:history.go(-1)">selectie maken</a> > overzicht<br><br><br>
+<h2>Studenten toekennen aan vakken</h2>
+<form action="admin.php?pagina=admin" method="POST">
+    <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
+    <input type="hidden" name="checkbox2" value="[onshow.checkbox2]" readonly="true" />
+
+    Studenten van de volgende groepen worden aan het vak <em>[onshow.vaknaam]</em> toegevoegd:<br><br>
+
+        <ul>
+            <li>
+                [blk1.val;block=li]
+            </li>
+        </ul>
+        <br><br>
+        Kies een lector die toegekent is aan het vak om dit vak te geven aan deze groep.
+        <br><br>
+        Lector:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select id="vakvan" name="vakvan">
+                        <option value="leeg">[blk2;block=option;nodata]Nog geen lector toegekent.</option>
+                        <option value="[blk2.idGebruiker;block=option]">[blk2.naam;], [blk2.voornaam;]</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <br><br>
+
+    <p id ="[onshow.typeboodschap;noerr]">
+        [onshow.foutboodschap;noerr]
+    </p>
+    <input type="submit" value="Verder" name="toekennenstudentenaanvakknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+</form>

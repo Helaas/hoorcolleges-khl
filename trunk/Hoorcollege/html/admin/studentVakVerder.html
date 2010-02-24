@@ -1,0 +1,21 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentVak">studenten aan vak</a> > selectie maken<br><br><br>
+<h2>Studenten toekennen aan vakken</h2>
+        <h3>Selectie maken</h3>
+        <form action="admin.php?pagina=studentVakVerderOverzicht" method="POST">
+            <input type="hidden" name="studdata" value="[onshow.studdata]" readonly="true" />
+            <ul>
+                <li>[blk1;block=li;nodata]Geen resultaat.</li>
+                <li><input type="checkbox" name="checkboxStudenten[]" value="[blk1.idGebruiker]" /> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
+            </ul>
+            <br><br><br>
+            Koppelen aan:<br><br>
+                    Vak: <select name="selectvak" >
+                        <option value="leeg">[blk2;block=option;nodata]Geen resultaat.</option>
+                        <option value="[blk2.idVak;block=option]">[blk2.naam;]</option>
+                    </select>
+                <br><br><br>
+                <p id ="[onshow.typeboodschap;noerr]">
+                        [onshow.foutboodschap;noerr]
+                    </p>
+                <input type="submit" value="Verder" name="toekennenstudentenaanvakoverzichtknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+        </form>
