@@ -9,7 +9,7 @@ if (isset($_POST["bepaalOverzicht"])){
     if($_SESSION['gebruiker']->getNiveau() == 99){
         header("location:admin.php");
     }elseif($_SESSION['gebruiker']->getNiveau() == 40){
-        header("location:lector.php");
+        header("location:./lector/index.php");
     }else {
         header("location:student.php");
     }
@@ -25,7 +25,8 @@ if(isset($_SESSION['gebruiker'])){
     if($_SESSION['gebruiker']->getNiveau() == 1){
         $TBS->LoadTemplate('./html/student/templateStudent.html');
     }else if($_SESSION['gebruiker']->getNiveau() == 40){
-        $TBS->LoadTemplate('./html/lector/templateLector.html');
+        //$TBS->LoadTemplate('./html/lector/templateLector.html');
+        header("location:./lector/index.php");
     }else if($_SESSION['gebruiker']->getNiveau() == 99){
         $TBS->LoadTemplate('./html/admin/templateAdmin.html');
     }

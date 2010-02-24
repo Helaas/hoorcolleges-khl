@@ -1,6 +1,7 @@
 <?php
 
 global $x;
+global $path;
 
 if (isset($this)) {
     $TBS =& $this;
@@ -11,7 +12,14 @@ if (isset($this)) {
 
 if(isset ($_SESSION['gebruiker'])){
     $x = $_SESSION['gebruiker']->getVoornaam().' '.$_SESSION['gebruiker']->getNaam();
-    $TBS->LoadTemplate('./html/logoutSubscript.html');
+    $path = "";
+    if(file_exists('./html/logoutSubscript.html')){
+            $TBS->LoadTemplate('./html/logoutSubscript.html');
+    }
+    else{
+        $path = "./../";
+        $TBS->LoadTemplate('./../html/logoutSubscript.html');
+    }
 }
 $TBS->Show() ;
 

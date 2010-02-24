@@ -1,7 +1,14 @@
-<form action="login.php" method="POST">
-
-    <p>E-mail: <input type="text" name="email" value="[onshow._POST.email;noerr]" style="font-size: 0.9em; width: 80px;" /></p>
-    <p>Wachtwoord: <input type="password" name="paswoord" value="[onshow._POST.paswoord;noerr]" style="font-size: 0.9em; width: 80px;" /></p>
+<form action="login.php" method="POST" style="padding-left:0px;  margin:0;">
+  <table width="180" border="0">
+      <tr>
+        <td>E-mail: </td>
+        <td><input type="text" name="email" value="[onshow._POST.email;noerr]" style="font-size: 0.9em; width: 80px;" /></td>
+      </tr>
+      <tr>
+        <td>Wachtwoord:</td>
+        <td><input type="password" name="paswoord" value="[onshow._POST.paswoord;noerr]" style="font-size: 0.9em; width: 80px;" /></td>
+      </tr>
+  </table>
     <p id ="fout">[onshow.foutboodschap][onload_1;block=p;when [var.fout;noerr]==1]</p>
-    <input type="submit" name ="inloggen" value="inloggen" style="font-size: 0.9em; padding: 0;" />
+    <input type="submit" name ="inloggen" value="Log in!" style="font-size: 0.9em; padding: 0;" />
 </form>
