@@ -1,12 +1,12 @@
-<form name="Form" action="Upload.php" enctype="multipart/form-data" method="POST" onsubmit="return submitForm();">
+<form name="Form" action="Upload.php" enctype="multipart/form-data" method="POST" onsubmit="return submitForm2();">
 
 <div id="Upload">
 <input type="hidden" name="cat" type="txt" value="[var.cat]" />
 <input type="hidden" name="MAX_FILE_SIZE" value="10737418" />
-Kies een bestand: <input name="uploadedfile" type="file" /><br />
+Kies een bestand: <input name="uploadedfile" id="fileupload" type="file" /><br />
 <br>
 Kies een naam voor het bestand:
-<input type="txt" name="bestandsnaam" value="[var._POST.bestandsnaam;noerr]" />
+<input type="txt" name="bestandsnaam" value="" id="filenaam" />
 <br>
 <br>
 </div>
@@ -32,4 +32,6 @@ rte1.build();
 </div>
  
 <input type="submit" value="Upload File" />
+<br>
+<div id="foutmelding"></div>
 </form>
