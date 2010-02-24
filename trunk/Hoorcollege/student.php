@@ -19,7 +19,8 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
                             FROM (hoorcollege_hoorcollege h LEFT OUTER JOIN hoorcollege_gebruikerhoorcollege gh
                             ON gh.Hoorcollege_idHoorcollege = h.idHoorcollege)
                             LEFT OUTER JOIN hoorcollege_onderwerphoorcollege oh ON h.idHoorcollege = oh.Hoorcollege_idHoorcollege
-                            WHERE Gebruiker_idGebruiker ='.$gebruikerID.' AND reedsBekeken = false');
+                            WHERE Gebruiker_idGebruiker ='.$gebruikerID.' AND reedsBekeken = false
+                            ORDER BY Onderwerp_Vak_idVak, Onderwerp_idOnderwerp, idHoorcollege');
     while(!$queryNogTeBekijken->EOF){
         $vak = $db->Execute('SELECT naam FROM hoorcollege_vak WHERE idVak ='.$queryNogTeBekijken->fields["Onderwerp_Vak_idVak"]);
         $onderwerp = $db->Execute('SELECT naam FROM hoorcollege_onderwerp WHERE idOnderwerp ='.$queryNogTeBekijken->fields["Onderwerp_idOnderwerp"]);
