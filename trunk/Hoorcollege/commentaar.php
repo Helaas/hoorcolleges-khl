@@ -12,6 +12,7 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
 
     //idHoorcollege moet opgehaald worden eens geïmplementeerd in de pagina van het hoorcollege
     $idHoorcollege = 1;
+    $gebruikersNaam = getGebruikerNaamViaId($_SESSION['gebruiker']->getIdGebruiker());
     $alleCommentarenQuery = 'SELECT voornaam, naam, inhoud
                                      FROM hoorcollege_reactie LEFT OUTER JOIN hoorcollege_gebruiker
                                      ON Gebruiker_idGebruiker = idGebruiker

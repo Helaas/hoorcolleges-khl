@@ -1,7 +1,9 @@
 var xHRObjectCommentToevoegen = null; //aanmaken van xHRObject
-
+var commentaar;
+var gebruikersnaam;
 function submitCommentaar(){
-    var commentaar = document.getElementById('tekst').value;
+    commentaar = document.getElementById('tekst').value;
+    gebruikersnaam = document.getElementById('naamGebruiker').value;
     // initialisatie van het xHRObject browser-onafhankelijk
     if (window.XMLHttpRequest) {
         xHRObjectCommentToevoegen = new XMLHttpRequest();
@@ -22,7 +24,18 @@ function submitCommentaar(){
 
 function getDataCommentToevoegen(){
     if(xHRObjectCommentToevoegen.readyState == 4 && xHRObjectCommentToevoegen.status == 200){
-        //Er moet niets gebeuren
+        var commentaarDiv = document.createElement('div');
+        commentaarDiv.id = "commentaar";
+
+        var commentaarGebruiker = document.createElement('p');
+        commentaarGebruiker.textContent = gebruikersnaam;
+        commentaarDiv.appendChild(commentaarGebruiker);
+
+        var commentaarText = document.createElement('p');
+        commentaarText.textContent = commentaar;
+        commentaarDiv.appendChild(commentaarText);
+
+        document.getElementById("commentaren").appendChild(commentaarDiv);
     }
 }
 

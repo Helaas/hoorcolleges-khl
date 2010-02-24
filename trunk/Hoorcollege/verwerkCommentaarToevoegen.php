@@ -11,4 +11,5 @@ $commentaar = $_GET["commentaar"];
 
 voegCommentaarToe($gebruikerID, $hoorcollegeID, $commentaar);
 
+
 ?>
