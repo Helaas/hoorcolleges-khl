@@ -33,17 +33,34 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
         $queryNogTeBekijken->MoveNext();
     }
 
-    //Query voor overzicht hoorcolleges reeds bekeken
-    $queryReedsBekeken = 'SELECT idHoorcollege, naam
-                         FROM hoorcollege_hoorcollege LEFT OUTER JOIN hoorcollege_gebruikerhoorcollege
-                         ON Hoorcollege_idHoorcollege = idHoorcollege
-                         WHERE Gebruiker_idGebruiker = '.$gebruikerID.' AND reedsBekeken = true';
+    $alBekeken = array();
+    $alBekekenTabel = array();
+    $i = 0;
 
+    //Query voor overzicht hoorcolleges reeds bekeken
+    $queryReedsBekeken = $db->Execute('SELECT idHoorcollege, naam, Onderwerp_Vak_idVak, Onderwerp_idOnderwerp
+                            FROM (hoorcollege_hoorcollege h LEFT OUTER JOIN hoorcollege_gebruikerhoorcollege gh
+                            ON gh.Hoorcollege_idHoorcollege = h.idHoorcollege)
+                            LEFT OUTER JOIN hoorcollege_onderwerphoorcollege oh ON h.idHoorcollege = oh.Hoorcollege_idHoorcollege
+                            WHERE Gebruiker_idGebruiker ='.$gebruikerID.' AND reedsBekeken = true
+                            ORDER BY Onderwerp_Vak_idVak, Onderwerp_idOnderwerp, idHoorcollege');
+
+    while(!$queryReedsBekeken->EOF){
+        $vak = $db->Execute('SELECT naam FROM hoorcollege_vak WHERE idVak ='.$queryReedsBekeken->fields["Onderwerp_Vak_idVak"]);
+        $onderwerp = $db->Execute('SELECT naam FROM hoorcollege_onderwerp WHERE idOnderwerp ='.$queryReedsBekeken->fields["Onderwerp_idOnderwerp"]);
+        $alBekeken["vak"] = $vak->fields["naam"];
+        $alBekeken["onderwerp"] = $onderwerp->fields["naam"];
+        $alBekeken["idHoorcollege"] = $queryReedsBekeken->fields["idHoorcollege"];
+        $alBekeken["naam"] = $queryReedsBekeken->fields["naam"];
+        $alBekekenTabel[$i] = $alBekeken;
+        $i = $i+1;
+        $queryReedsBekeken->MoveNext();
+    }
     //Tabel nog te bekijken hoorcolleges opvullen (nog aan te passen)
     $TBS->MergeBlock('blk1', $nogTeBekijkenTabel);
 
     //Tabel reeds bekeken hoorcolleges opvullen (nog aan te passen)
-    $TBS->MergeBlock('blk2', $db, $queryReedsBekeken);
+    $TBS->MergeBlock('blk2', $alBekekenTabel);
 
 }else if(!isset ($_SESSION['gebruiker'])){
     header("location: login.php");

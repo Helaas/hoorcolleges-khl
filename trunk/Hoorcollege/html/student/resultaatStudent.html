@@ -1,28 +1,16 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <h2>Overzicht vragen hoorcollege '[onshow.naamHoorcollege]'</h2>
-        <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
-          <tr>
-            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Vraag</font></b></td>
-            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Juist antwoord</font></b></td>
-            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Gegeven antwoord</font></b></td>
-            <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Juist/Fout?</font></b></td>
-          </tr>
-          <tr>
-            <td width="25%"><font size="1" face="Verdana">[blk1.vraagstelling;block=tr]</font></td>
-            <td width="25%"><font size="1" face="Verdana">[blk1.juistAntwoord]</font></td>
-            <td width="25%"><font size="1" face="Verdana">[blk1.gegevenAntwoord]</font></td>
-            <td width="25%"><font size="1" face="Verdana">[blk1.juist;if [val]=1;then 'Juist';else  'Fout']</font></td>
-          </tr>
-        </table>
-  </body>
-</html>
+<h2>Overzicht vragen hoorcollege '[onshow.naamHoorcollege]'</h2>
+<table border="1" cellpadding="2" cellspacing="0" style="font-size: 13px" bordercolor="#111111" width="100%">
+    <tr>
+        <td bgcolor="#DDDDDD"><b>Vraag</b></td>
+        <td bgcolor="#DDDDDD"><b>Juist antwoord</b></td>
+        <td bgcolor="#DDDDDD"><b>Gegeven antwoord</b></td>
+        <td bgcolor="#DDDDDD"><b>Juist/Fout?</b></td>
+    </tr>
+    <tr>
+        <td>[blk1.vraagstelling;block=tr]</td>
+        <td>[blk1.juistAntwoord]</td>
+        <td>[blk1.gegevenAntwoord]</td>
+        <td>[blk1.juist;if [val]=1;then 'Juist';else  'Fout']</td>
+    </tr>
+</table>
+
