@@ -2,14 +2,33 @@
 
 <h3>Nog te bekijken hoorcolleges</h3>
 
-<table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
-  <tr>
-    <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Hoorcollege</font></b></td>
-    <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Bekijken</font></b></td>
+<table width="100%" border="0" cellspacing="1" cellpadding="0">
+    <tr>
+        <td colspan="0" bgcolor="#CFE7CF" class="title-section"><b>[blk1.vak;block=tr;headergrp=vak]</b></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td> 
+        <td colspan="0" bgcolor="#FFF5D2"><u><b>[blk1.onderwerp;block=tr+tr;headergrp=onderwerp]</b></u></td>
+    </tr>
+    
+    <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="3" bgcolor="#F0F0F0"><strong><em>Hoorcollege</em></strong></td>
+    <td colspan="3" bgcolor="#F0F0F0"><strong><em>Bekijken</em></strong></td>
+    <td colspan="3" bgcolor="#F0F0F0"><strong><em>Vragen oplossen</em></strong></td>
   </tr>
   <tr>
-    <td width="25%"><font size="1" face="Verdana">[blk1.naam;block=tr]</font></td>
-    <td width="25%"><font size="1" face="Verdana"><a href="hoorcollege.php?hoorcollege=[blk1.idHoorcollege]">Bekijken</a></font></td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td> 
+    <td colspan="3" bgcolor="#F0F0F0">[blk1.naam;block=tr]</td>
+    <td colspan="3" bgcolor="#F0F0F0"><a href="hoorcollege.php?hoorcollege=[blk1.idHoorcollege]">Bekijken</a></td>
+    <td colspan="3" bgcolor="#F0F0F0"><a href="hoorcollege.php?hoorcollegeVragenBeantwoorden=[blk1.idHoorcollege]">Vragen oplossen</a></td>
   </tr>
   <tr bgcolor="#FFCFB9">
     <td colspan="3">[blk1;block=tr;nodata]U heeft alle aan u toegekende hoorcolleges bekeken.</td>
@@ -21,10 +40,12 @@
 <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
   <tr>
     <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Hoorcollege</font></b></td>
+    <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Herbekijk</font></b></td>
     <td width="25%" bgcolor="#DDDDDD"><b><font size="1" face="Verdana">Resultaat</font></b></td>
   </tr>
   <tr>
     <td width="25%"><font size="1" face="Verdana">[blk2.naam;block=tr]</font></td>
+    <td width="25%"><font size="1" face="Verdana"><a href="hoorcollege.php?hoorcollege=[blk2.idHoorcollege]">Herbekijk</a></font></td>
     <td width="25%"><font size="1" face="Verdana"><a href="resultaatStudent.php?hoorcollege=[blk2.idHoorcollege]">Resultaat</a></font></td>
   </tr>
   <tr bgcolor="#FFCFB9">

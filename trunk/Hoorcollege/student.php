@@ -10,11 +10,27 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
     $TBS->LoadTemplate('./html/student/templateStudent.html') ;
     $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();
 
+    $nogTeBekijken = array();
+    $nogTeBekijkenTabel = array();
+    $i = 0;
+
     //Query voor overzicht hoorcolleges nog te bekijken
-    $queryNogTeBekijken = 'SELECT idHoorcollege, naam
-                          FROM hoorcollege_hoorcollege LEFT OUTER JOIN hoorcollege_gebruikerhoorcollege
-                          ON Hoorcollege_idHoorcollege = idHoorcollege
-                          WHERE Gebruiker_idGebruiker = '.$gebruikerID.' AND reedsBekeken = false';
+    $queryNogTeBekijken = $db->Execute('SELECT idHoorcollege, naam, Onderwerp_Vak_idVak, Onderwerp_idOnderwerp
+                            FROM (hoorcollege_hoorcollege h LEFT OUTER JOIN hoorcollege_gebruikerhoorcollege gh
+                            ON gh.Hoorcollege_idHoorcollege = h.idHoorcollege)
+                            LEFT OUTER JOIN hoorcollege_onderwerphoorcollege oh ON h.idHoorcollege = oh.Hoorcollege_idHoorcollege
+                            WHERE Gebruiker_idGebruiker ='.$gebruikerID.' AND reedsBekeken = false');
+    while(!$queryNogTeBekijken->EOF){
+        $vak = $db->Execute('SELECT naam FROM hoorcollege_vak WHERE idVak ='.$queryNogTeBekijken->fields["Onderwerp_Vak_idVak"]);
+        $onderwerp = $db->Execute('SELECT naam FROM hoorcollege_onderwerp WHERE idOnderwerp ='.$queryNogTeBekijken->fields["Onderwerp_idOnderwerp"]);
+        $nogTeBekijken["vak"] = $vak->fields["naam"];
+        $nogTeBekijken["onderwerp"] = $onderwerp->fields["naam"];
+        $nogTeBekijken["idHoorcollege"] = $queryNogTeBekijken->fields["idHoorcollege"];
+        $nogTeBekijken["naam"] = $queryNogTeBekijken->fields["naam"];
+        $nogTeBekijkenTabel[$i] = $nogTeBekijken;
+        $i = $i+1;
+        $queryNogTeBekijken->MoveNext();
+    }
 
     //Query voor overzicht hoorcolleges reeds bekeken
     $queryReedsBekeken = 'SELECT idHoorcollege, naam
@@ -23,7 +39,7 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
                          WHERE Gebruiker_idGebruiker = '.$gebruikerID.' AND reedsBekeken = true';
 
     //Tabel nog te bekijken hoorcolleges opvullen (nog aan te passen)
-    $TBS->MergeBlock('blk1', $db, $queryNogTeBekijken);
+    $TBS->MergeBlock('blk1', $nogTeBekijkenTabel);
 
     //Tabel reeds bekeken hoorcolleges opvullen (nog aan te passen)
     $TBS->MergeBlock('blk2', $db, $queryReedsBekeken);
