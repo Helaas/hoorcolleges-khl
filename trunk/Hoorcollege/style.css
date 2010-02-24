@@ -224,7 +224,12 @@ font-size:1em;
 color:#5A6300;
 }
 
-
+#commentaar{
+    border-color: silver;
+    border-style: ridge;
+    border-width: 1px;
+    padding: 10px;
+}
 
 
 
