@@ -1,0 +1,35 @@
+<form name="Form" action="Upload.php" enctype="multipart/form-data" method="POST" onsubmit="return submitForm();">
+
+<div id="Upload">
+<input type="hidden" name="cat" type="txt" value="[var.cat]" />
+<input type="hidden" name="MAX_FILE_SIZE" value="10737418" />
+Kies een bestand: <input name="uploadedfile" type="file" /><br />
+<br>
+Kies een naam voor het bestand:
+<input type="txt" name="bestandsnaam" value="" />
+<br>
+<br>
+</div>
+
+<div id="RTE" >
+<br><br>
+Geef hier een beschrijving van het bestand op:<br><br>
+<script language="JavaScript" type="text/javascript">
+
+initRTE("./html/cbrte/images/", "./html/cbrte/", "", true);
+
+</script>
+<noscript><p><b>Javascript must be enabled to use this form.</b></p></noscript>
+
+<script language="JavaScript" type="text/javascript">
+var rte1 = new richTextEditor('rte1');
+rte1.html = '<?=$content;?>';
+rte1.toggleSrc = false;
+rte1.html="Vul hier uw tekst in..";
+rte1.build();
+
+</script>
+</div>
+ 
+<input type="submit" value="Upload File" />
+</form>

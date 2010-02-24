@@ -1,7 +1,7 @@
 <h2>File Upload</h2>
 
 <!-- Upload segment, roept Upload.php op, max file size = value -->
-<form name="Form" action="Upload.php" enctype="multipart/form-data" method="POST">
+<form name="Form" action="verwerkselectie.php" enctype="multipart/form-data" method="POST">
 
  Kies een Categorie:
 <br>
@@ -15,16 +15,11 @@
 <br>
 <div id="foutmelding"></div>
 <br>
-<br>
-<input type="hidden" name="MAX_FILE_SIZE" value="10737418" />
-
-Kies een bestand: <input name="uploadedfile" type="file" /><br />
-<br>
-Kies een naam voor het bestand:
-<input type="txt" name="bestandsnaam" value="" />
-<br>
-<br>
-
-<input type="submit" value="Upload File" />
+Kies het type bestand dat u wilt uploaden:<br><br>
+<input type="radio" name="filetype" value="Audio" checked> Audio
+<input type="radio" name="filetype" value="Video" > Video
+<input type="radio" name="filetype" value="Tekst"> Tekst
+<br><br>
+<input type="submit" value="Submit" />
 </form>
 

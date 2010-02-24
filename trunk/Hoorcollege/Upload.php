@@ -8,6 +8,7 @@ $TBS = new clsTinyButStrong;
 
 session_start();
 
+
 $config["pagina"] = "./FileUpload/FileAdded.html";
 $testinhoud = "";
 
