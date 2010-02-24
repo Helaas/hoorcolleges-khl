@@ -34,7 +34,7 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
                 $TBS->MergeBlock("blk1",$vragen);
             } else {
                 $fout["reden"] = "Geen resultaten beschikbaar";
-                $fout["inhoud"] = "U heeft nog geen vragen beantwoordt voor dit hoorcollege, dit hoorcollege heeft geen vragen, of u mag de vragen niet bekijken.";
+                $fout["inhoud"] = "U heeft nog geen vragen beantwoord voor dit hoorcollege, dit hoorcollege heeft geen vragen, of u mag de vragen niet bekijken.";
                 $config["pagina"] = "./algemeneFout.html";
                 $TBS->LoadTemplate('./html/student/templateStudent.html');
             }
