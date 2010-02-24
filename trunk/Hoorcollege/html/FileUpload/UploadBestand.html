@@ -6,7 +6,7 @@
 Kies een bestand: <input name="uploadedfile" type="file" /><br />
 <br>
 Kies een naam voor het bestand:
-<input type="txt" name="bestandsnaam" value="" />
+<input type="txt" name="bestandsnaam" value="[var._POST.bestandsnaam;noerr]" />
 <br>
 <br>
 </div>
@@ -25,7 +25,7 @@ initRTE("./html/cbrte/images/", "./html/cbrte/", "", true);
 var rte1 = new richTextEditor('rte1');
 rte1.html = '<?=$content;?>';
 rte1.toggleSrc = false;
-rte1.html="Vul hier uw tekst in..";
+rte1.html="Vul hier uw beschrijving in..";
 rte1.build();
 
 </script>

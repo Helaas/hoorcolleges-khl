@@ -1,0 +1,46 @@
+<script language="JavaScript" type="text/javascript">
+
+initRTE("./html/cbrte/images/", "./html/cbrte/", "", true);
+
+</script>
+<noscript><p><b>Javascript must be enabled to use this form.</b></p></noscript>
+
+<form name="Form" action="UploadTekst.php" enctype="multipart/form-data" method="POST" onsubmit="return submitForm();">
+<h3>Creëer tekstbestand</h3>
+<br>
+<div id="Upload">
+<input type="hidden" name="cat" type="txt" value="[var.cat]" />
+<input type="hidden" name="MAX_FILE_SIZE" value="10737418" />
+<script language="JavaScript" type="text/javascript">
+var rte2 = new richTextEditor('rte2');
+rte2.html = '<?=$content;?>';
+rte2.toggleSrc = false;
+rte2.html="Maak hier uw tekstbestand aan.";
+rte2.height=360;
+rte2.build();
+
+</script>
+<br>
+<br>
+</div>
+
+<div id="RTE" >
+<br><br>
+Geef hier een beschrijving van het tekstbestand op:<br><br>
+<script language="JavaScript" type="text/javascript">
+var rte1 = new richTextEditor('rte1');
+rte1.html = '<?=$content;?>';
+rte1.toggleSrc = false;
+rte1.html="Vul hier een beschrijving van het bestand in.";
+rte1.width = 560;
+rte1.height = 100;
+
+rte1.build();
+
+</script>
+</div>
+<br>
+<p>Kies een naam voor het tekstbestand:
+<input type="txt" name="bestandsnaam" value="[onshow._POST.naam;noerr]" /></p>
+<input type="submit" value="Upload tekst" />
+</form>
