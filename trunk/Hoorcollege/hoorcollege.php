@@ -15,10 +15,11 @@
             $hoorcolInfo["heeftVragen"] = heeftHoorcollegeVragen($_GET["hoorcollege"])  == true ? "true" : "false"; //ik wil letterlijk de strings
             $hoorcolInfo["heeftVBC"] = heeftHoorcollegeVBC($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]) == "1" ? "true" : "false"; //ik wil letterlijk de strings
             $hoorcolInfo["gebruiker"] = (int)$_SESSION['gebruiker']->getIdGebruiker();
+            $items = getHoorcollegeBibliotheekitems($_GET["hoorcollege"]);
+            //$items["video"]["beschrijving"] = stripslashes($items["video"]["beschrijving"]);
 
-            echo "<pre>";
-            print_r(getHoorcollegeBibliotheekitems($_GET["hoorcollege"]));
-            echo "</pre>";
+
+ 
 
             $config["pagina"] = "./hoorcollege/template.html";
             $TBS->LoadTemplate('./html/student/templateStudent.html');

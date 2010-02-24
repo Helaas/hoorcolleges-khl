@@ -557,16 +557,26 @@
                                         WHERE Hoorcollege_idHoorcollege = '. $hoorcollegeID .'
                                     )');
         while (!$resultaat->EOF) {
-            $teller = count($items);
+            $teller = $resultaat->fields["mimetype"]; //maar 1 van elk type per hoorcollege
             $items[$teller]["idBibliotheekItem"] = $resultaat->fields["idBibliotheekItem"];
             $items[$teller]["naam"] = $resultaat->fields["naam"];
-            $items[$teller]["mimetype"] = $resultaat->fields["mimetype"];
             $items[$teller]["beschrijving"] = $resultaat->fields["beschrijving"];
             $items[$teller]["locatie"] = $resultaat->fields["locatie"];
             $items[$teller]["tekst"] = $resultaat->fields["tekst"];
             $resultaat->MoveNext();
         }
 
-       return $items;
+        arrayNaarUTF($items);
+        return $items;
+    }
+    
+    function arrayNaarUTF(&$complex_array){
+        foreach ($complex_array as $n => &$v){
+            if (is_array($v))
+                arrayNaarUTF($v);
+            else{
+                $v = utf8_encode($v);
+            }
+        }
     }
 ?>

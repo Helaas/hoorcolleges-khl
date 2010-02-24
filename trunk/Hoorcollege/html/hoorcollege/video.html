@@ -1,3 +1,4 @@
+<h3>Video "[var.items.video.naam]"</h3>
 <div>
 <object type="application/x-shockwave-flash" data="./html/hoorcollege/flash/player.swf" width="720" height="520">
         <param name="movie" value="./html/hoorcollege/flash/player.swf" />
@@ -6,4 +7,5 @@
         <param name="FlashVars" value="videoPath=http://rommel.web-k.be/Untitled.flv&VBCcontrole=[var.hoorcolInfo.heeftVBC]&VBCgeluid=[var.hoorcolInfo.VBC_geluid]&MPCvragen=[var.hoorcolInfo.heeftVragen]&aantalHoofden=[var.hoorcolInfo.VBC_aantal]&hoorcollegeId=[var.hoorcolInfo.idHoorcollege]&gebruikerId=[var.hoorcolInfo.gebruiker]" />
     </object>
 </div>
-<div></div>
+<h3>Beschrijving</h3>
+<div>[var.items.video.beschrijving;htmlconv=no]</div>
