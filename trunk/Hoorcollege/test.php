@@ -8,6 +8,8 @@
         $_SESSION['gebruiker'] = $gebruiker;
         if ($_POST["level"] == 99)
             header('location: admin.php');
+        elseif ($_POST["level"] == 40)
+            header('location: ./lector/index.php');
         else
             header('location: index.php');
         exit();

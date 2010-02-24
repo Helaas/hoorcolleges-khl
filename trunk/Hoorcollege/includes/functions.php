@@ -566,6 +566,12 @@
             $resultaat->MoveNext();
         }
 
+        //beschrijvingen worden met addslashes in de db gezet
+        foreach ($items as $key => $value){
+                //$items[$key]["naam"] = stripslashes($items[$key]["naam"]);
+                $items[$key]["beschrijving"] = stripslashes($items[$key]["beschrijving"]);
+        }
+
         arrayNaarUTF($items);
         return $items;
     }

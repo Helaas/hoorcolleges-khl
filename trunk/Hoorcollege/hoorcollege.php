@@ -10,16 +10,34 @@
             //pagina ingeladen dus het hoorcollege is al "bekeken"
             zetHoorcollegeBekeken($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]);
 
+            /**
+             * Hoorcollege informatie algemeen
+             */
+
             $hoorcolInfo = getHoorcollegeInformatie($_GET["hoorcollege"]);
             $hoorcolInfo["VBC_geluid"] = $hoorcolInfo["VBC_geluid"] == "1" ? "true" : "false"; //ik wil letterlijk de strings
             $hoorcolInfo["heeftVragen"] = heeftHoorcollegeVragen($_GET["hoorcollege"])  == true ? "true" : "false"; //ik wil letterlijk de strings
             $hoorcolInfo["heeftVBC"] = heeftHoorcollegeVBC($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]) == "1" ? "true" : "false"; //ik wil letterlijk de strings
             $hoorcolInfo["gebruiker"] = (int)$_SESSION['gebruiker']->getIdGebruiker();
+
+            /**
+             * De items in dit hoorcollege
+             */
+
+            //toegestande types
+            $video = false;
+            $audio = false;
+            $tekst = false;
+
             $items = getHoorcollegeBibliotheekitems($_GET["hoorcollege"]);
-            //$items["video"]["beschrijving"] = stripslashes($items["video"]["beschrijving"]);
 
 
- 
+            if (isset($items["flv"])) $video = true;
+            if (isset($items["mp3"])) $audio = true;
+            if (isset($items["txt"])) $tekst = true;
+
+
+            
 
             $config["pagina"] = "./hoorcollege/template.html";
             $TBS->LoadTemplate('./html/student/templateStudent.html');

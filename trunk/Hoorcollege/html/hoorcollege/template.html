@@ -1,3 +1,7 @@
 <h2>Hoorcollege "[var.hoorcolInfo.naam]"</h2>
 
-[onload;file='./html/hoorcollege/video.html';getbody]
+[onshow.video;if  [val]=1;then  '[onload; file='./html/hoorcollege/video.html';getbody]';else  '']
+[onshow.audio;if  [val]=1;then  '[onload; file='./html/hoorcollege/audio.html';getbody]';else  '']
+[onshow.tekst;if  [val]=1;then  '[onload; file='./html/hoorcollege/tekst.html';getbody]';else  '']
+
+<h3>Opmerkingen</h3>
