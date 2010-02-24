@@ -1,8 +1,9 @@
 <!-- Php file die instaat voor het uploaden van het bestand -->
 <?php
-include_once('./includes/kern.php');
-
+include_once('./../includes/kern.php');
 session_start();
+
+
 
 
 $config["pagina"] = "./FileUpload/FileAdded.html";
@@ -28,21 +29,21 @@ if(isset ($_SESSION['gebruiker'])) {
 
 
                 //Kijk of de folder reeds bestaat, zoniet maak hem aan, herhaal dit voor alle subfolders
-                if (!is_dir("Bibliotheek/".$gebruikerID."/")) {
-                    mkdir("Bibliotheek/".$gebruikerID, 0777);
+                if (!is_dir("../Bibliotheek/".$gebruikerID."/")) {
+                    mkdir("../Bibliotheek/".$gebruikerID, 0777);
                 }
 
-                if (!is_dir("Bibliotheek/".$gebruikerID."/".$_POST['cat']."/")) {
-                    mkdir("Bibliotheek/".$gebruikerID."/".$_POST['cat'], 0777);
+                if (!is_dir("../Bibliotheek/".$gebruikerID."/".$_POST['cat']."/")) {
+                    mkdir("../Bibliotheek/".$gebruikerID."/".$_POST['cat'], 0777);
                 }
                 $get= rand(1,1000000);
 
                 //Path waar het bestand heen moet
-                $target_path = "Bibliotheek/".$gebruikerID."/".$_POST['cat']."/";
+                $target_path = "../Bibliotheek/".$gebruikerID."/".$_POST['cat']."/";
                 $target_path = $target_path .$get.'.'.$stringArray[count($stringArray)-1];
                 while(file_exists($target_path)) {
                     $get= rand(1,1000000);
-                    $target_path = "Bibliotheek/".$gebruikerID."/".$_POST['cat']."/".$get.'.'.$stringArray[count($stringArray)-1];
+                    $target_path = "../Bibliotheek/".$gebruikerID."/".$_POST['cat']."/".$get.'.'.$stringArray[count($stringArray)-1];
                 }
 
                 //Code voor het verplaatsen/kopiëren van het tijdelijke bestand naar de server+pagina weergeven
@@ -57,7 +58,7 @@ if(isset ($_SESSION['gebruiker'])) {
                 $testinhoud="Gelieve een bestand met extensie extensie .mp3 of .flv te selecteren.";
             }
 
-            $TBS->LoadTemplate('./html/lector/templateLector.html') ;
+            $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
             $TBS->Show() ;
         }
         else {
@@ -66,12 +67,12 @@ if(isset ($_SESSION['gebruiker'])) {
                 $tekstinhoud="U heeft geen categorie geselecteerd.";
 
                 $config["pagina"] = "./lector/Boodschap.html";
-                $TBS->LoadTemplate('./html/lector/templateLector.html') ;
+                $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
                 $TBS->Show() ;
             }
             else {
                 $config["pagina"] = "./FileUpload/Error2Input.html";
-                $TBS->LoadTemplate('./html/lector/templateLector.html') ;
+                $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
                 $TBS->Show() ;
             }
         }
@@ -80,24 +81,24 @@ if(isset ($_SESSION['gebruiker'])) {
     //Users met onvoldoende privileges voor deze pagina een foutpagina tonen
     else if($_SESSION['gebruiker']->getNiveau() == 1) {
         $config["pagina"] = "./FileUpload/Error1Login.html";
-        $TBS->LoadTemplate('./html/student/templateStudent.html');
+        $TBS->LoadTemplate('./../html/student/templateStudent.html');
         $TBS->Show() ;
     }else if($_SESSION['gebruiker']->getNiveau() == 99) {
         $config["pagina"] = "./FileUpload/Error1Login.html";
-        $TBS->LoadTemplate('./html/admin/templateAdmin.html');
+        $TBS->LoadTemplate('./../html/admin/templateAdmin.html');
         $TBS->Show() ;
     }
 
     else {
         $config["pagina"] = "./FileUpload/Error1Login.html";
-        $TBS->LoadTemplate('./html/template.html') ;
+        $TBS->LoadTemplate('./../html/template.html') ;
         $TBS->Show() ;
     }
 
 }
 else {
     $config["pagina"] = "./FileUpload/Error1Login.html";
-    $TBS->LoadTemplate('./html/template.html') ;
+    $TBS->LoadTemplate('./../html/template.html') ;
     $TBS->Show() ;
 }
 ?>
