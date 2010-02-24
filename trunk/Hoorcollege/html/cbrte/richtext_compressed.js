@@ -10,6 +10,14 @@ function submitForm() {
          err.appendChild(txt);
          fdiv.appendChild(err);
 	return false;
+       }else if(document.Form.rte1.value.match(rte1.html) || document.Form.rte2.value.match(rte2.html)){
+       while ( fdiv.firstChild ){fdiv.removeChild( fdiv.firstChild );}
+         var err=document.createElement('p');
+         err.id='fout';
+         var txt= document.createTextNode("Gelieve de standaardtekst van de texteditors te wijzgen.");
+         err.appendChild(txt);
+         fdiv.appendChild(err);
+         return false;
        }
        else{return true;}
 
@@ -25,6 +33,15 @@ function submitForm2() {
          err.appendChild(txt);
          fdiv.appendChild(err);
 	return false;
+       }
+       else if(document.Form.rte1.value.match(rte1.html)){
+       while ( fdiv.firstChild ){fdiv.removeChild( fdiv.firstChild );}
+         var err=document.createElement('p');
+         err.id='fout';
+         var txt= document.createTextNode("Gelieve de standaardbeschrijving te wijzgen.");
+         err.appendChild(txt);
+         fdiv.appendChild(err);
+         return false;
        }
        else{return true;}
 
