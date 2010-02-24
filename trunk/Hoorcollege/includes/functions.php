@@ -542,4 +542,31 @@
 
         return $resultaat["VBCVerplicht"];
     }
+
+    function getHoorcollegeBibliotheekitems($hoorcollegeID){
+        global $db;
+        $hoorcollegeID = (int)$hoorcollegeID;
+
+        $items = array();
+        $resultaat = $db->Execute('SELECT *
+                                    FROM hoorcollege_bibliotheekitem
+                                    WHERE idBibliotheekItem
+                                    IN (
+                                        SELECT BibliotheekItem_idBibliotheekItem
+                                        FROM hoorcollege_hoorcollegbibliotheekitem
+                                        WHERE Hoorcollege_idHoorcollege = '. $hoorcollegeID .'
+                                    )');
+        while (!$resultaat->EOF) {
+            $teller = count($items);
+            $items[$teller]["idBibliotheekItem"] = $resultaat->fields["idBibliotheekItem"];
+            $items[$teller]["naam"] = $resultaat->fields["naam"];
+            $items[$teller]["mimetype"] = $resultaat->fields["mimetype"];
+            $items[$teller]["beschrijving"] = $resultaat->fields["beschrijving"];
+            $items[$teller]["locatie"] = $resultaat->fields["locatie"];
+            $items[$teller]["tekst"] = $resultaat->fields["tekst"];
+            $resultaat->MoveNext();
+        }
+
+       return $items;
+    }
 ?>
