@@ -5,7 +5,8 @@ session_start();
 
 if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) { //student is ingelogged
 
-    if (isset($_GET["hoorcollege"]) && is_numeric($_GET["hoorcollege"]) && magGebruikerHoorcollegeZien($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])) {
+    //validateNumber controleert of de variabele gevuld is + numeriek is
+    if (validateNumber($_GET["hoorcollege"]) && magGebruikerHoorcollegeZien($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])) {
 
         //pagina ingeladen dus het hoorcollege is al "bekeken"
         zetHoorcollegeBekeken($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]);
@@ -40,16 +41,29 @@ if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) { 
         $config["pagina"] = "./hoorcollege/template.html";
         $TBS->LoadTemplate('./html/student/templateStudent.html');
 
+        /**
+         * Hoorcollege reacties bekijken + plaatsen
+         */
+
         $idHoorcollege = $_GET["hoorcollege"];
         $gebruikersNaam = getGebruikerNaamViaId($_SESSION['gebruiker']->getIdGebruiker());
-        $alleCommentarenQuery = 'SELECT voornaam, naam, inhoud
+        $alleCommentarenQuery = $db->Execute('SELECT voornaam, naam, inhoud
                                      FROM hoorcollege_reactie LEFT OUTER JOIN hoorcollege_gebruiker
                                      ON Gebruiker_idGebruiker = idGebruiker
-                                     WHERE Hoorcollege_idHoorcollege ='.$idHoorcollege;
+                                     WHERE Hoorcollege_idHoorcollege ='.$idHoorcollege);
 
-        $TBS->MergeBlock('blk1', $db, $alleCommentarenQuery);
+        //Noodzakelijk voor het weglaten van de slahes in de inhoud
+        $alleCommentarenTabel = array();
+        $i = 0;
+        while(!$alleCommentarenQuery->EOF){
+          $alleCommentarenTabel[$i]["voornaam"] = $alleCommentarenQuery->fields["voornaam"];
+          $alleCommentarenTabel[$i]["naam"] = $alleCommentarenQuery->fields["naam"];
+          $alleCommentarenTabel[$i]["inhoud"] = stripslashes($alleCommentarenQuery->fields["inhoud"]);
+          $i++;
+          $alleCommentarenQuery->MoveNext();
+        }
 
-
+        $TBS->MergeBlock('blk1', $alleCommentarenTabel);
 
     } else {
         $fout["reden"] = "Geen hoorcollege beschikbaar";

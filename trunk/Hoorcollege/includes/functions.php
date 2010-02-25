@@ -47,10 +47,6 @@
         elseif(empty($string)){
             return FALSE;
         }
-        //Nagaan dat de string niet overdreven lang is
-        elseif(strlen($string) > 10 || strlen($string) < 1){
-            return FALSE;
-        }
         else{
             //Alles ok
             return TRUE;

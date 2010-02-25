@@ -1,15 +1,15 @@
 <?php
+/**
+ * Deze file wordt opgeroepen in functies.js voor het toevoegen van ingegeven commentaar in de db
+*/
 include_once('./includes/kern.php');
 session_start();
 
 $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();
-//Nog even standaard hoorcollegeID
 $hoorcollegeID = $_GET["hoorcollege"];
 
-//Inhoud commentaar moet ik nog controleren
-$commentaar = $_GET["commentaar"];
-
-voegCommentaarToe($gebruikerID, $hoorcollegeID, $commentaar);
-
-
+if(validateNumber($gebruikerID) && validateNumber($hoorcollegeID)){
+    $commentaar = mysql_real_escape_string($_GET["commentaar"]);
+    voegCommentaarToe($gebruikerID, $hoorcollegeID, $commentaar);
+}
 ?>
