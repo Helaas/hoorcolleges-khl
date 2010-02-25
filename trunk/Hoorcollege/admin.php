@@ -11,6 +11,7 @@
     //foutafhandeling
     $typeboodschap = "fout";
     
+    
     if(isset ($_GET['foutboodschap'])) {
         $foutboodschap = $_GET['foutboodschap'];
     }
@@ -202,8 +203,64 @@
                 $foutboodschap = 'Technisch probleem, mogelijk is niet iedereen ontkoppeld, gelieve manueel te controleren';
             }
         }
+        else if(isset ($_POST['verderontkoppelengroepvanvakknop'])) { 
+            if($_POST['selectvak'] == 'kies') {
+                header("location: admin.php?pagina=groepVakOnt&foutboodschap=U moet een vak kiezen");
+            }
+            else {
+                //nagaan of knop getoond zal moeten worden
+                $i = 0;
+                $vak = $_POST['selectvak'];
+                $groepen = array();
+                $array = $db->Execute('SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+                while(!$array->EOF) {
+                    if(isGroepToegekentAanVak($array->fields['idGroep'], $vak)) {
+                        $groepen[$i]['idGroep'] = $array->fields['idGroep'];
+                        $groepen[$i]['naam'] = $array->fields['naam'];
+                        $i++;
+                    }
+                    $array->MoveNext();
+                }
+                if(count($groepen) > 0) {
+                    $knoptonen = true;
+                }
+                else {
+                    $knoptonen = false;
+                }
+                $vak = $_POST['selectvak'];
+            }
+        }
+        else if(isset ($_POST['ontkoppelengroepvanvakknopselectie'])) {
+            if(count($_POST['checkbox']) > 0) {
+                //$checkbox2 = serialize($_POST['checkbox']);
+                $vak = $_POST['vak'];
+                $vaknaam = getVakNameViaId($vak);                
+            }
+            else {
+                header("admin.php?pagina=groepVakOnt");
+            }
+        }
+        else if(isset ($_POST['ontkoppelengroepvanvakknop'])) {
+            $ch = unserialize($_POST['checkbox2']);            
+            $vak = (int) $_POST['vak'];            
 
+            $count = count($ch);
+            $gelukt = false;
+           
+            for($i=0; $i < $count; $i++) {
+                echo $ch[$i];
+                $gelukt = ontkoppelGroepVanVak($ch[$i], $vak);
+            }
 
+            if($gelukt == true) {
+                $typeboodschap = "juist";
+                $foutboodschap = 'Alle leerlingen van de geselecteerde groepen zijn van het vak ontkoppeld.';
+            }
+            else {
+                $typeboodschap = "fout";
+                       $foutboodschap = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groepen correct zijn ontkoppeld van het vak!';
+            }       
+        }
 
 
 
@@ -539,6 +596,36 @@
             else if($_GET['pagina'] == 'groepenOverzicht') {
                 //overzicht alle groepen
                 $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'groepVakOnt') {
+                //overzicht alle vakken
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');                
+            }
+            else if($_GET['pagina'] == 'groepVakOntSelectie') {
+                //overzicht alle groepen die het vak volgen                
+                $vak = $_POST['selectvak'];
+                $groepen = array();
+                $i = 0;
+                $array = $db->Execute('SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+                while(!$array->EOF) {                    
+                    if(isGroepToegekentAanVak($array->fields['idGroep'], $vak)) {                        
+                        $groepen[$i]['idGroep'] = $array->fields['idGroep'];
+                        $groepen[$i]['naam'] = $array->fields['naam'];
+                        $i++;
+                    }
+                    $array->MoveNext();
+                }
+                
+                $TBS->MergeBlock('blk1', $groepen);
+            }
+            else if($_GET['pagina'] == 'groepVakOntOverzicht') {
+                $namen = array();
+                $checkbox2 = serialize($_POST['checkbox']);
+                $count = count($_POST['checkbox']);
+                for($i=0; $i < $count; $i++) {
+                    $namen[$i] = getGroepNameViaId($_POST['checkbox'][$i]);
+                }
+                $TBS->MergeBlock('blk1',$namen);
             }
         }        
 

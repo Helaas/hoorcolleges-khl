@@ -1,0 +1,16 @@
+> <a class="nav" href="admin.php?actie=admin">admin</a> > groepen ontkoppelen<br><br><br>
+<h2>Groepen ontkoppelen</h2>
+    <form action="admin.php?pagina=groepVakOntSelectie" method="POST">
+                Vak:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="selectvak" >
+                     <option value="kies">--- kies ---</option>
+                    <option value="[blk1.idVak;block=option]">[blk1.naam;]</option>
+                </select>
+                <br><br>
+
+                <p id ="[onshow.typeboodschap;noerr]">
+                        [onshow.foutboodschap;noerr]
+                </p>
+                <br>
+                <input type="submit" value="Verder" name="verderontkoppelengroepvanvakknop" />
+            </form>
