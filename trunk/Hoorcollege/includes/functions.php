@@ -1,7 +1,29 @@
 <?php
     include_once('kern.php');
+
+    //methode om een beheerder van een vak te verwijderen
+    function verwijderBeheerderVanVak($idGebruiker, $idVak) {
+        global $db;
+        return $resultaat = $db->Execute("delete from hoorcollege_gebruiker_beheert_vak
+                                          where Gebruiker_idGebruiker='$idGebruiker' and Vak_idVak = '$idVak'");
+    }
+
+    //methode om na te gaan hoeveel lectoren een bepaalde vak beheren
+    function aantalBeheertVak($idVak) {
+        global $db;
+        $resultaat = $db->Execute("SELECT count( Gebruiker_idGebruiker ) as aantal
+                                   FROM hoorcollege_gebruiker_beheert_vak
+                                   WHERE Vak_idVak = '$idVak'");
+        return $resultaat->fields["aantal"];
+    }
     
-    
+    //methode om de naam van een vak te wijzigen
+    function wijzigNaamVak($idVak, $naam) {
+        global $db;
+        return $resultaat = $db->Execute("update hoorcollege_vak
+                                          set naam = '$naam' where idVak = '$idVak'");
+    }
+
     //methode om de naam van een vak te bekomen via de id
     function getVakNameViaId($vakId) {
         global $db;

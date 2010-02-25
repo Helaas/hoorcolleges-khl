@@ -674,7 +674,7 @@
         }
         else if($config["pagina"] == "./admin/groepDetails.html") {
             $id = $_GET['detailsGroepId'];
-            //overzicht om de beheerderders van een vak te tonen
+            //overzicht om de leden
             $TBS->MergeBlock('blk70', $db, "SELECT *
                                             FROM hoorcollege_gebruiker g
                                             LEFT JOIN hoorcollege_gebruikergroep bv ON g.idGebruiker = bv.Gebruiker_idGebruiker

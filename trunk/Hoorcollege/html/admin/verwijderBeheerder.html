@@ -1,0 +1,17 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> >  <a class="nav" href="admin.php?pagina=wijzigenVakken">wijzigen vakken</a> > verwijder beheerder<br><br><br>
+<h2>Verwijderen beheerder</h2>
+
+    <form action="admin.php?pagina=verwijderBeheerderVerder" method="POST">
+                Vak:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="selectvak" >
+                     <option value="kies">--- kies ---</option>
+                    <option value="[blk1.idVak;block=option]">[blk1.naam;]</option>
+                </select>
+                <br><br>                
+
+                <p id ="[onshow.typeboodschap;noerr]">
+                        [onshow.foutboodschap;noerr]
+                </p>
+                <br>
+                <input type="submit" value="Verder" name="verderverwijderbeheerder" />
+    </form>

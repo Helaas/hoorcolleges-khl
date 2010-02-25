@@ -258,8 +258,55 @@
             }
             else {
                 $typeboodschap = "fout";
-                       $foutboodschap = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groepen correct zijn ontkoppeld van het vak!';
+                $foutboodschap = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groepen correct zijn ontkoppeld van het vak!';
             }       
+        }
+        else if(isset ($_POST['wijzigvaknaamknop'])) {
+            $vak = $_POST['selectvak'];
+            $nieuweNaam = $_POST['nieuweVaknaam'];
+            if($vak == 'kies') {
+                $typeboodschap = "fout";
+                $foutboodschap = 'U dient een vak te kiezen!';
+            }
+            else if(empty ($nieuweNaam)) {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Nieuwe naam mag niet leeg zijn!';
+            }
+            else {
+                if(wijzigNaamVak($vak, $nieuweNaam)) {
+                    $typeboodschap = "juist";
+                    $foutboodschap = 'Nieuwe naam is toegekent aan vak!'; //dit is geen foutboodschap
+                }
+                else {
+                    $typeboodschap = "fout";
+                    $foutboodschap = 'Technisch probleem! Actie mogelijk niet uitgevoerd!';
+                }
+            }
+        }
+        else if(isset ($_POST['verderverwijderbeheerder'])) {
+            $vak = $_POST['selectvak'];
+            $vaknaam = getVakNameViaId($vak);
+            if($vak == 'kies') {
+                header("location: admin.php?pagina=verwijderBeheerder&foutboodschap=U moet een vak kiezen");
+            }
+            else {
+                //nagaan hoeveel beheerders dit vak heeft
+                if(aantalBeheertVak($vak) < 2) { //indien deze slechts 1 beheerder heeft
+                    header("location: admin.php?pagina=verwijderBeheerder&foutboodschap=Vak heeft slechts 1 beheerder, u moet eerst nog een beheerder toevoegen, vooraleer u verder kunt gaan!");
+                }
+            }
+        }
+        else if(isset ($_POST['verderverwijderbeheerdervoltooien'])) {
+            $vak = $_POST['vak'];
+            $lector = $_POST['selectlector'];
+            if(verwijderBeheerderVanVak($lector, $vak)) {
+                $typeboodschap = "juist";
+                $foutboodschap = 'Lector is niet meer aan het vak toegekend!'; //dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
+            }
         }
 
 
@@ -626,6 +673,24 @@
                     $namen[$i] = getGroepNameViaId($_POST['checkbox'][$i]);
                 }
                 $TBS->MergeBlock('blk1',$namen);
+            }
+            else if($_GET['pagina'] == 'wijzigVaknaam') {
+                //overzicht alle vakken
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'verwijderBeheerder') {
+                //overzicht alle vakken
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'verwijderBeheerderVerder') {
+                //alle lectoren die het vak geven
+                $vak = $_POST['selectvak'];
+                //overzicht om de beheerderders van een vak te tonen
+                $TBS->MergeBlock('blk1', $db, "SELECT *
+                                               FROM hoorcollege_gebruiker g
+                                               LEFT JOIN hoorcollege_gebruiker_beheert_vak bv ON g.idGebruiker = bv.Gebruiker_idGebruiker
+                                               WHERE bv.Vak_idVak = '$vak'");
+
             }
         }        
 

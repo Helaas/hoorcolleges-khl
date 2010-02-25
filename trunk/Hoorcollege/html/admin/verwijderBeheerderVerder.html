@@ -1,0 +1,19 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> >  <a class="nav" href="admin.php?pagina=wijzigenVakken">wijzigen vakken</a> > <a class="nav" href="admin.php?pagina=verwijderBeheerder">verwijder beheerder</a> > voltooien<br><br><br>
+<h2>Verwijderen beheerder</h2>
+
+<form action="admin.php?pagina=admin" method="POST">
+                <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
+
+                Kies de lector die u wilt wilt ontkoppelen van het vak [onshow.vaknaam]<br><br><br>
+                Lector:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="selectlector" >                    
+                    <option value="[blk1.idGebruiker;block=option]">[blk1.naam;], [blk1.voornaam;]</option>
+                </select>
+                <br><br>
+
+                <p id ="[onshow.typeboodschap;noerr]">
+                        [onshow.foutboodschap;noerr]
+                </p>
+                <br>
+                <input type="submit" value="Voltooien" name="verderverwijderbeheerdervoltooien" />
+</form>
