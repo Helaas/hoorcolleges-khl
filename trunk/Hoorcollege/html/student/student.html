@@ -63,7 +63,7 @@
         <td>&nbsp;</td>
         <td colspan="3" bgcolor="#F0F0F0">[blk2.naam;block=tr]</td>
         <td colspan="3" bgcolor="#F0F0F0"><a href="hoorcollege.php?hoorcollege=[blk2.idHoorcollege]">Herbekijk</a></td>
-        <td colspan="3" bgcolor="#F0F0F0"><a href="resultaatStudent.php?hoorcollege=[blk2.idHoorcollege]">Resultaat</a></td>
+        <td colspan="3" bgcolor="#F0F0F0">[blk2.gemaakt; if [val]=1; then '<a href="resultaatStudent.php?hoorcollege=[blk2.idHoorcollege]">Resultaat</a>'; else '<a href="hoorcollege.php?hoorcollegeVragenBeantwoorden=[blk2.idHoorcollege]">Maak oefeningen</a>'] </td>
     </tr>
     <tr bgcolor="#FFCFB9">
         <td colspan="0">[blk2;block=tr;nodata]U heeft nog geen hoorcolleges bekeken.</td>
