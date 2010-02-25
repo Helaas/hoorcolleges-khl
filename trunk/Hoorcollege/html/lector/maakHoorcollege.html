@@ -1,14 +1,16 @@
 <h2>Hoorcollege maken</h2>
-<form action="maakHoorcollege.php" method="POST">
+<form action="maakHoorcollege.php" name="Form" method="POST">
     <h3>Vak en onderwerp</h3>
         Kies een vak: <br />
-        <select id="Vak" name="vak" onchange="autoSubmit(this.form,'autoSubmit2')">
-        <!-- Kies een eerste vak uit de vakken die deze gebruiker volgt !-->
-        <option value="" name="Vak">--Selecteer een vak--</option>
-        <!-- Vul dropdown op met TBS data !-->
-        <option value="[blk1.idVak]" name="Vak">[blk1.naam;block=option]</option>
-        </select><br /><div id="kiesond"></div>
-
+<select id="Vak" name="vak" onchange="autoSubmit(this.form,'autoSubmit2')">
+    <!-- Kies een eerste vak uit de vakken die deze gebruiker volgt !-->
+    <option value="" name="Vak">--Selecteer een vak--</option>
+    <!-- Vul dropdown op met TBS data !-->
+<option value="[blk1.idVak]" name="Vak">[blk1.naam;block=option]</option>
+</select>
+<div id="kiesond"></div>
+<div id="onderwerpform"></div>
+<div id="foutmelding"></div>
         <h3>Componenten</h3>
         Een hoorcollege kan uit verschillende componenten bestaan. U kan tot drie componenten per hoorcollege opnemen, één van elk type.
         Opgelet: u moet minstens één component toekennen aan een hoorcollege.
@@ -45,8 +47,6 @@
                     </div>
                     <div>
                         <select name="" size="25" multiple="multiple" style="width: 200px">
-                            <option>ddfdf</option>
-                            <option>dfdf</option>
                         </select>
                     </div>
                 </td>
@@ -59,8 +59,6 @@
                 <td>
                     <div>
                         <select name="" size="25" multiple="multiple" style="width: 200px">
-                            <option>ddfdf</option>
-                            <option>dfdf</option>
                         </select>
                     </div>
                 </td>

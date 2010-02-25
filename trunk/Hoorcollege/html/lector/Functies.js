@@ -70,7 +70,7 @@ function autoSubmit(form,var1)
     var knop= document.createElement('input');
     knop.setAttribute('type','button');
     knop.setAttribute('name','CreateOnd');
-    knop.setAttribute('value','Voeg een nieuw onderwerp toe');
+    knop.setAttribute('value','Of voeg een nieuw onderwerp toe');
     knop.onclick = voegOndToe;
     document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
     document.getElementById('kiesond').appendChild(knop);

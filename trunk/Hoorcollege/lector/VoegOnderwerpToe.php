@@ -18,6 +18,12 @@ if(isset ($_SESSION['gebruiker'])) {
 
             $result= $db->Execute("select * from hoorcollege_onderwerp where vak_idVak=".$_POST["vakID"]." AND naam=\"".$_POST['veld1']."\"");
             if($result->fields["naam"]==null) {
+
+                //Als we van maakHoorcollege komen
+                if  (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'maakHoorcollege.php') !== false){
+                    header("location: maakHoorcollege.php");
+                }
+                
                 $db->Execute("INSERT INTO hoorcollege_onderwerp (idOnderwerp, naam, Vak_idVak) VALUES (NULL, '".$_POST['veld1']."', '".$_POST['vakID']."')");
                 $config["pagina"] = "./Lector/Boodschap.html";
                 $Titel="Onderwerp toevoegen";
