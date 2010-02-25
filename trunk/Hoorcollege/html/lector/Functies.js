@@ -519,7 +519,8 @@ function GoTo3(url)
 }
 
 function maakHoorcollegePopup(type){
-    	newwindow=window.open('bibliotheekPopup.php?type='+type,'biblio','height=550,width=750');
+        var geselecteerd = document.getElementById("keuze_"+type).value;
+    	newwindow=window.open('bibliotheekPopup.php?type='+type+'&geselecteerd='+geselecteerd,'biblio','height=550,width=750');
 	if (window.focus) {newwindow.focus()}
 	return false;
 
@@ -546,9 +547,11 @@ function popupNaarHoofdpagina(type){
         if (button.value>0){
             window.opener.document.getElementById("feedback_"+type).innerHTML = "Geselecteerde " + naam + ' : <strong>"' + document.getElementById("naam_"+button.value).innerHTML +'"</strong>.';
             window.opener.document.getElementById("button_"+type).value="Wijzig keuze";
+            window.opener.document.getElementById("keuze_"+type).value = button.value
         } else {
             window.opener.document.getElementById("feedback_"+type).innerHTML = "Nog geen " + naam + " geselecteerd.";
             window.opener.document.getElementById("button_"+type).value="Blader in bibliotheek";
+            window.opener.document.getElementById("keuze_"+type).value = "-1";
         }
         close();
     } else {
@@ -556,4 +559,11 @@ function popupNaarHoofdpagina(type){
     }
 
 
+}
+
+function selecteerItemPopup(item){
+    var radioButtons = document.body.getElementsByTagName('input')
+    for (i=0; i<radioButtons.length; i++) {
+        if(radioButtons[i].value == item) radioButtons[i].checked=true;
+    }
 }

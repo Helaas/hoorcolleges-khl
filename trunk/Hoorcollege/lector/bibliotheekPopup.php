@@ -11,13 +11,16 @@
         if (isset($_GET["type"]) && in_array($_GET["type"],  $toegestaneTypes)){
             $bibliotheekCategorie=0;
             if (isset($_POST["bibliotheekCategorie"])) $bibliotheekCategorie=(int)$_POST["bibliotheekCategorie"];
-                $TBS->LoadTemplate('./../html/lector/bibliotheekPopup.html');
-                $TBS->MergeBlock("blk1",$db,"select *, IF(idBibliotheekCategorie= ". $bibliotheekCategorie .", \" selected\", \"\") as selected from hoorcollege_bibliotheekcategorie WHERE Gebruiker_idGebruiker = ".(int)$_SESSION['gebruiker']->getIdGebruiker());
+            if (isset($_GET["geselecteerd"])){
+                $bibliotheekCategorie=(int)getBibliotheekCategorieId($_GET["geselecteerd"]);
+            }
+            $TBS->LoadTemplate('./../html/lector/bibliotheekPopup.html');
+            $TBS->MergeBlock("blk1",$db,"select *, IF(idBibliotheekCategorie= ". $bibliotheekCategorie .", \" selected\", \"\") as selected from hoorcollege_bibliotheekcategorie WHERE Gebruiker_idGebruiker = ".(int)$_SESSION['gebruiker']->getIdGebruiker());
 
-                $TBS->MergeBlock("blk2",$db,"SELECT * FROM hoorcollege_bibliotheekitem
-                                             where BibliotheekCategorie_Gebruiker_idGebruiker = ". (int)$_SESSION['gebruiker']->getIdGebruiker() ."
-                                             and mimetype = '". $_GET["type"] ."'
-                                             and BibliotheekCategorie_idBibliotheekCategorie = ".$bibliotheekCategorie);
+            $TBS->MergeBlock("blk2",$db,"SELECT * FROM hoorcollege_bibliotheekitem
+                                         where BibliotheekCategorie_Gebruiker_idGebruiker = ". (int)$_SESSION['gebruiker']->getIdGebruiker() ."
+                                         and mimetype = '". $_GET["type"] ."'
+                                         and BibliotheekCategorie_idBibliotheekCategorie = ".$bibliotheekCategorie);
 
                 
                 

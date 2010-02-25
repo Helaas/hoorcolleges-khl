@@ -634,48 +634,49 @@
             }
         }
     }
-        function verwijderHoorcollege($hoorcollid) {
+
+    function verwijderHoorcollege($hoorcollid) {
         global $db;
-        //delete gegeven antwoorden voor dit hoorcollege
-        $db->Execute("DELETE FROM hoorcollege_gegevenantwoord
+         //delete gegeven antwoorden voor dit hoorcollege
+         $db->Execute("DELETE FROM hoorcollege_gegevenantwoord
                                  WHERE  Vraag_idVraag
                                     in (SELECT idVraag
                                     FROM hoorcollege_vraag
                                     WHERE Hoorcollege_idHoorcollege =".$hoorcollid.")");
-        //delete mogelijke antwoorden voor dit hoorcollege
-        $db->Execute("DELETE FROM hoorcollege_mogelijkantwoord
+          //delete mogelijke antwoorden voor dit hoorcollege
+          $db->Execute("DELETE FROM hoorcollege_mogelijkantwoord
                                  WHERE  Vraag_idVraag
                                     in (SELECT idVraag
                                     FROM hoorcollege_vraag
-                                    WHERE Hoorcollege_idHoorcollege =".$hoorcollid.")");
-        //delete vragen voor dit hoorcollege
-       $db->Execute("DELETE FROM hoorcollege_vraag
-                                    WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid.")");
+            //delete vragen voor dit hoorcollege
+           $db->Execute("DELETE FROM hoorcollege_vraag
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
 
-       //delete video bekeken controle voor dit hoorcollege
-       $db->Execute("DELETE FROM hoorcollege_vbc
-                                    WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
+           //delete video bekeken controle voor dit hoorcollege
+           $db->Execute("DELETE FROM hoorcollege_vbc
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
 
-       //delete reacties op dit hoorcollege
-       $db->Execute("DELETE FROM hoorcollege_reactie
-                                    WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
+           //delete reacties op dit hoorcollege
+           $db->Execute("DELETE FROM hoorcollege_reactie
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
 
-       //Verwijder relaties tussen gebruikers en dit hoorcollege
-       $db->Execute("DELETE FROM hoorcollege_gebruikerhoorcollege
-                                    WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
+           //Verwijder relaties tussen gebruikers en dit hoorcollege
+           $db->Execute("DELETE FROM hoorcollege_gebruikerhoorcollege
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
 
-       //Verwijder relaties tussen bilbiotheekitems en dit hoorcollege
-       $db->Execute("DELETE FROM hoorcollege_hoorcollegbibliotheekitem
-                                    WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
+           //Verwijder relaties tussen bilbiotheekitems en dit hoorcollege
+           $db->Execute("DELETE FROM hoorcollege_hoorcollegbibliotheekitem
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
 
-       //Verwijder relaties tussen onderwerpen en dit hoorcollege
-       $db->Execute("DELETE FROM hoorcollege_onderwerphoorcollege
-                                    WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
+           //Verwijder relaties tussen onderwerpen en dit hoorcollege
+           $db->Execute("DELETE FROM hoorcollege_onderwerphoorcollege
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
 
-       //Verwijder relaties tussen onderwerpen en dit hoorcollege
-       $db->Execute("DELETE FROM hoorcollege_hoorcollege
-                                    WHERE idHoorcollege =".$hoorcollid);
-        }
+           //Verwijder relaties tussen onderwerpen en dit hoorcollege
+           $db->Execute("DELETE FROM hoorcollege_hoorcollege
+                                        WHERE idHoorcollege =".$hoorcollid);
+       }
 
         function verwijderOnderwerp($gevraagdond){
             global $db;
@@ -689,7 +690,7 @@
                                     WHERE idOnderwerp =".$gevraagdond);
         }
 
-            function editOnderwerp($ondid,$ondnaam){
+       function editOnderwerp($ondid,$ondnaam){
             global $db;
             $db->Execute("UPDATE hoorcollege_onderwerp SET naam ='".$ondnaam."' WHERE idOnderwerp =".(int)$ondid );
         }
@@ -699,5 +700,16 @@
 
             $result=$db->GetRow("SELECT idGroep FROM hoorcollege_groep WHERE naam ='".$groepnaam."'");
             return $result["idGroep"];
+        }
+
+        function getBibliotheekCategorieId($cat){
+            global $db;
+            $cat = (int)$cat;
+
+            $resultaat=$db->GetRow("SELECT BibliotheekCategorie_idBibliotheekCategorie
+                                FROM hoorcollege_bibliotheekitem
+                                WHERE idBibliotheekItem = ".$cat);
+            if (!isset($resultaat["BibliotheekCategorie_idBibliotheekCategorie"])) return -1;
+            return $resultaat["BibliotheekCategorie_idBibliotheekCategorie"];
         }
 ?>
