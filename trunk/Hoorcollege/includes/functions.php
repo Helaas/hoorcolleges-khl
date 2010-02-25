@@ -693,4 +693,11 @@
             global $db;
             $db->Execute("UPDATE hoorcollege_onderwerp SET naam ='".$ondnaam."' WHERE idOnderwerp =".(int)$ondid );
         }
+
+        function getGroepId($groepnaam){
+            global $db;
+
+            $result=$db->Execute("SELECT idGroep FROM hoorcollege_groep WHERE naam =".$groepnaam);
+            return $result["idGroep"];
+        }
 ?>
