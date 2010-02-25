@@ -47,7 +47,7 @@ if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) { 
 
         $idHoorcollege = $_GET["hoorcollege"];
         $gebruikersNaam = getGebruikerNaamViaId($_SESSION['gebruiker']->getIdGebruiker());
-        $alleCommentarenQuery = $db->Execute('SELECT voornaam, naam, inhoud
+        $alleCommentarenQuery = $db->Execute('SELECT voornaam, naam, inhoud, datum
                                      FROM hoorcollege_reactie LEFT OUTER JOIN hoorcollege_gebruiker
                                      ON Gebruiker_idGebruiker = idGebruiker
                                      WHERE Hoorcollege_idHoorcollege ='.$idHoorcollege);
@@ -59,6 +59,7 @@ if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) { 
           $alleCommentarenTabel[$i]["voornaam"] = $alleCommentarenQuery->fields["voornaam"];
           $alleCommentarenTabel[$i]["naam"] = $alleCommentarenQuery->fields["naam"];
           $alleCommentarenTabel[$i]["inhoud"] = stripslashes($alleCommentarenQuery->fields["inhoud"]);
+          $alleCommentarenTabel[$i]["datum"] = $alleCommentarenQuery->fields["datum"];
           $i++;
           $alleCommentarenQuery->MoveNext();
         }
