@@ -35,9 +35,15 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
                 }
 
                 $TBS->MergeBlock("blk1",$vragen);
-            } else {
+                
+            } else if(!heeftHoorcollegeVragen($_GET["hoorcollege"])){
                 $fout["reden"] = "Geen resultaten beschikbaar";
-                $fout["inhoud"] = "U heeft nog geen vragen beantwoord voor dit hoorcollege, dit hoorcollege heeft geen vragen, of u mag de vragen niet bekijken.";
+                $fout["inhoud"] = "Dit hoorcollege heeft geen vragen";
+                $config["pagina"] = "./algemeneFout.html";
+                $TBS->LoadTemplate('./html/student/templateStudent.html');
+            } else{
+                $fout["reden"] = "Geen resultaten beschikbaar";
+                $fout["inhoud"] = "U heeft nog geen vragen beantwoord voor dit hoorcollege";
                 $config["pagina"] = "./algemeneFout.html";
                 $TBS->LoadTemplate('./html/student/templateStudent.html');
             }

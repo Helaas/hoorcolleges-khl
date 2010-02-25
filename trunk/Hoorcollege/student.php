@@ -52,7 +52,11 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){
         $alBekeken["onderwerp"] = $onderwerp->fields["naam"];
         $alBekeken["idHoorcollege"] = $queryReedsBekeken->fields["idHoorcollege"];
         $alBekeken["naam"] = $queryReedsBekeken->fields["naam"];
-        $alBekeken["gemaakt"] = heeftGebruikerVragenGemaakt($gebruikerID, $queryReedsBekeken->fields["idHoorcollege"]);
+        if(heeftGebruikerVragenGemaakt($gebruikerID, $queryReedsBekeken->fields["idHoorcollege"]) || !heeftHoorcollegeVragen($queryReedsBekeken->fields["idHoorcollege"])){
+            $alBekeken["gemaakt"] = true;
+        }else{
+            $alBekeken["gemaakt"] = false;
+        }
         $alBekekenTabel[$i] = $alBekeken;
         $i = $i+1;
         $queryReedsBekeken->MoveNext();
