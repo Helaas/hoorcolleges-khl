@@ -536,6 +536,10 @@
                 }
                 $TBS->MergeBlock('blk1',$namen);
             }
+            else if($_GET['pagina'] == 'groepenOverzicht') {
+                //overzicht alle groepen
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            }
         }        
 
 
