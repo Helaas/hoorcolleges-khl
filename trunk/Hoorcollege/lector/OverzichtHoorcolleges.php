@@ -21,14 +21,14 @@ if(isset ($_SESSION['gebruiker'])) {
 
     else {
         $config["pagina"] = "./FileUpload/Error1Login.html";
-        $TBS->LoadTemplate('./../html/template.html') ;
+        $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
         $TBS->Show() ;
 
     }
 }
 else {
     $config["pagina"] = "./FileUpload/Error1Login.html";
-    $TBS->LoadTemplate('./../html/template.html') ;
+    $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
     $TBS->Show() ;
 
 }

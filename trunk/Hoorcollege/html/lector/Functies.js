@@ -144,14 +144,24 @@ function autoSubmitBeheer(form)
         sel.options.add( new Option(inh,id));
     }
 
+    var knop2= document.createElement('input');
+    knop2.setAttribute('type','button');
+    knop2.setAttribute('name','EditOnd');
+    knop2.setAttribute('value','Edit');
+    knop2.setAttribute('onclick',"GoTo3('editOnderwerp.php?')");
+    document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0\u00A0\u00A0' ) );
+    document.getElementById('kiesond').appendChild(knop2);
 
+    
     var knop= document.createElement('input');
     knop.setAttribute('type','button');
     knop.setAttribute('name','DeleteOnd');
-    knop.setAttribute('value','Delete');
+    knop.setAttribute('value','Verwijder');
     knop.setAttribute('onclick',"GoTo2('DeleteOnderwerp.php?')");
-    document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0\u00A0\u00A0' ) );
+    document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
     document.getElementById('kiesond').appendChild(knop);
+    
+
                 
 
 }
@@ -496,4 +506,15 @@ function GoTo2(url)
     }
 }
 
+//goto voor onderwerp editen
+function GoTo3(url)
+{
+    var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
+    var ondnaam= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].text;
+
+    if(ondid!=0){
+            window.location.href = url+"gevraagdond="+ondid+"&gevraagdondnaam="+ondnaam;
+
+    }
+}
 

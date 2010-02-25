@@ -12,27 +12,27 @@ if(isset ($_SESSION['gebruiker'])) {
 
     if($gebruikerNiv==40) {
 
-              if (preg_match('/^[0-9]+$/iD', $_GET['gevraagdond'])  ) {
+              if (preg_match('/^[0-9]+$/iD', $_POST['OndID']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['OndNaam'])) {
                  //controle of het onderwerp wel bij de lector hoort
                  $result = $db->Execute("    select idOnderwerp
                                              from hoorcollege_onderwerp
                                              where Vak_idVak in (
                                                              SELECT Vak_idVak
                                                              FROM hoorcollege_gebruiker_beheert_vak
-                                                             WHERE Gebruiker_idGebruiker=".(int)$gebruikerID.") AND idOnderwerp=".(int)$_GET['gevraagdond']);
+                                                             WHERE Gebruiker_idGebruiker=".(int)$gebruikerID.") AND idOnderwerp=".(int)$_POST['OndID']);
 
                  if($result->fields["idOnderwerp"]!=null) {
-               //Delete onderwerp indien lector rechten tot dit onderwerp heeft
-               verwijderOnderwerp($_GET['gevraagdond']);
+               //edit onderwerp indien lector rechten tot dit onderwerp heeft
+                 editOnderwerp($_POST['OndID'],$_POST['OndNaam']);
 
                 $config["pagina"] = "./Lector/Boodschap.html";
-                $Titel="Onderwerp verwijderen";
-                $tekstinhoud = "Het onderwerp werd met succes verwijderd.";
+                $Titel="Onderwerp wijzigen";
+                $tekstinhoud = "Het onderwerp werd met succes aangepast.";
                  }
                  else{
                 $config["pagina"] = "./Lector/Boodschap.html";
-                $Titel="Onderwerp verwijderen";
-                $tekstinhoud = "U probeerde een onderwerp te verwijderen dat niet onder uw bevoegdheid valt.";
+                $Titel="Onderwerp wijzigen";
+                $tekstinhoud = "U probeerde een onderwerp te wijzigen dat niet onder uw bevoegdheid valt.";
                  }
 
 
@@ -60,14 +60,14 @@ if(isset ($_SESSION['gebruiker'])) {
 
     else {
         $config["pagina"] = "./FileUpload/Error1Login.html";
-        $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
+        $TBS->LoadTemplate('./../html/template.html') ;
         $TBS->Show() ;
     }
 
 }
 else {
     $config["pagina"] = "./FileUpload/Error1Login.html";
-    $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
+    $TBS->LoadTemplate('./../html/template.html') ;
     $TBS->Show() ;
 }
 ?>

@@ -1,32 +1,26 @@
 <?php
 include_once('./../includes/kern.php');
-
 session_start();
 
-$config["pagina"] = "FileUpload/AddFile.html";
+$config["pagina"] = "./FileUpload/Error1Login.html";
+$tekstinhoud = "";
 
 if(isset ($_SESSION['gebruiker'])) {
     $gebruiker = $_SESSION['gebruiker'];
     $gebruikerNiv = $gebruiker->getNiveau();
+    $gebruikerID = $gebruiker->getIdGebruiker();
 
     if($gebruikerNiv==40) {
-        //Enkel getallen mogen hier binnen
-        if (preg_match('/^[0-9]+$/iD', $_SESSION['gebruiker']->getIdGebruiker())) {
-            $q = "select * from hoorcollege_bibliotheekcategorie WHERE Gebruiker_idGebruiker =".$_SESSION['gebruiker']->getIdGebruiker();
-            $TBS->LoadTemplate('./../html/lector/templateLector.html');
-            $TBS->MergeBlock("blk1",$db,$q);
-            $TBS->Show();
-        }
-        else {
-            //Geen Speciale Tekens toegestaan
-            $Titel="Foutmelding";
-            $tekstinhoud = "Onderwerpen konden niet opgevraagd worden, probeer het later opnieuw.";
-            $config["pagina"] = "./lector/Boodschap.html";
+      $ondid=$_GET['gevraagdond'];
+      $ondnaam=$_GET['gevraagdondnaam'];
+
+
+            $config["pagina"] = "./Lector/editOnderwerp.html";
             $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
             $TBS->Show() ;
-        }
-    //Users met onvoldoende privileges voor deze pagina een foutpagina tonen
-    }else if($_SESSION['gebruiker']->getNiveau() == 1) {
+       
+    }  //Users met onvoldoende privileges voor deze pagina een foutpagina tonen
+    else if($_SESSION['gebruiker']->getNiveau() == 1) {
         $config["pagina"] = "./FileUpload/Error1Login.html";
         $TBS->LoadTemplate('./../html/lector/templateLector.html');
         $TBS->Show() ;
@@ -41,12 +35,12 @@ if(isset ($_SESSION['gebruiker'])) {
         $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
         $TBS->Show() ;
     }
-
 }
+
+
 else {
     $config["pagina"] = "./FileUpload/Error1Login.html";
     $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
     $TBS->Show() ;
 }
-
 ?>

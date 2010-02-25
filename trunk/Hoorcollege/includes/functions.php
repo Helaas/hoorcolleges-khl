@@ -664,4 +664,8 @@
                                     WHERE idOnderwerp =".$gevraagdond);
         }
 
+            function editOnderwerp($ondid,$ondnaam){
+            global $db;
+            $db->Execute("UPDATE hoorcollege_onderwerp SET naam ='".$ondnaam."' WHERE idOnderwerp =".(int)$ondid );
+        }
 ?>
