@@ -1,0 +1,15 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > studenten ontkoppelen van vak<br><br><br>
+<h2>Studenten ontkoppelen van vak</h2>
+<form action="admin.php?pagina=studentenkoppelenselectief" method="POST">
+            Vak:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="selectvak" >
+                    <option value="leeg">[blk1;block=option;nodata]Nog geen lectoren</option>
+                    <option value="[blk1.idVak;block=option]">[blk1.naam;]</option>
+                </select>
+                <br><br>
+            <p id ="[onshow.typeboodschap;noerr]">
+                    [onshow.foutboodschap;noerr]
+            </p>
+            <br>
+            <input type="submit" value="Verder" name="studentenselectiefontkoppelen"/>
+</form>

@@ -150,6 +150,62 @@
                 $foutboodschap = 'Technisch probleem, mogelijk is niet iedereen toegekent aan het vak, gelieve manueel te controleren';
             }
         }
+        else if(isset ($_POST['lectorVakVoltooiKnop'])) { //indien men een lector wil toekennen aan een vak in vak.html            
+            //validatie van de toekenning
+            if(beheertLectorVak($_POST['selectlector'], $_POST['selectvak'])) {
+                $foutboodschap2 = "Actie niet gelukt: lector is al toegekend aan dit vak of er is een technisch probleem opgedoken!";
+            }
+            else {
+                if(!kenLectorToeAanVak($_POST['selectlector'], $_POST['selectvak'])) {
+                    $foutboodschap = "Actie niet gelukt: waarschijnlijk te wijten aan een technisch probleem!";
+                }
+                else {
+                    $typeboodschap = "juist";
+                    $foutboodschap = 'Lector is succesvol aan vak toegekend!'; //dit is geen foutboodschap
+                }
+            }
+        }
+        else if(isset ($_POST['studentenselectiefontkoppelen'])) {
+            if($_POST['selectvak'] == 'leeg') {                
+                header("location: admin.php?pagina=studentVakOnt&foutboodschap=U dient een vak te kiezen!");
+            }
+            else {                
+                $vak = $_POST['selectvak'];
+                $vaknaam = getVakNameViaId($vak);
+            }
+        }
+        else if(isset ($_POST['verderstudentenontkoppelenselectief'])) {
+            if(count($_POST['checkbox']) > 0) {
+                $vak = $_POST['vak'];
+                $vaknaam = getVakNameViaId($vak);
+            }
+            else {
+                //hier nog fout opvangen indien men niemand selecteerd bij studentenkoppelenselectief
+            }
+        }
+        else if(isset ($_POST['ontkopelgeselecteerdenvanvak'])) {            
+            $idVak = $_POST['vak'];
+            $ch = unserialize($_POST['checkbox2']);
+            $count = count($ch);
+
+            $gelukt = true;
+            for($i=0; $i < $count; $i++) {
+                $gelukt = ontkoppelStudentVanVak($ch[$i], $idVak);
+            }
+
+            if($gelukt) {
+                $typeboodschap = "juist";
+                $foutboodschap = 'Alle geselecteerden zijn ontkoppeld!'; // dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Technisch probleem, mogelijk is niet iedereen ontkoppeld, gelieve manueel te controleren';
+            }
+        }
+
+
+
+
 
 
     $TBS->LoadTemplate('./html/admin/templateAdmin.html');
@@ -452,7 +508,35 @@
                                             WHERE g.niveau !=1 && hb.Vak_idVak = '$vak'
                                             GROUP BY g.naam, g.voornaam ASC");
             }
-        }
+            else if($_GET['pagina'] == 'lectorVak') { //indien men op pagina komt om een lector aan een vak toe te kennen
+                //select veld aanmaken voor overzicht lectoren
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1 GROUP BY naam, voornaam asc');
+                //tabel aanmaken voor overzicht vakken
+                $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'studentVakOnt') { //indien men op de pagina studentVakOnt komt
+                //tabel aanmaken voor overzicht vakken
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'studentenkoppelenselectief') {
+                //overzicht van alle studenten die het vak volgen
+                $TBS->MergeBlock('blk1', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
+                                               FROM hoorcollege_gebruiker g
+                                               LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
+                                               WHERE vv.Vak_idVak = '$vak'
+                                               GROUP BY g.naam, g.voornaam ASC");
+            }
+            else if($_GET['pagina'] == 'overzichtstudentenkoppelenselectief') {
+                //veld aanmaken voor de overzicht van gekozen studenten
+                $namen = array();
+                $checkbox2 = serialize($_POST['checkbox']);
+                $count = count($_POST['checkbox']);
+                for($i=0; $i < $count; $i++) {
+                    $namen[$i] = getGebruikerNaamViaId($_POST['checkbox'][$i]);
+                }
+                $TBS->MergeBlock('blk1',$namen);
+            }
+        }        
 
 
     $TBS->Show() ;
