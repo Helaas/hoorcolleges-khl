@@ -29,15 +29,31 @@ color:#000000;
         <div id="container" class="clearfix" style="padding: 0; margin:0">
             <div id="centerColumn" style="border-left:0">
                 <h2>Bibliotheekitem selecteren</h2>
-                <form action="bibliotheekPopup.php" method="POST" style="padding-left:0;">
+                <form action="bibliotheekPopup.php?type=[var._GET.type;noerr]" method="POST" style="padding-left:0;">
                     <div>
                         <select id="bibliotheekCategorie" name="bibliotheekCategorie"  onchange="">
                             <option value="">--Selecteer een categorie--</option>
                             <option value="[blk1.idBibliotheekCategorie]"[blk1.selected]>[blk1.naam;block=option]</option>
                         </select><input type="submit" value="Kies !" name="submit" />
                     </div>
-
                 </form>
+                <table border="1" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+                <tr>
+                    <td width="25%" bgcolor="#DDDDDD"><b>Naam</b></td>
+                    <td width="25%" bgcolor="#DDDDDD"><b>Type</b></td>
+                    <td width="25%" bgcolor="#DDDDDD"><b>Beschrijving</b></td>
+                </tr>
+                <tr>
+                    <td width="25%">[blk2.naam;block=tr]</td>
+                    <td width="25%">[blk2.mimetype]</td>
+                    <td width="25%">[blk2.beschrijving]</td>
+                </tr>
+                <tr>
+                    <td width="25%" bgcolor="#CCCCFF">[blk2.idGebruiker;block=tr]</td>
+                    <td width="25%" bgcolor="#CCCCFF">[blk2.voornaam]</td>
+                    <td width="25%" bgcolor="#CCCCFF">[blk2.beschrijving]</td>
+                </tr>
+                </table>
             </div>
         </div>
 </body>

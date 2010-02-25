@@ -573,11 +573,17 @@
     }
     
     function arrayNaarUTF(&$complex_array){
-        foreach ($complex_array as $n => &$v){
-            if (is_array($v))
-                arrayNaarUTF($v);
-            else{
-                $v = utf8_encode($v);
+        if (is_array($complex_array)){
+            foreach ($complex_array as $n => &$v){
+                if (is_array($v))
+                    arrayNaarUTF($v);
+                else{
+                    $v = utf8_encode($v);
+                }
+            }
+        } else {
+            if (is_string($complex_array)){
+                $complex_array = utf8_encode($complex_array);
             }
         }
     }

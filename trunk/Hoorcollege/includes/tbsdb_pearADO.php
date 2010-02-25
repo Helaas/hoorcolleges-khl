@@ -17,7 +17,9 @@ function tbsdb_pear_ADOConnection_open(&$source,&$query) {
 }
 
 function tbsdb_pear_ADOConnection_fetch(&$rs) {
-	return $rs->FetchRow() ;
+        $temp = $rs->FetchRow();
+        arrayNaarUTF($temp);
+	return $temp;
 }
 
 function tbsdb_pear_ADOConnection_close(&$rs) {
