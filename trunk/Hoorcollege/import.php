@@ -1,7 +1,6 @@
 <?php
 
 include_once('./includes/kern.php');
-include_once('./includes/functions.php');
 session_start();
 
 $TBS = new clsTinyButStrong;
@@ -45,19 +44,18 @@ if ($_FILES['file']['tmp_name'] ) {
     */
     foreach( $data as $row ) {
         $gebruikerId = $row['gebruikerId'];
-        if(!bestaatGroep($row['groep'])){
-            voegGroepToe($groep);
-        }
-        $groepId = getGroepId($row['groep']);
-        //Ervoor zorgen dat een student geen 2keer aan dezelfde groep wordt toegevoegd
-        if(!isStudentToegekentAanGroep2($gebruikerId, $groepId)){
+        if(validateNumber($gebruikerId) && strlen($row['groep']) < 8) {
+            if(!bestaatGroep($row['groep'])) {
+                voegGroepToe($groep);
+            }
+            $groepId = getGroepId($row['groep']);
+            //Ervoor zorgen dat een student geen 2keer aan dezelfde groep wordt toegevoegd
+            if(!isStudentToegekentAanGroep2($gebruikerId, $groepId)) {
                 kenStudentToeAanGroep($gebruikerId, $groepId);
-        }    
+            }
+        }
     }
 }
-
-
-
 $TBS->Show() ;
 
 ?>
