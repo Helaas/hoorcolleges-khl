@@ -1,0 +1,52 @@
+<h2>Hoorcollege maken</h2>
+<form action="maakHoorcollege.php" method="POST">
+    <h3>Vak en onderwerp</h3>
+        Kies een vak: <br />
+        <select id="Vak" name="vak" onchange="autoSubmit(this.form,'autoSubmit2')">
+        <!-- Kies een eerste vak uit de vakken die deze gebruiker volgt !-->
+        <option value="" name="Vak">--Selecteer een vak--</option>
+        <!-- Vul dropdown op met TBS data !-->
+        <option value="[blk1.idVak]" name="Vak">[blk1.naam;block=option]</option>
+        </select><br /><div id="kiesond"></div>
+
+    <h3>Videocomponent</h3>
+        <input type="button" value="Blader in bibliotheek" />
+    <h3>Audiocomponent</h3>
+        <input type="button" value="Blader in bibliotheek" />
+    <h3>Tekstcomponent</h3>
+        <input type="button" value="Blader in bibliotheek" />
+    <h3>Gebruikers kiezen</h3>
+    <table border="0">
+        <tbody>
+            <tr>
+                <td width="250">Beschikbare studenten</td>
+                <td width="150">Actie studenten</td>
+                <td width="250">Geselecteerde studenten</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <select name="" size="25" multiple="multiple" style="width: 200px">
+                            <option>ddfdf</option>
+                            <option>dfdf</option>
+                        </select>
+                    </div>
+                </td>
+                <td style="vertical-align:middle;padding-left: 20px;">
+                    <div>
+                        <input type="button" value=">>" /> <br />
+                        <input type="button" value="<<" />
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <select name="" size="25" multiple="multiple" style="width: 200px">
+                            <option>ddfdf</option>
+                            <option>dfdf</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
