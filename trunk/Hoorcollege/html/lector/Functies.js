@@ -29,7 +29,7 @@ function autoSubmit(form,var1)
     }
 
 
-  xmlhttp.onreadystatechange=Verwerk;
+
   //xmlhttp request om via php een xml pagina aan te maken op basis van het meegegoven vakid
   xmlhttp.open("GET", "VerwerkDropdown.php?gevraagdVak="+vakid, false);
   xmlhttp.send(null);
@@ -65,6 +65,14 @@ function autoSubmit(form,var1)
                  sel.options.add( new Option(inh,id));
                 }
 
+                var knop= document.createElement('input');
+                knop.setAttribute('type','button');
+                knop.setAttribute('name','CreateOnd');
+                knop.setAttribute('value','Voeg een nieuw onderwerp toe');
+                knop.onclick = voegOndToe;
+                document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
+                document.getElementById('kiesond').appendChild(knop);
+
 }
 
 function autoSubmitBeheer(form)
@@ -98,7 +106,7 @@ function autoSubmitBeheer(form)
     }
 
 
-  xmlhttp.onreadystatechange=Verwerk;
+
   //xmlhttp request om via php een xml pagina aan te maken op basis van het meegegoven vakid
   xmlhttp.open("GET", "VerwerkDropdown.php?gevraagdVak="+vakid, false);
   xmlhttp.send(null);
@@ -115,7 +123,7 @@ function autoSubmitBeheer(form)
                  document.getElementById("kiesond").appendChild(brk);
                  var sel=document.createElement('select');
                  sel.name='Ond';
-                 sel.onchange=function(){GenHoorcollButton(this.form);};
+                 sel.onchange=function(){GenHoorcollDropdown(this.form);};
                  var opt1= document.createElement("option");
                  opt1.text='--Selecteer een onderwerp--';
                  opt1.value=0;
@@ -135,10 +143,10 @@ function autoSubmitBeheer(form)
 
                 var knop= document.createElement('input');
                 knop.setAttribute('type','button');
-                knop.setAttribute('name','CreateOnd');
-                knop.setAttribute('value','Voeg een nieuw onderwerp toe');
-                knop.onclick = voegOndToe;
-                document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
+                knop.setAttribute('name','DeleteOnd');
+                knop.setAttribute('value','Delete');
+                knop.onclick = VerwijderOnderwerp;
+                document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0\u00A0\u00A0' ) );
                 document.getElementById('kiesond').appendChild(knop);
                 
 
@@ -178,7 +186,7 @@ function autoSubmit2(form)
          }
     }
 
-  xmlhttp.onreadystatechange=Verwerk;
+
   //xmlhttp request om via php een xml pagina aan te maken met gegevens over de hoorcolleges die bij dit vak en onderwerp passen
   xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"&gevraagdOnd="+ondid, false);
   xmlhttp.send(null);
@@ -253,30 +261,6 @@ function autoSubmit2(form)
                
                    
 
-}
-
-
-
-
-
-function Verwerk()
-{
-
-if(xmlhttp.readyState == 4 && xmlHttp.status == 200)
-{
-    alert('reached')
-               //haal optie uit de XML en voeg toe aan dropdown
-                var elems = xmlhttp.responseXML.getElementsByTagName("Onderwerp");
- 		var size = elems.length;
-                form.onderwerp.options[0]=null;
-                for(i = 0; i < size; i++){
-
-                 //onderwerp = naam van het onderwerp, id = id van het onderwerp, gebruiker krijgt de naam te zien, de var die doorgegoven word in 'onchange' is de id
-                 var inh=xmlhttp.responseXML.getElementsByTagName('Onderwerp')[i].firstChild.data;
-                 var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
-                 form.onderwerp.options.add( new Option(inh,id));
-}
-}
 }
 
 
@@ -387,21 +371,99 @@ else{
 
 
 
-function GenHoorcollButton(form){
+function GenHoorcollDropdown(form){
 
    var vakid= document.Form.vak.options[document.Form.vak.options.selectedIndex].value;
    var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
 
 
-                      var Hdiv=document.getElementById("HoorcollegeToevoegen")
-                      //while ( Hdiv.firstChild ){Hdiv.removeChild( Hdiv.firstChild );}
-                      var txt=document.createElement('p');
-                      var inh= document.createTextNode("------ Hier komt de functionaliteit voor het toevoegen van een hoorcollege aan het gekozen onderwerp ------");
-                      txt.appendChild(inh);
-                      Hdiv.appendChild(txt);
+      var xmlhttp;
+     try {
+    // Mozilla / Safari / IE7
+         xmlhttp = new XMLHttpRequest();
+     } catch (e) {
+          // IE
+           var XMLHTTP_IDS = new Array('MSXML2.XMLHTTP.5.0',
+                                    'MSXML2.XMLHTTP.4.0',
+                                    'MSXML2.XMLHTTP.3.0',
+                                    'MSXML2.XMLHTTP',
+                                    'Microsoft.XMLHTTP' );
+         var success = false;
+        for (var i=0;i < XMLHTTP_IDS.length && !success; i++) {
+             try {
+                  xmlhttp = new ActiveXObject(XMLHTTP_IDS[i]);
+                    success = true;
+               } catch (e) {}
+         }
+        if (!success) {
+             throw new Error('Unable to create XMLHttpRequest.');
+         }
+    }
+
+
+
+  //xmlhttp request om via php een xml pagina aan te maken op basis van het meegegoven vakid
+  xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"&gevraagdOnd="+ondid, false);
+  xmlhttp.send(null);
+
+
+
+                //haal optie uit de XML en voeg toe aan dropdown
+                var elems = xmlhttp.responseXML.getElementsByTagName("Naam");
+ 		var size = elems.length;
+    
+                var hoorcolldiv=document.getElementById("HoorcollegeToevoegen")
+                //div dynamisch opvullen met een select gebaseerd op het gekozen onderwerp
+                while ( hoorcolldiv.firstChild ){hoorcolldiv.removeChild( hoorcolldiv.firstChild );}
+                var txtnode= document.createTextNode('Kies een hoorcollege:');
+                document.getElementById("HoorcollegeToevoegen").appendChild(txtnode);
+
+
+                 var brk=document.createElement('br');
+                 document.getElementById("HoorcollegeToevoegen").appendChild(brk);
+                 var sel2=document.createElement('select');
+                 sel2.name='Hoorcollegeselect';
+                 var opt= document.createElement("option");
+                 opt.text='--Selecteer een hoorcollege--';
+                 opt.value=0;
+                 sel2.options.add(opt);
+                 document.getElementById("HoorcollegeToevoegen").appendChild(sel2);
+                while(sel2.options.length>1){
+                sel2.options[1]=null;
+                }
+                for(i = 0; i < size; i++){
+                 //onderwerp = naam van het onderwerp, id = id van het onderwerp, gebruiker krijgt de naam te zien, de var die doorgegoven word in 'onchange' is de id
+                 var inh=xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data;
+                 var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
+                 sel2.options.add( new Option(inh,id));
+                }
+
+                var knop= document.createElement('input');
+                knop.setAttribute('type','button');
+                knop.setAttribute('name','DeleteHoorcollege');
+                knop.setAttribute('value','Delete');
+                knop.setAttribute('onclick',"GoTo('DeleteHoorcollege.php?')");
+                document.getElementById('HoorcollegeToevoegen').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
+                document.getElementById('HoorcollegeToevoegen').appendChild(knop);
                 
 
 
 }
+function GoTo(url)
+{
+
+        var hoorcollid= document.Form.Hoorcollegeselect.options[document.Form.Hoorcollegeselect.options.selectedIndex].value;
+        var hoorcollnaam= document.Form.Hoorcollegeselect.options[document.Form.Hoorcollegeselect.options.selectedIndex].text;
+	var confirmed = confirm("Bent u zeker dat u het hoorcollege \""+hoorcollnaam+"\" wilt verwijderen?");
+	if (confirmed){
+	window.location.href = url+"gevraagdhoorcoll="+hoorcollid;
+        }
+}
+
+
+function VerwijderOnderwerp(){
+    ;
+}
+
 
 

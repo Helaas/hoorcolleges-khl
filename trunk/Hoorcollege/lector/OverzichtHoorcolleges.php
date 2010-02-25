@@ -12,7 +12,7 @@ if(isset ($_SESSION['gebruiker'])) {
     if($gebruikerNiv==40) {
 
         if (preg_match('/^[0-9]+$/iD', $_SESSION['gebruiker']->getIdGebruiker())) {
-            $q = "select * from hoorcollege_vak where idVak in(SELECT Vak_idVak FROM `hoorcollege_gebruiker_beheert_vak` WHERE gebruiker_idgebruiker =".$_SESSION['gebruiker']->getIdGebruiker().")";
+            $q = "select * from hoorcollege_vak where idVak in(SELECT Vak_idVak FROM hoorcollege_gebruiker_beheert_vak WHERE gebruiker_idgebruiker =".$_SESSION['gebruiker']->getIdGebruiker().")";
             $TBS->LoadTemplate('./../html/lector/templateLector.html');
             $TBS->MergeBlock("blk1",$db,$q);
             $TBS->Show();

@@ -16,7 +16,7 @@ if(isset ($_SESSION['gebruiker'])) {
 
         //Enkel getallen mogen hier binnen
         if (preg_match('/^[0-9]+$/iD', $_GET["gevraagdVak"]) && preg_match('/^[0-9]+$/iD', $_GET["gevraagdOnd"])) {
-            $result = $db->Execute("SELECT * from Hoorcollege_hoorcollege where idHoorcollege in (SELECT Hoorcollege_idHoorcollege FROM `hoorcollege_onderwerphoorcollege` WHERE Onderwerp_Vak_idVak=".$_GET["gevraagdVak"]." AND Onderwerp_idOnderwerp=".$_GET["gevraagdOnd"].")");
+            $result = $db->Execute("SELECT * from Hoorcollege_hoorcollege where idHoorcollege in (SELECT Hoorcollege_idHoorcollege FROM hoorcollege_onderwerphoorcollege WHERE Onderwerp_Vak_idVak=".$_GET["gevraagdVak"]." AND Onderwerp_idOnderwerp=".$_GET["gevraagdOnd"].")");
         }
         //xml file aanmaken
         $xml_file  = "<?xml version=\"1.0\"?>";
