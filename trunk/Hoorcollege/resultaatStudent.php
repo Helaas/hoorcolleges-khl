@@ -5,26 +5,29 @@ session_start();
 $TBS = new clsTinyButStrong;
 
 if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
-    //Controle van $_Get['hoorcollege']
     if(validateNumber($_GET['hoorcollege'])) {
             if (heeftHoorcollegeVragen($_GET["hoorcollege"]) && heeftGebruikerVragenGemaakt($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])){
                 $config["pagina"] = "./student/resultaatStudent.html";
                 $TBS->LoadTemplate('./html/student/templateStudent.html');
                 $gebruikerID = $_SESSION['gebruiker']->getIdGebruiker();
-                $resultaat = $db->GetRow('select * from hoorcollege_hoorcollege where idHoorcollege='.$_GET['hoorcollege']);
-                $naamHoorcollege = $resultaat['naam'];
+                $hoorcollegeInfo = $db->GetRow('select * from hoorcollege_hoorcollege where idHoorcollege='.$_GET['hoorcollege']);
+                $naamHoorcollege = $hoorcollegeInfo['naam'];
 
                 $vragen = array();
                 $idVraag;
-                $resultaat = $db->Execute('SELECT * FROM hoorcollege_vraag WHERE Hoorcollege_idHoorcollege = '.$_GET['hoorcollege']);
-                while (!$resultaat->EOF) {
-                    $vragen[$resultaat->fields["idVraag"]]["vraagstelling"] =  $resultaat->fields["vraagstelling"];
-                    $vragen[$resultaat->fields["idVraag"]]["id"] =  $resultaat->fields["idVraag"];
-                    $vragen[$resultaat->fields["idVraag"]]["juistAntwoord"] = getAntwoord($resultaat->fields["juistantwoord"]);
-                    $resultaat->MoveNext();
+                //Alle vragen van het hoorcollege
+                $alleVragenQuery = $db->Execute('SELECT * FROM hoorcollege_vraag WHERE Hoorcollege_idHoorcollege = '.$_GET['hoorcollege']);
+                while (!$alleVragenQuery->EOF) {
+                    $vragen[$alleVragenQuery->fields["idVraag"]]["vraagstelling"] =  $alleVragenQuery->fields["vraagstelling"];
+                    $vragen[$alleVragenQuery->fields["idVraag"]]["id"] =  $alleVragenQuery->fields["idVraag"];
+                    $vragen[$alleVragenQuery->fields["idVraag"]]["juistAntwoord"] = getAntwoord($alleVragenQuery->fields["juistantwoord"]);
+                    $alleVragenQuery->MoveNext();
                 }
 
-                $resultaat = $db->Execute('SELECT * FROM hoorcollege_gegevenantwoord WHERE Gebruiker_idGebruiker = '.$gebruikerID);
+                //Alle vragen van het hoorcollege die bij de gebruiker hoort
+                $resultaat = $db->Execute('SELECT * FROM hoorcollege_gegevenantwoord 
+                    LEFT OUTER JOIN hoorcollege_vraag ON Vraag_idVraag = idVraag 
+                    WHERE Gebruiker_idGebruiker = '.$gebruikerID.' AND Hoorcollege_idHoorcollege ='.$_GET['hoorcollege']);
                 while (!$resultaat->EOF) {
                     $vragen[$resultaat->fields["Vraag_idVraag"]]["gegevenAntwoord"] = getAntwoord($resultaat->fields["MogelijkAntwoord_idMogelijkAntwoord"]);
                     $vragen[$resultaat->fields["Vraag_idVraag"]]["juist"] = antwoordOk($gebruikerID, $resultaat->fields["Vraag_idVraag"]);
