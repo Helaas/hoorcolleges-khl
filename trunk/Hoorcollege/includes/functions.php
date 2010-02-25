@@ -652,4 +652,16 @@
                                     WHERE idHoorcollege =".$hoorcollid);
         }
 
+        function verwijderOnderwerp($gevraagdond){
+            global $db;
+
+            $result=$db->Execute("SELECT Hoorcollege_idHoorcollege FROM hoorcollege_onderwerphoorcollege WHERE Onderwerp_idOnderwerp=".$gevraagdond);
+            while (!$result->EOF) {
+            verwijderHoorcollege($result->fields["Hoorcollege_idHoorcollege"]);
+            $result->MoveNext();
+            }
+            $db->Execute("DELETE FROM hoorcollege_onderwerp
+                                    WHERE idOnderwerp =".$gevraagdond);
+        }
+
 ?>
