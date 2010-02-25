@@ -697,7 +697,7 @@
         function getGroepId($groepnaam){
             global $db;
 
-            $result=$db->Execute("SELECT idGroep FROM hoorcollege_groep WHERE naam =".$groepnaam);
+            $result=$db->GetRow("SELECT idGroep FROM hoorcollege_groep WHERE naam ='".$groepnaam."'");
             return $result["idGroep"];
         }
 ?>
