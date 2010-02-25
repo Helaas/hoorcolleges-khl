@@ -518,3 +518,42 @@ function GoTo3(url)
     }
 }
 
+function maakHoorcollegePopup(type){
+    	newwindow=window.open('bibliotheekPopup.php?type='+type,'biblio','height=550,width=750');
+	if (window.focus) {newwindow.focus()}
+	return false;
+
+}
+
+function popupNaarHoofdpagina(type){
+    var naam = "technische fout";
+
+    if (type == "txt") naam = "tekst";
+    if (type == "mp3") naam = "audio";
+    if (type == "flv") naam = "video";
+
+    var verder = false;
+    var button;
+    var radioButtons = document.body.getElementsByTagName('input')
+    for (i=0; i<radioButtons.length; i++) {
+            if (radioButtons[i].checked){
+                verder = true;
+                button = radioButtons[i];
+            }
+    }
+
+    if(verder){
+        if (button.value>0){
+            window.opener.document.getElementById("feedback_"+type).innerHTML = "Geselecteerde " + naam + ' : <strong>"' + button.parentNode.parentNode.childNodes[3].innerHTML +'"</strong>.';
+            window.opener.document.getElementById("button_"+type).value="Wijzig keuze";
+        } else {
+            window.opener.document.getElementById("feedback_"+type).innerHTML = "Nog geen " + naam + " geselecteerd.";
+            window.opener.document.getElementById("button_"+type).value="Blader in bibliotheek";
+        }
+        close();
+    } else {
+        alert("U moet een keuze maken");
+    }
+
+
+}
