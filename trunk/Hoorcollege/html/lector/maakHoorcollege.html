@@ -9,18 +9,23 @@
         <option value="[blk1.idVak]" name="Vak">[blk1.naam;block=option]</option>
         </select><br /><div id="kiesond"></div>
 
-    <h3>Videocomponent</h3>
+        <h3>Componenten</h3>
+        U kan kan van elk type 1 component selecteren.
+    <h4>Videocomponent</h4>
         <input type="button" id ="button_flv" value="Blader in bibliotheek" onclick="maakHoorcollegePopup('flv')" />
         <br /><br />
         <div id="feedback_flv">Nog geen video geselecteerd.</div>
+        <input type="hidden" name="keuze_flv" id="keuze_flv" value="-1" />
     <h3>Audiocomponent</h3>
         <input type="button" id ="button_mp3" value="Blader in bibliotheek" onclick="maakHoorcollegePopup('mp3')" />
         <br /><br />
         <div id="feedback_mp3">Nog geen audio geselecteerd.</div>
+        <input type="hidden" name="keuze_mp3" id="keuze_mp3" value="-1" />
     <h3>Tekstcomponent</h3>
         <input type="button" id ="button_txt" value="Blader in bibliotheek" onclick="maakHoorcollegePopup('txt')" />
         <br /><br />
         <div id="feedback_txt">Nog geen tekst geselecteerd.</div>
+        <input type="hidden" name="keuze_txt" id="keuze_txt" value="-1" />
     <h3>Studenten kiezen</h3>
     <table border="0">
         <tbody>

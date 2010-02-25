@@ -544,7 +544,7 @@ function popupNaarHoofdpagina(type){
 
     if(verder){
         if (button.value>0){
-            window.opener.document.getElementById("feedback_"+type).innerHTML = "Geselecteerde " + naam + ' : <strong>"' + button.parentNode.parentNode.childNodes[3].innerHTML +'"</strong>.';
+            window.opener.document.getElementById("feedback_"+type).innerHTML = "Geselecteerde " + naam + ' : <strong>"' + document.getElementById("naam_"+button.value).innerHTML +'"</strong>.';
             window.opener.document.getElementById("button_"+type).value="Wijzig keuze";
         } else {
             window.opener.document.getElementById("feedback_"+type).innerHTML = "Nog geen " + naam + " geselecteerd.";

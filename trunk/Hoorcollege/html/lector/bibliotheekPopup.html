@@ -46,16 +46,19 @@ color:#000000;
                     </tr>
                     <tr>
                         <td><input type="radio" name="selecteer" value="[blk2.idBibliotheekItem]" /></td>
-                        <td bgcolor="#F0F0F0">[blk2.naam;block=tr]</td>
+                        <td bgcolor="#F0F0F0" id="naam_[blk2.idBibliotheekItem]">[blk2.naam;block=tr]</td>
                         <td bgcolor="#F0F0F0">[blk2.mimetype]</td>
                         <td bgcolor="#F0F0F0">[blk2.beschrijving;htmlconv=no]</td>
                     </tr>
                     <tr>
                         <td><input type="radio" name="selecteer" value="[blk2.idBibliotheekItem]" /></td>
-                        <td bgcolor="#FFF5D2">[blk2.naam;block=tr]</td>
+                        <td bgcolor="#FFF5D2" id="naam_[blk2.idBibliotheekItem]">[blk2.naam;block=tr]</td>
                         <td bgcolor="#FFF5D2">[blk2.mimetype]</td>
                         <td bgcolor="#FFF5D2">[blk2.beschrijving;htmlconv=no]</td>
                     </tr>
+                   <tr bgcolor="#FFCFB9">
+                        <td colspan="4">[blk2;block=tr;nodata]Geen componenten in deze categorie.</td>
+                   </tr>
                     </table>
                     <div><br/><input type="radio" name="selecteer" value="-1" checked />Geen item selecteren.<br /><br /><input type="button" value="Keuze bevestigen" onclick="popupNaarHoofdpagina('[var._GET.type;noerr]')" /></div>
                 </form>

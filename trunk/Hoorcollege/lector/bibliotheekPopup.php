@@ -14,13 +14,12 @@
                 $TBS->LoadTemplate('./../html/lector/bibliotheekPopup.html');
                 $TBS->MergeBlock("blk1",$db,"select *, IF(idBibliotheekCategorie= ". $bibliotheekCategorie .", \" selected\", \"\") as selected from hoorcollege_bibliotheekcategorie WHERE Gebruiker_idGebruiker = ".(int)$_SESSION['gebruiker']->getIdGebruiker());
 
-                if (isset($_POST["bibliotheekCategorie"])) {
-                                    $TBS->MergeBlock("blk2",$db,"SELECT * FROM hoorcollege_bibliotheekitem
-                                                                 where BibliotheekCategorie_Gebruiker_idGebruiker = ". (int)$_SESSION['gebruiker']->getIdGebruiker() ."
-                                                                 and mimetype = '". $_GET["type"] ."'
-                                                                 and BibliotheekCategorie_idBibliotheekCategorie = ".$bibliotheekCategorie);
+                $TBS->MergeBlock("blk2",$db,"SELECT * FROM hoorcollege_bibliotheekitem
+                                             where BibliotheekCategorie_Gebruiker_idGebruiker = ". (int)$_SESSION['gebruiker']->getIdGebruiker() ."
+                                             and mimetype = '". $_GET["type"] ."'
+                                             and BibliotheekCategorie_idBibliotheekCategorie = ".$bibliotheekCategorie);
 
-                }
+                
                 
 
                 
