@@ -1,6 +1,31 @@
 <?php
     include_once('kern.php');
 
+    //methode om een volledige vak te verwijderen
+    function verwijderVak($idVak) {
+        global $db;
+        //alle onderwerpen en bijhorenden hoorcolleges enz verwijderen
+        $resultaat = $db->Execute("SELECT idOnderwerp as id
+                                   FROM hoorcollege_onderwerp
+                                   where Vak_idVak = '$idVak'");
+        while(!$resultaat->EOF) {
+            verwijderOnderwerp($resultaat->fields["id"]);
+            $resultaat->MoveNext();
+        }
+
+        //verwijderen van alle studenten die het vak volgen
+        $resultaat = $db->Execute("delete from hoorcollege_gebruiker_volgt_vak
+                                          where Vak_idVak = '$idVak'");
+
+        //verwijderen van alle beheerders van het vak
+        $resultaat = $db->Execute("delete from hoorcollege_gebruiker_beheert_vak
+                                          where Vak_idVak = '$idVak'");
+
+        //het vak zelf verwijderen
+        $resultaat = $db->Execute("delete from hoorcollege_vak
+                                          where idVak = '$idVak'");
+    }
+
     //methode om een beheerder van een vak te verwijderen
     function verwijderBeheerderVanVak($idGebruiker, $idVak) {
         global $db;

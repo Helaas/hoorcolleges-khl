@@ -308,6 +308,24 @@
                 $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
             }
         }
+        else if(isset ($_POST['verwijderenvakverder'])) {
+            $vak = $_POST['selectvak'];
+            $vaknaam = getVakNameViaId($vak);
+            if($vak == 'kies') {
+                header("location: admin.php?pagina=verwijderenVakken&foutboodschap=U moet een vak kiezen");
+            }            
+        }
+        else if(isset ($_POST['voltooienverwijderenvak'])) {
+            $vak = $_POST['vak'];
+            if(verwijderVak($vak)) {
+                $typeboodschap = "juist";
+                $foutboodschap = 'Vak is succesvol verwijderd!'; //dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
+            }
+        }
 
 
 
@@ -691,6 +709,10 @@
                                                LEFT JOIN hoorcollege_gebruiker_beheert_vak bv ON g.idGebruiker = bv.Gebruiker_idGebruiker
                                                WHERE bv.Vak_idVak = '$vak'");
 
+            }
+            else if($_GET['pagina'] == 'verwijderenVakken') {
+                //overzicht alle vakken
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
             }
         }        
 

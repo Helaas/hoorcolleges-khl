@@ -1,0 +1,9 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> >  <a class="nav" href="admin.php?pagina=verwijderenVakken">verwijderen vakken</a> > voltooien<br><br><br>
+<h2>Voltooien</h2>
+
+U staat op het punt het vak <em>[onshow.vaknaam]</em> te verwijderen. Alles wat hieran is verbonden wordt verwijderd. Deze actie is onherroepelijk!
+<br><br><br>
+<form action="admin.php?pagina=admin" method="POST">
+    <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
+    <input type="submit" value="Voltooien" name="voltooienverwijderenvak" />&nbsp;&nbsp<input type="submit" value="Annuleer" name="annuleer" />
+</form>
