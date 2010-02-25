@@ -1,59 +1,69 @@
 <?php
 // && heeftHoorcollegeVragen($_GET["hoorcollege"]) && magGebruikerVragenBeantwoorden($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])
-    require("./includes/kern.php");
-    session_start();
+require("./includes/kern.php");
+session_start();
 
-    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1){ //student is ingelogged
+if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) { //student is ingelogged
 
-        if (isset($_GET["hoorcollege"]) && is_numeric($_GET["hoorcollege"]) && magGebruikerHoorcollegeZien($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])){
+    if (isset($_GET["hoorcollege"]) && is_numeric($_GET["hoorcollege"]) && magGebruikerHoorcollegeZien($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])) {
 
-            //pagina ingeladen dus het hoorcollege is al "bekeken"
-            zetHoorcollegeBekeken($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]);
+        //pagina ingeladen dus het hoorcollege is al "bekeken"
+        zetHoorcollegeBekeken($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]);
 
-            /**
-             * Hoorcollege informatie algemeen
-             */
+        /**
+         * Hoorcollege informatie algemeen
+         */
 
-            $hoorcolInfo = getHoorcollegeInformatie($_GET["hoorcollege"]);
-            $hoorcolInfo["VBC_geluid"] = $hoorcolInfo["VBC_geluid"] == "1" ? "true" : "false"; //ik wil letterlijk de strings
-            $hoorcolInfo["heeftVragen"] = heeftHoorcollegeVragen($_GET["hoorcollege"])  == true ? "true" : "false"; //ik wil letterlijk de strings
-            $hoorcolInfo["heeftVBC"] = heeftHoorcollegeVBC($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]) == "1" ? "true" : "false"; //ik wil letterlijk de strings
-            $hoorcolInfo["gebruiker"] = (int)$_SESSION['gebruiker']->getIdGebruiker();
+        $hoorcolInfo = getHoorcollegeInformatie($_GET["hoorcollege"]);
+        $hoorcolInfo["VBC_geluid"] = $hoorcolInfo["VBC_geluid"] == "1" ? "true" : "false"; //ik wil letterlijk de strings
+        $hoorcolInfo["heeftVragen"] = heeftHoorcollegeVragen($_GET["hoorcollege"])  == true ? "true" : "false"; //ik wil letterlijk de strings
+        $hoorcolInfo["heeftVBC"] = heeftHoorcollegeVBC($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]) == "1" ? "true" : "false"; //ik wil letterlijk de strings
+        $hoorcolInfo["gebruiker"] = (int)$_SESSION['gebruiker']->getIdGebruiker();
 
-            /**
-             * De items in dit hoorcollege
-             */
+        /**
+         * De items in dit hoorcollege
+         */
 
-            //toegestande types
-            $video = false;
-            $audio = false;
-            $tekst = false;
+        //toegestande types
+        $video = false;
+        $audio = false;
+        $tekst = false;
 
-            $items = getHoorcollegeBibliotheekitems($_GET["hoorcollege"]);
-
-
-            if (isset($items["flv"])) $video = true;
-            if (isset($items["mp3"])) $audio = true;
-            if (isset($items["txt"])) $tekst = true;
+        $items = getHoorcollegeBibliotheekitems($_GET["hoorcollege"]);
 
 
-            
+        if (isset($items["flv"])) $video = true;
+        if (isset($items["mp3"])) $audio = true;
+        if (isset($items["txt"])) $tekst = true;
 
-            $config["pagina"] = "./hoorcollege/template.html";
-            $TBS->LoadTemplate('./html/student/templateStudent.html');
-        } else {
-            $fout["reden"] = "Geen hoorcollege beschikbaar";
-            $fout["inhoud"] = "U beschikt over onvoldoende rechten om dit hoorcollege te bekijken.";
-            $config["pagina"] = "./algemeneFout.html";
-            $TBS->LoadTemplate('./html/student/templateStudent.html');
-        }
 
-    } else { //geen student / niet ingelogged
-        $config["pagina"] = "./FileUpload/Error1Login.html";
-        $TBS->LoadTemplate('./html/template.html');
+        $config["pagina"] = "./hoorcollege/template.html";
+        $TBS->LoadTemplate('./html/student/templateStudent.html');
+
+        $idHoorcollege = $_GET["hoorcollege"];
+        $gebruikersNaam = getGebruikerNaamViaId($_SESSION['gebruiker']->getIdGebruiker());
+        $alleCommentarenQuery = 'SELECT voornaam, naam, inhoud
+                                     FROM hoorcollege_reactie LEFT OUTER JOIN hoorcollege_gebruiker
+                                     ON Gebruiker_idGebruiker = idGebruiker
+                                     WHERE Hoorcollege_idHoorcollege ='.$idHoorcollege;
+
+        $TBS->MergeBlock('blk1', $db, $alleCommentarenQuery);
+
+
+
+    } else {
+        $fout["reden"] = "Geen hoorcollege beschikbaar";
+        $fout["inhoud"] = "U beschikt over onvoldoende rechten om dit hoorcollege te bekijken.";
+        $config["pagina"] = "./algemeneFout.html";
+        $TBS->LoadTemplate('./html/student/templateStudent.html');
     }
 
-    $TBS->Show();
+} else { //geen student / niet ingelogged
+    $config["pagina"] = "./FileUpload/Error1Login.html";
+    $TBS->LoadTemplate('./html/template.html');
+}
+
+$TBS->Show();
 
 
 ?>

@@ -1,9 +1,11 @@
 var xHRObjectCommentToevoegen = null; //aanmaken van xHRObject
 var commentaar;
 var gebruikersnaam;
+var hoorcollege;
 function submitCommentaar(){
     commentaar = document.getElementById('tekst').value;
     gebruikersnaam = document.getElementById('naamGebruiker').value;
+    hoorcollege = document.getElementById('idHoorcollege').value;
     // initialisatie van het xHRObject browser-onafhankelijk
     if (window.XMLHttpRequest) {
         xHRObjectCommentToevoegen = new XMLHttpRequest();
@@ -14,7 +16,7 @@ function submitCommentaar(){
     }
 
     xHRObjectCommentToevoegen.onreadystatechange = getDataCommentToevoegen; // callback
-    xHRObjectCommentToevoegen.open("GET", "verwerkCommentaarToevoegen.php?commentaar="+commentaar+"&hoorcollege=1",true);
+    xHRObjectCommentToevoegen.open("GET", "verwerkCommentaarToevoegen.php?commentaar="+commentaar+"&hoorcollege="+hoorcollege,true);
     xHRObjectCommentToevoegen.send(null);
 
 }
@@ -28,7 +30,7 @@ function getDataCommentToevoegen(){
         commentaarDiv.id = "commentaar";
 
         var commentaarGebruiker = document.createElement('p');
-        commentaarGebruiker.textContent = gebruikersnaam;
+        commentaarGebruiker.textContent = gebruikersnaam + " zegt:";
         commentaarDiv.appendChild(commentaarGebruiker);
 
         var commentaarText = document.createElement('p');
