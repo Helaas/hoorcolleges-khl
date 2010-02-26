@@ -29,7 +29,7 @@ if ($_FILES['file']['tmp_name'] ) {
             $index = 1;
             $cells = $row->getElementsByTagName( 'Cell' );
             foreach( $cells as $cell ) {
-                $ind = $cell->getAttribute( 'Index' );
+                $ind = $cell->getAttribute( 'ss:Index' );
                 if ( $ind != null ) $index = $ind;
                 if ( $index == 1 ) $groep = $cell->nodeValue;
                 if ( $index == 2 ) $gebruikerId = $cell->nodeValue;
