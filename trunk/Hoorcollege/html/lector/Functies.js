@@ -4,6 +4,16 @@ function autoSubmit(form,var1)
 
     var vakid=form.vak.options[form.vak.options.selectedIndex].value;
 
+    //reset velden
+    var TableDiv=document.getElementById('TableDiv');
+  while ( TableDiv.firstChild ){
+        TableDiv.removeChild( TableDiv.firstChild );
+    }
+        var ondDiv=document.getElementById('onderwerpform');
+  while ( ondDiv.firstChild ){
+        ondDiv.removeChild( ondDiv.firstChild );
+    }
+
 
     var xmlhttp;
     try {
@@ -70,7 +80,7 @@ function autoSubmit(form,var1)
     var knop= document.createElement('input');
     knop.setAttribute('type','button');
     knop.setAttribute('name','CreateOnd');
-    knop.setAttribute('value','Of voeg een nieuw onderwerp toe');
+    knop.setAttribute('value','Voeg een nieuw onderwerp toe');
     knop.onclick = voegOndToe;
     document.getElementById('kiesond').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
     document.getElementById('kiesond').appendChild(knop);
@@ -172,6 +182,8 @@ function autoSubmit2(form)
 
     var vakid=form.vak.options[form.vak.options.selectedIndex].value;
     var ondid=form.Ond.options[form.Ond.options.selectedIndex].value;
+    var vak=form.vak.options[form.vak.options.selectedIndex].text;
+    var ond=form.Ond.options[form.Ond.options.selectedIndex].text;
 
 
 
@@ -205,78 +217,211 @@ function autoSubmit2(form)
     xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"&gevraagdOnd="+ondid, false);
     xmlhttp.send(null);
 
-    var myTable = document.getElementById("myTable");
+    var TableDiv = document.getElementById("TableDiv");
 
 
     //Huidige tabel leegmaken om hem te vervangen met een nieuwe
-    while ( myTable.firstChild ){
-        myTable.removeChild( myTable.firstChild );
+    while ( TableDiv.firstChild ){
+        TableDiv.removeChild( TableDiv.firstChild );
     }
+    //als onderwerp of vak niet geselecteerd is, geen tabel maken
+
+    if(ondid!=0 && vakid!=0){
 
     //grootte xml bestand opvragen
     var elems = xmlhttp.responseXML.getElementsByTagName('Naam');
     var size = elems.length;
                  
-    if(size>0){
+
+
+        
+        //initialiseer tabel
+        var myTable = document.createElement("table");
+        myTable.setAttribute('width','100%');
+        myTable.setAttribute('border','0');
+        myTable.setAttribute('cellspacing','1');
+        myTable.setAttribute('cellpadding','0');
+        myTable.setAttribute('font-size','13px');
+
+        //Tr voor vakvermelding
         var TR1 = document.createElement("tr");
-        var TH1 = document.createElement("th");
-
-        TH1.id='TitelId';
-        TR1.appendChild(TH1);
-
-
-        var TH2 = document.createElement("th");
-        TH2.id='TitelCollege';
-        TR1.appendChild(TH2);
+        var TD1 = document.createElement("td");
+        TD1.setAttribute('className',"title-section");
+        TD1.setAttribute('bgcolor',"#CFE7CF");
+        TD1.setAttribute('colSpan',"0");
+        var bvak = document.createElement("b");
+        bvak.appendChild(document.createTextNode(vak));
+        TD1.appendChild(bvak);
+        TR1.appendChild(TD1);
 
         myTable.appendChild(TR1);
 
-                  
+        //Tr voor ondervermelding + wijzig en edit opties
+        var TR2 = document.createElement("tr");
+        var TD2 = document.createElement("td");
+        //whitespace td
+        TD2.appendChild(document.createTextNode('\u00A0'));
+        TD2.setAttribute('height',"20");
+        TR2.appendChild(TD2);
+
+        var TD3= document.createElement("td");
+        TD3.setAttribute('bgcolor',"#FFF5D2");
+        //TD3.setAttribute('colSpan',"0");
+        var bfield=document.createElement("b");
+        var ufield=document.createElement("u");
+        ufield.appendChild(document.createTextNode(ond));
+        bfield.appendChild(ufield);
+        TD3.appendChild(bfield);
+        TD3.setAttribute('width','15%');
+        TR2.appendChild(TD3);
+        //edit onderwerp
+        var TD4= document.createElement("td");
+        TD4.setAttribute('bgcolor',"#FFF5D2");
+        //TD4.setAttribute('colSpan',"0");
+        var link = document.createElement("a");
+        link.appendChild(document.createTextNode('Wijzig onderwerp'));
+        link.setAttribute('href',"hoorcollegeVragenBeantwoorden.php?hoorcollege="+vakid);
+        //TD4.setAttribute('width','5%');
+        TD4.appendChild(link);
+        TR2.appendChild(TD4);
+        //remove onderwerp
+        var TD5= document.createElement("td");
+        TD5.setAttribute('bgcolor',"#FFF5D2");
+        TD5.setAttribute('colSpan',"3");
+        var link2 = document.createElement("a");
+        link2.appendChild(document.createTextNode('Verwijder onderwerp'));
+        link2.setAttribute('href',"hoorcollegeVragenBeantwoorden.php?hoorcollege="+vakid);
+        TD5.appendChild(link2);
+        TR2.appendChild(TD5);
 
 
 
-        //aanmaken titel kolom 1
-        var titel=document.createElement('p');
-        titel.innerHTML='Id';
-        document.getElementById("TitelId").appendChild(titel);
+       myTable.appendChild(TR2);
 
-        //aanmaken titel colom 2
-        var titel2=document.createElement('p');
-        titel2.innerHTML='Hoorcollege';
-        document.getElementById("TitelCollege").appendChild(titel2);
+       //Tr voor kolomnamen
+        var TR3 = document.createElement("tr");
+        var TDw = document.createElement("td");
+        var TDw2= document.createElement("td");
+        //whitespace td
+        TDw.appendChild(document.createTextNode('\u00A0'));
+        TDw2.appendChild(document.createTextNode('\u00A0'));
+        TR3.appendChild(TDw);TR3.appendChild(TDw2);
+
+ 
+
+        //kolom1
+        var TD6= document.createElement("td");
+        TD6.setAttribute('bgcolor',"#F0F0F0");
+        TD6.setAttribute('height',"20");
+        var boldfield=document.createElement("b");
+        var ufield=document.createElement("em");
+        ufield.appendChild(document.createTextNode('Hoorcollege'));
+        boldfield.appendChild(ufield);
+        TD6.appendChild(boldfield);
+        TR3.appendChild(TD6);
+        //kolom2
+        TD6= document.createElement("td");
+        TD6.setAttribute('bgcolor',"#F0F0F0");
+       // TD6.setAttribute('colSpan',"4");
+        boldfield=document.createElement("b");
+        boldfield.appendChild(document.createTextNode('Bekijken'));
+        TD6.appendChild(boldfield);
+        TR3.appendChild(TD6);
+        //kolom3
+        TD6= document.createElement("td");
+        TD6.setAttribute('bgcolor',"#F0F0F0");
+        //TD6.setAttribute('colSpan',"4");
+        boldfield=document.createElement("b");
+        boldfield.appendChild(document.createTextNode('Wijzigen'));
+        TD6.appendChild(boldfield);
+        TR3.appendChild(TD6);
+        //kolom4
+        TD6= document.createElement("td");
+        TD6.setAttribute('bgcolor',"#F0F0F0");
+        //TD6.setAttribute('colSpan',"4");
+        boldfield=document.createElement("b");
+        boldfield.appendChild(document.createTextNode('Verwijder'));
+        TD6.appendChild(boldfield);
+        TR3.appendChild(TD6);
 
 
+        myTable.appendChild(TR3);
+
+                //vul op met hoorcolleges
+               if(size>0){
+                for(i=0;i<size;i++){
+                   var newTR = document.createElement("tr");
+                   var newTd = document.createElement("td");
+                   newTd.appendChild(document.createTextNode('\u00A0'));
+                   var newField = document.createElement("td");
+
+                   newField.appendChild(document.createTextNode(xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data));
+                   newField.setAttribute('bgcolor',"#F0F0F0");
+                   newTR.appendChild(newTd);
+                   newTd = document.createElement("td");
+                   newTd.appendChild(document.createTextNode('\u00A0'));
+                   newTR.appendChild(newTd);
+                   newTR.appendChild(newField);
+
+                   newField = document.createElement("td");
+                   link = document.createElement("a");
+                   link.appendChild(document.createTextNode('Details'));
+                   link.setAttribute('href',"details.php");
+                   newField.setAttribute('bgcolor',"#F0F0F0");
+                   newField.appendChild(link);
+                   newTR.appendChild(newField);
 
 
-                   
-                   
-        //tabel opvullen met gegevens uit de xml
-        for(i=0;i<size;i++){
-            var newTR = document.createElement("tr");
-            var newId = document.createElement("td");
-            newId.innerHTML = xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
-            var newName = document.createElement("td");
-            newName.innerHTML = xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data;
-            newTR.appendChild(newId);
-            newTR.appendChild(newName);
-            myTable.appendChild(newTR);
-        }
+                   newField = document.createElement("td");
+                   link = document.createElement("a");
+                   link.appendChild(document.createTextNode('Wijzig'));
+                   link.setAttribute('href',"editHoorcollege.php");
+                   newField.appendChild(link);
+                   newField.setAttribute('bgcolor',"#F0F0F0");
+                   newTR.appendChild(newField);
+
+                   var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
+                   newField = document.createElement("td");
+                   newField.setAttribute('bgcolor',"#F0F0F0");
+                   link = document.createElement("a");
+                   link.appendChild(document.createTextNode('Verwijder'));
+                   link.setAttribute('href',"DeleteHoorcollege.php?gevraagdhoorcoll="+id);
+                   link.setAttribute('onclick', "return confirm('Bent u zeker dat u het hoorcollege \""+xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data+"\" wilt verwijderen?')");
+                   newField.appendChild(link);
+                   newTR.appendChild(newField);
+
+                   myTable.appendChild(newTR);
+ }
+               }
+   else{
+        //geen hoorcolleges
+                var newTR = document.createElement("tr");
+                   var newTd = document.createElement("td");
+                   newTd.appendChild(document.createTextNode('\u00A0'));
+                   var newField = document.createElement("td");
+
+                   newField.appendChild(document.createTextNode('Dit onderwerp bevat geen hoorcolleges'));
+                   newField.setAttribute('bgcolor',"#F0F0F0");
+                   newField.setAttribute('colspan',"4");
+                   newTR.appendChild(newTd);
+                   newTd = document.createElement("td");
+                   newTd.appendChild(document.createTextNode('\u00A0'));
+                   newTR.appendChild(newTd);
+                   newTR.appendChild(newField);
+                   myTable.appendChild(newTR);
+
     }
+        TableDiv.appendChild(myTable);
+   
+    
 
-    else{
-        var nieuweTR = document.createElement("tr");
-        var msg = document.createElement("td");
-        msg.appendChild(document.createTextNode('Dit onderwerp heeft geen hoorcolleges'));
-        nieuweTR.appendChild(msg);
-        myTable.appendChild(nieuweTR);
-
-    }
+ 
 
 
 
                
                    
-
+    }
 }
 
 
@@ -404,7 +549,7 @@ function GenHoorcollDropdown(form){
     var vakid= document.Form.vak.options[document.Form.vak.options.selectedIndex].value;
     var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
 
-
+if(ondid!=0){
     var xmlhttp;
     try {
         // Mozilla / Safari / IE7
@@ -476,8 +621,7 @@ function GenHoorcollDropdown(form){
     document.getElementById('HoorcollegeToevoegen').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
     document.getElementById('HoorcollegeToevoegen').appendChild(knop);
                 
-
-
+}
 }
 function GoTo(url)
 {
