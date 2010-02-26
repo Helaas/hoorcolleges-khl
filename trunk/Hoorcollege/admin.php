@@ -326,7 +326,66 @@
                 $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
             }
         }
-
+        else if(isset ($_POST['knopvoegtoegroep'])) { //indien men een groep probeert aan te maken via aanmakenGroepen.html            
+            //validatie van aanmaak groep
+            if(empty ($_POST['groepnaam'])) {
+                $foutboodschap = 'U moet een naam opgeven!';
+            }
+            else if(bestaatGroep($_POST['groepnaam'])) {
+                $foutboodschap = 'Deze groep bestaat al!';
+            }
+            else {
+                if(!voegGroepToe($_POST['groepnaam'])) {
+                    $foutboodschap = 'Door een technische probleem kon de groep niet aangemaakt worden, proper later nog eens!';
+                }
+                else {
+                    $typeboodschap = "juist";
+                    $foutboodschap = 'Groep is succesvol aangemaakt!'; //dit is geen foutboodschap
+                }
+            }
+        }       
+        else if(isset ($_POST['wijziggroepnaam'])) { //indien men een groepsnaam probeert te wijzigen in wijzigenGroepen
+            if(!empty ($_POST['nieuwenaam'])) {
+                $idGroep = (int) $_POST['selectgroep'];
+                $naam = (string) $_POST['nieuwenaam'];
+                if(wijzigGroepsnaam($idGroep, $naam)) {
+                    $typeboodschap = "juist";
+                    $foutboodschap = 'Groepsnaam is succesvol gewijzigd!'; //dit is geen foutboodschap
+                }
+                else {
+                    $typeboodschap = "fout";
+                    $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
+                }
+            }
+            else if($_POST['selectgroep'] == 'leeg') {
+                $typeboodschap = "fout";
+                $foutboodschap = 'U moet eerst een groep selecteren!';
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Nieuwe naam mag niet leeg zijn!';
+            }
+        }
+        else if(isset ($_POST['verderverwijdergroepknop'])) {
+            if($_POST['selectgroep'] != "leeg") {
+                $idGroep = (int) $_POST['selectgroep'];
+                $groepsnaam = getGroepNameViaId($idGroep);
+            }
+            else {
+                header("location: admin.php?pagina=verwijderenGroepen&foutboodschap=U moet een groep kiezen");
+            }
+        }
+        else if(isset ($_POST['voltooiengroepverwijderen'])) {
+            $idGroep = $_POST['idGroep'];
+            if(verwijderGroep($idGroep)) {
+                $typeboodschap = "juist";
+                $foutboodschap = 'Groep is succesvol verwijderd!'; //dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
+            }
+        }
 
 
 
@@ -713,6 +772,22 @@
             else if($_GET['pagina'] == 'verwijderenVakken') {
                 //overzicht alle vakken
                 $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_vak GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'wijzigenGroepen') {
+                //overzicht alle groepen
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'verwijderenGroepen') {
+                //overzicht alle groepen
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'verderverwijderenGroepen') {
+                $groep = (int) $_POST['selectgroep'];
+                $TBS->MergeBlock('blk1', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
+                                              FROM hoorcollege_gebruiker g
+                                              LEFT JOIN hoorcollege_gebruikergroep gr ON g.idGebruiker = gr.Gebruiker_idGebruiker
+                                              WHERE gr.Groep_idGroep = '$groep' AND g.niveau = '1'
+                                              GROUP BY g.naam, g.voornaam ASC");
             }
         }        
 

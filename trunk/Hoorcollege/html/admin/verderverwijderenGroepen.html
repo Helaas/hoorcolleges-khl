@@ -1,0 +1,20 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > > <a class="nav" href="admin.php?pagina=verwijderenGroepen">verwijderen groepen</a> > voltooien<br><br><br>
+<h2>Verwijderen groepen</h2>
+<form action="admin.php" method="POST">
+            <input type="hidden" name="idGroep" value="[onshow.idGroep]" readonly="true" />
+            Groep <em>[onshow.groepsnaam]</em> wordt verwijderd, volgende studenten hebben geen groep meer:<br><br>
+
+            <ul>
+                <li>
+                    [blk1;block=li;nodata]Bevat geen studenten
+                </li>
+                <li>                    
+                    [blk1.naam;block=li], [blk1.voornaam;block=li]
+                </li>
+            </ul>
+            <br><br>
+            <p id ="[onshow.typeboodschap;noerr]">
+                [onshow.foutboodschap;noerr]
+            </p>
+            <input type="submit" value="Voltooien" name="voltooiengroepverwijderen" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+</form>

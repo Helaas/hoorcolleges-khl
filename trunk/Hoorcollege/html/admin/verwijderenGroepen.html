@@ -1,0 +1,16 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > verwijderen groepen<br><br><br>
+<h2>Verwijderen groepen</h2>
+<form action="admin.php?pagina=verderverwijderenGroepen" method="POST">
+    Kies de te verwijderen groep:<br><br>
+    <select name="selectgroep">
+        <option value="leeg">[blk1;block=option;nodata]Leeg</option>
+        <option value="[blk1.idGroep;block=option]">[blk1.naam;]</option>
+    </select>
+    <br><br>    
+
+    <p id ="[onshow.typeboodschap;noerr]">
+        [onshow.foutboodschap;noerr]
+    </p>
+    <br><br>
+    <input type="submit" value="verder" name="verderverwijdergroepknop" />
+</form>

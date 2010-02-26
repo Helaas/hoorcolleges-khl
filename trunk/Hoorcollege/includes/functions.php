@@ -1,6 +1,25 @@
 <?php
     include_once('kern.php');
 
+    //methode om een groep te verwijderen uit de database
+    function verwijderGroep($idGroep) {
+        global $db;
+
+        //studenten die aan deze groep zijn gelinkt uit de tabel gebruikergroep verwijderen
+        verwijderAlleStudentenVanGroep($idGroep);
+        
+        // het vak zelf verwijderen
+        return $resultaat = $db->Execute("delete from hoorcollege_groep
+                                          where idGroep = '$idGroep'");
+    }
+
+    //methode om de groepsnaam te wijzigen
+    function wijzigGroepsnaam($idGroep, $naam) {
+        global $db;
+        return $resultaat = $db->Execute("update hoorcollege_groep
+                                          set naam = '$naam' where idGroep = '$idGroep'");
+    }
+
     //methode om een volledige vak te verwijderen
     function verwijderVak($idVak) {
         global $db;
