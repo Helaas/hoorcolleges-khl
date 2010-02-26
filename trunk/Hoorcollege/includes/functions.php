@@ -712,4 +712,30 @@
             if (!isset($resultaat["BibliotheekCategorie_idBibliotheekCategorie"])) return -1;
             return $resultaat["BibliotheekCategorie_idBibliotheekCategorie"];
         }
+
+        function getGroepenVoorvak($vakid){
+            global $db;
+            $vakid = (int)$vakid;
+
+            $items = array();
+            $resultaat = $db->Execute('SELECT *
+                                    FROM hoorcollege_groep
+                                    WHERE idGroep
+                                    IN (
+                                            SELECT Groep_idGroep
+                                            FROM hoorcollege_gebruikergroep
+                                            WHERE Gebruiker_idGebruiker in (
+                                                                            SELECT Gebruiker_idGebruiker
+                                                                            FROM hoorcollege_gebruiker_volgt_vak
+                                                                            WHERE Vak_idVak ='. $vakid .')
+                                                                            )');
+            while (!$resultaat->EOF) {
+                $items[$resultaat->fields["idGroep"]] = $resultaat->fields["naam"];
+                $resultaat->MoveNext();
+            }
+
+
+            arrayNaarUTF($items);
+            return $items;
+        }
 ?>

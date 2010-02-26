@@ -562,8 +562,48 @@ function popupNaarHoofdpagina(type){
 }
 
 function selecteerItemPopup(item){
-    var radioButtons = document.body.getElementsByTagName('input')
+    var radioButtons = document.body.getElementsByTagName('input');
     for (i=0; i<radioButtons.length; i++) {
         if(radioButtons[i].value == item) radioButtons[i].checked=true;
     }
+}
+
+var xmlhttp;
+
+function vakDropdown(id){
+    xmlhttp=GetXmlHttpObject();
+
+    if (xmlhttp==null){
+      alert ("Your browser does not support AJAX!");
+      return;
+     }
+
+    xmlhttp.onreadystatechange=stateChanged;
+    xmlhttp.open("GET","maakHoorcollegeXML.php?f=dropdown&id="+id,true);
+    xmlhttp.send(null);
+}
+
+function stateChanged()
+{
+    if (xmlhttp.readyState==4){
+        var antwoord = xmlhttp.responseXML;
+        var vakken = antwoord.getElementsByTagName('vak');
+        for (var i=0; i<vakken.length;i++){
+            var id = vakken[i].childNodes[0].childNodes[0].nodeValue;
+            var naam = vakken[i].childNodes[1].childNodes[0].nodeValue
+            alert(naam+id);
+        }
+    }
+}
+
+function GetXmlHttpObject(){
+    if (window.XMLHttpRequest){
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        return new XMLHttpRequest();
+    }
+    if (window.ActiveXObject){
+        // code for IE6, IE5
+        return new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return null;
 }
