@@ -12,7 +12,7 @@ if(isset ($_SESSION['gebruiker'])) {
 
     if($gebruikerNiv==40) {
 
-              if (preg_match('/^[0-9]+$/iD', $_POST['OndID']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['OndNaam'])) {
+              if (preg_match('/^[0-9]+$/iD', $_POST['OndID']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['veld1'])) {
                  //controle of het onderwerp wel bij de lector hoort
                  $result = $db->Execute("    select idOnderwerp
                                              from hoorcollege_onderwerp
@@ -23,7 +23,7 @@ if(isset ($_SESSION['gebruiker'])) {
 
                  if($result->fields["idOnderwerp"]!=null) {
                //edit onderwerp indien lector rechten tot dit onderwerp heeft
-                 editOnderwerp($_POST['OndID'],$_POST['OndNaam']);
+                 editOnderwerp($_POST['OndID'],$_POST['veld1']);
 
                 $config["pagina"] = "./Lector/Boodschap.html";
                 $Titel="Onderwerp wijzigen";

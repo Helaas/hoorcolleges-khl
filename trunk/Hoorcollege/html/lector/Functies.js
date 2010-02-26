@@ -277,10 +277,9 @@ function autoSubmit2(form)
         //edit onderwerp
         var TD4= document.createElement("td");
         TD4.setAttribute('bgcolor',"#FFF5D2");
-        //TD4.setAttribute('colSpan',"0");
         var link = document.createElement("a");
         link.appendChild(document.createTextNode('Wijzig onderwerp'));
-        link.setAttribute('href',"hoorcollegeVragenBeantwoorden.php?hoorcollege="+vakid);
+        link.setAttribute('href',"editOnderwerp.php?gevraagdond="+ondid+"&gevraagdondnaam="+ond);
         //TD4.setAttribute('width','5%');
         TD4.appendChild(link);
         TR2.appendChild(TD4);
@@ -290,7 +289,8 @@ function autoSubmit2(form)
         TD5.setAttribute('colSpan',"3");
         var link2 = document.createElement("a");
         link2.appendChild(document.createTextNode('Verwijder onderwerp'));
-        link2.setAttribute('href',"hoorcollegeVragenBeantwoorden.php?hoorcollege="+vakid);
+        link2.setAttribute('href',"DeleteOnderwerp.php?gevraagdond="+ondid);
+        link2.setAttribute('onclick', "return confirm('Bent u zeker dat u het onderwerp \""+ond+"\" wilt verwijderen?')");
         TD5.appendChild(link2);
         TR2.appendChild(TD5);
 
@@ -322,25 +322,28 @@ function autoSubmit2(form)
         //kolom2
         TD6= document.createElement("td");
         TD6.setAttribute('bgcolor',"#F0F0F0");
-       // TD6.setAttribute('colSpan',"4");
         boldfield=document.createElement("b");
-        boldfield.appendChild(document.createTextNode('Bekijken'));
+        ufield=document.createElement("em");
+        ufield.appendChild(document.createTextNode('Bekijken'));
+        boldfield.appendChild(ufield);
         TD6.appendChild(boldfield);
         TR3.appendChild(TD6);
         //kolom3
         TD6= document.createElement("td");
         TD6.setAttribute('bgcolor',"#F0F0F0");
-        //TD6.setAttribute('colSpan',"4");
         boldfield=document.createElement("b");
-        boldfield.appendChild(document.createTextNode('Wijzigen'));
+        ufield=document.createElement("em");
+        ufield.appendChild(document.createTextNode('Wijzigen'));
+        boldfield.appendChild(ufield);
         TD6.appendChild(boldfield);
         TR3.appendChild(TD6);
         //kolom4
         TD6= document.createElement("td");
         TD6.setAttribute('bgcolor',"#F0F0F0");
-        //TD6.setAttribute('colSpan',"4");
         boldfield=document.createElement("b");
-        boldfield.appendChild(document.createTextNode('Verwijder'));
+        ufield=document.createElement("em");
+        ufield.appendChild(document.createTextNode('Verwijder'));
+        boldfield.appendChild(ufield);
         TD6.appendChild(boldfield);
         TR3.appendChild(TD6);
 
