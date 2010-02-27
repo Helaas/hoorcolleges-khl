@@ -233,22 +233,22 @@ function autoSubmit2(form)
     var size = elems.length;
                  
 
-
+      //Tabel met hoorcolleges genereren adhv Ajaxx
         
-        //initialiseer tabel
+        //tabel
         var myTable = document.createElement("table");
-        myTable.setAttribute('width','100%');
+        myTable.setAttribute('width','700');
         myTable.setAttribute('border','0');
-        myTable.setAttribute('cellspacing','1');
+        myTable.setAttribute('cellspacing','0');
         myTable.setAttribute('cellpadding','0');
         myTable.setAttribute('font-size','13px');
 
-        //Tr voor vakvermelding
+        //Tr vakvermelding
         var TR1 = document.createElement("tr");
         var TD1 = document.createElement("td");
         TD1.setAttribute('className',"title-section");
         TD1.setAttribute('bgcolor',"#CFE7CF");
-        TD1.setAttribute('colSpan',"0");
+        TD1.setAttribute('colSpan',"6");
         var bvak = document.createElement("b");
         bvak.appendChild(document.createTextNode(vak));
         TD1.appendChild(bvak);
@@ -256,23 +256,24 @@ function autoSubmit2(form)
 
         myTable.appendChild(TR1);
 
-        //Tr voor ondervermelding + wijzig en edit opties
+        //Tr ondervermelding + wijzig en edit opties
         var TR2 = document.createElement("tr");
         var TD2 = document.createElement("td");
         //whitespace td
         TD2.appendChild(document.createTextNode('\u00A0'));
-        TD2.setAttribute('height',"20");
         TR2.appendChild(TD2);
 
         var TD3= document.createElement("td");
         TD3.setAttribute('bgcolor',"#FFF5D2");
-        //TD3.setAttribute('colSpan',"0");
+        TD3.setAttribute('colSpan',"2");
         var bfield=document.createElement("b");
-        var ufield=document.createElement("u");
+        var ufield=document.createElement("u"); 
         ufield.appendChild(document.createTextNode(ond));
         bfield.appendChild(ufield);
-        TD3.appendChild(bfield);
-        TD3.setAttribute('width','15%');
+        var p=document.createElement("p");
+        p.appendChild(bfield);
+        TD3.appendChild(p);
+        TD3.setAttribute('width','46%');
         TR2.appendChild(TD3);
         //edit onderwerp
         var TD4= document.createElement("td");
@@ -280,25 +281,27 @@ function autoSubmit2(form)
         var link = document.createElement("a");
         link.appendChild(document.createTextNode('Wijzig onderwerp'));
         link.setAttribute('href',"editOnderwerp.php?gevraagdond="+ondid+"&gevraagdondnaam="+ond);
-        //TD4.setAttribute('width','5%');
         TD4.appendChild(link);
         TR2.appendChild(TD4);
         //remove onderwerp
         var TD5= document.createElement("td");
         TD5.setAttribute('bgcolor',"#FFF5D2");
-        TD5.setAttribute('colSpan',"3");
+        TD5.setAttribute('colSpan',"1");
         var link2 = document.createElement("a");
         link2.appendChild(document.createTextNode('Verwijder onderwerp'));
         link2.setAttribute('href',"DeleteOnderwerp.php?gevraagdond="+ondid);
         link2.setAttribute('onclick', "return confirm('Bent u zeker dat u het onderwerp \""+ond+"\" wilt verwijderen?')");
         TD5.appendChild(link2);
         TR2.appendChild(TD5);
-
+        var TD10=document.createElement('td');
+        TD10.setAttribute('bgcolor',"#FFF5D2");
+        TD10.appendChild(document.createTextNode(''));
+        TR2.appendChild(TD10);
 
 
        myTable.appendChild(TR2);
 
-       //Tr voor kolomnamen
+       //Tr voor namen kolommen
         var TR3 = document.createElement("tr");
         var TDw = document.createElement("td");
         var TDw2= document.createElement("td");
@@ -312,12 +315,13 @@ function autoSubmit2(form)
         //kolom1
         var TD6= document.createElement("td");
         TD6.setAttribute('bgcolor',"#F0F0F0");
-        TD6.setAttribute('height',"20");
         var boldfield=document.createElement("b");
         var ufield=document.createElement("em");
         ufield.appendChild(document.createTextNode('Hoorcollege'));
         boldfield.appendChild(ufield);
-        TD6.appendChild(boldfield);
+        p=document.createElement("p");
+        p.appendChild(boldfield);
+        TD6.appendChild(p);
         TR3.appendChild(TD6);
         //kolom2
         TD6= document.createElement("td");
@@ -336,6 +340,7 @@ function autoSubmit2(form)
         ufield.appendChild(document.createTextNode('Wijzigen'));
         boldfield.appendChild(ufield);
         TD6.appendChild(boldfield);
+        TD6.setAttribute('width','20%');
         TR3.appendChild(TD6);
         //kolom4
         TD6= document.createElement("td");
@@ -350,19 +355,19 @@ function autoSubmit2(form)
 
         myTable.appendChild(TR3);
 
-                //vul op met hoorcolleges
+                //vul tabel op met hoorcolleges uit de xml file
                if(size>0){
                 for(i=0;i<size;i++){
                    var newTR = document.createElement("tr");
+                   var newField = document.createElement("td");
+                   p=document.createElement("p");
+                   p.appendChild(document.createTextNode(xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data));
+                   newField.appendChild(p);
+
+                   newField.setAttribute('bgcolor',"#F0F0F0");
                    var newTd = document.createElement("td");
                    newTd.appendChild(document.createTextNode('\u00A0'));
-                   var newField = document.createElement("td");
-
-                   newField.appendChild(document.createTextNode(xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data));
-                   newField.setAttribute('bgcolor',"#F0F0F0");
-                   newTR.appendChild(newTd);
-                   newTd = document.createElement("td");
-                   newTd.appendChild(document.createTextNode('\u00A0'));
+                   newTd.setAttribute('colSpan',"2");
                    newTR.appendChild(newTd);
                    newTR.appendChild(newField);
 
@@ -398,19 +403,37 @@ function autoSubmit2(form)
                }
    else{
         //geen hoorcolleges
-                var newTR = document.createElement("tr");
-                   var newTd = document.createElement("td");
-                   newTd.appendChild(document.createTextNode('\u00A0'));
+
+                   var newTR = document.createElement("tr");
                    var newField = document.createElement("td");
 
-                   newField.appendChild(document.createTextNode('Dit onderwerp bevat geen hoorcolleges'));
+                   p=document.createElement("p");
+                   p.appendChild(document.createTextNode('Dit onderwerp bevat nog geen hoorcolleges'));
+                   newField.appendChild(p);
                    newField.setAttribute('bgcolor',"#F0F0F0");
-                   newField.setAttribute('colspan',"4");
-                   newTR.appendChild(newTd);
-                   newTd = document.createElement("td");
+                   var newTd = document.createElement("td");
                    newTd.appendChild(document.createTextNode('\u00A0'));
+                   newTd.setAttribute('colSpan',"2");
                    newTR.appendChild(newTd);
                    newTR.appendChild(newField);
+
+                   newField = document.createElement("td");
+                   newField.appendChild(document.createTextNode(''));
+                   newField.setAttribute('bgcolor',"#F0F0F0");
+                   newTR.appendChild(newField);
+
+
+                   newField = document.createElement("td");
+                   newField.appendChild(document.createTextNode(''));
+                   newField.setAttribute('bgcolor',"#F0F0F0");
+                   newTR.appendChild(newField);
+
+              
+                   newField = document.createElement("td");
+                   newField.appendChild(document.createTextNode(''));
+                   newField.setAttribute('bgcolor',"#F0F0F0");
+                   newTR.appendChild(newField);
+
                    myTable.appendChild(newTR);
 
     }
