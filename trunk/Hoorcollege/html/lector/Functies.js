@@ -648,33 +648,6 @@ function selecteerItemPopup(item){
     }
 }
 
-var xmlhttp;
-
-function vakDropdown(id){
-    xmlhttp=GetXmlHttpObject();
-
-    if (xmlhttp==null){
-      alert ("Your browser does not support AJAX!");
-      return;
-     }
-
-    xmlhttp.onreadystatechange=stateChanged;
-    xmlhttp.open("GET","maakHoorcollegeXML.php?f=dropdown&id="+id,true);
-    xmlhttp.send(null);
-}
-
-function stateChanged()
-{
-    if (xmlhttp.readyState==4){
-        var antwoord = xmlhttp.responseXML;
-        var vakken = antwoord.getElementsByTagName('vak');
-        for (var i=0; i<vakken.length;i++){
-            var id = vakken[i].childNodes[0].childNodes[0].nodeValue;
-            var naam = vakken[i].childNodes[1].childNodes[0].nodeValue
-            alert(naam+id);
-        }
-    }
-}
 
 function GetXmlHttpObject(){
     if (window.XMLHttpRequest){
@@ -686,4 +659,51 @@ function GetXmlHttpObject(){
         return new ActiveXObject("Microsoft.XMLHTTP");
     }
     return null;
+}
+
+function isNumeriek(value){
+    var anum=/(^\d+$)|(^\d+\.\d+$)/
+    if (anum.test(value))
+            return true;
+    return false;
+}
+
+var xmlhttpVak;
+
+function vakDropdown(id){
+    xmlhttpVak=GetXmlHttpObject();
+
+    if (xmlhttpVak==null){
+      alert ("Your browser does not support AJAX!");
+      return;
+     }
+
+    xmlhttpVak.onreadystatechange=stateChangedVak;
+    xmlhttpVak.open("GET","maakHoorcollegeXML.php?f=dropdown&id="+id,true);
+    xmlhttpVak.send(null);
+}
+
+function stateChangedVak()
+{
+    if (xmlhttpVak.readyState==4){
+        var antwoord = xmlhttpVak.responseXML;
+        var vakken = antwoord.getElementsByTagName('vak');
+        var select = document.getElementById("selectGroep");
+
+        /**
+         * Leeg maken
+         */
+         var lengte = select.options.length;
+        for (var x=0; x<lengte;x++){
+            if (isNumeriek(select.options[x].value)){
+                select.removeChild(select.options[x]);
+            }
+        }
+
+        for (var i=0; i<vakken.length;i++){
+            var id = vakken[i].childNodes[0].childNodes[0].nodeValue;
+            var naam = vakken[i].childNodes[1].childNodes[0].nodeValue
+            select.options[select.options.length] = new Option(naam, id);
+        }
+    }
 }

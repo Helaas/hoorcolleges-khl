@@ -2,7 +2,7 @@
 <form action="maakHoorcollege.php" name="Form" method="POST">
     <h3>Vak en onderwerp</h3>
         Kies een vak: <br />
-<select id="Vak" name="vak" onchange="autoSubmit(this.form,'autoSubmit2')">
+<select id="Vak" name="vak" onchange="vakDropdown(this.value);autoSubmit(this.form,'autoSubmit2')">
     <!-- Kies een eerste vak uit de vakken die deze gebruiker volgt !-->
     <option value="" name="Vak">--Selecteer een vak--</option>
     <!-- Vul dropdown op met TBS data !-->
@@ -40,9 +40,9 @@
             <tr>
                 <td style="vertical-align:top;">
                     <div>
-                        <select name="">
-                            <option>--- Selecteer groep ---</option>
-                            <option>Alle groepen</option>
+                        <select id="selectGroep" name="groep">
+                            <option value="niks">--- Selecteer groep ---</option>
+                            <option value="alles">Alle groepen</option>
                         </select>
                     </div>
                     <div>
