@@ -790,8 +790,15 @@ function verwijderStudent(){
     var geselecteerd = document.getElementById("lijstStudentGeselecteerd");
     var lengte = geselecteerd.options.length
     for (var i = 0; i < lengte; i++) {
-       if (geselecteerd.options[i].selected){
+       if (geselecteerd.options[i]!=null && geselecteerd.options[i].selected){
          geselecteerd.removeChild(geselecteerd.options[i]); i--;
        }
+    }
+}
+
+function allesSelecteren(){
+    var form = document.getElementById("lijstStudentGeselecteerd");
+    for (var i=0; i<form.options.length; i++){
+        form.options[i].selected = true;
     }
 }

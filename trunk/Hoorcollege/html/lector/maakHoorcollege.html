@@ -1,5 +1,5 @@
 <h2>Hoorcollege maken</h2>
-<form action="maakHoorcollege.php" name="Form" method="POST">
+<form action="maakHoorcollege.php" name="Form" method="POST" onsubmit="allesSelecteren()">
     <h3>Vak en onderwerp</h3>
         Kies een vak: <br />
 <select id="Vak" name="vak" onchange="vakDropdown(this.value);autoSubmit(this.form,'autoSubmit2')">
@@ -58,7 +58,7 @@
                 </td>
                 <td>
                     <div>
-                        <select name="studenten" id="lijstStudentGeselecteerd" name="studenten" size="20" multiple="multiple" style="width: 200px">
+                        <select name="studentGeselecteerd[]" id="lijstStudentGeselecteerd" size="20" multiple style="width: 200px">
                         </select>
                     </div>
                 </td>
