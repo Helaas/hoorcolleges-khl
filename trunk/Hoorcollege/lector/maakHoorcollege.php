@@ -1,7 +1,7 @@
 <?php
     require_once('./../includes/kern.php');
     session_start();
-
+getStudentenVoorvak(2,2);
 
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40){ //lector is ingelogged
         if (isset($_POST["verzenden"])){

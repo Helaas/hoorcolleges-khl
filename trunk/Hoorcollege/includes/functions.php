@@ -771,4 +771,69 @@ function veranderPaswoord($idGebruiker, $nieuwPW) {
     $db->Execute("UPDATE  hoorcollege_gebruiker SET wachtwoord = '".$nieuwPW."' WHERE idGebruiker =".$idGebruiker);
 }
 
+function getStudentenVoorvak($vakid,$groepid) {
+    global $db;
+    $vakid = (int)$vakid;
+    $groepid = (int)$groepid;
+
+    $alleStudentenVanVak = array();
+    $resultaat = $db->Execute('SELECT idGebruiker
+                                FROM hoorcollege_gebruiker
+                                WHERE idGebruiker
+                                IN (
+                                    SELECT Gebruiker_idGebruiker
+                                    FROM hoorcollege_gebruiker_volgt_vak
+                                    WHERE Vak_idVak = '.$vakid.'
+                                )');
+    while (!$resultaat->EOF) {
+        $alleStudentenVanVak[] = $resultaat->fields["idGebruiker"];
+        $resultaat->MoveNext();
+    }
+
+    $alleStudentenInGroep = array();
+    $resultaat = $db->Execute('SELECT Gebruiker_idGebruiker
+                                FROM hoorcollege_gebruikergroep
+                                WHERE Groep_idGroep = '.$groepid);
+    while (!$resultaat->EOF) {
+        $alleStudentenInGroep[] = $resultaat->fields["Gebruiker_idGebruiker"];
+        $resultaat->MoveNext();
+    }
+
+    $filter = array_intersect($alleStudentenInGroep, $alleStudentenVanVak);
+
+    $studentids = "";
+
+
+    foreach ($filter as $value) {
+        $studentids .= $value.",";
+    }
+
+
+    if (strlen($studentids) > 0){
+        $studentids = substr_replace($studentids,"",-1);
+    }
+    
+
+    $items = array();
+    $resultaat = $db->Execute('SELECT idGebruiker, naam, voornaam
+                                FROM hoorcollege_gebruiker
+                                WHERE idGebruiker
+                                IN ( '. $studentids .' )
+                                ORDER BY naam, voornaam');
+    while (!$resultaat->EOF) {
+        $items[$resultaat->fields["idGebruiker"]] = $resultaat->fields["naam"] . " " . $resultaat->fields["voornaam"];
+        $resultaat->MoveNext();
+    }
+
+    /**echo "<pre>";
+    print_r($alleStudentenVanVak);
+    print_r($alleStudentenInGroep);
+    print_r($filter);
+    print_r($items);
+    echo "</pre>";**/
+
+    arrayNaarUTF($items);
+    return $items;
+}
+
 ?>

@@ -33,14 +33,14 @@
     <table border="0">
         <tbody>
             <tr>
-                <td width="250">Beschikbare studenten</td>
+                <td width="300"><div>Beschikbare studenten <span id="divStudent"></span></div></td>
                 <td width="150">Actie studenten</td>
                 <td width="250">Geselecteerde studenten</td>
             </tr>
             <tr>
                 <td style="vertical-align:top;">
                     <div>
-                        <select id="selectGroep" name="groep">
+                        <select id="selectGroep" name="groep" onchange="studentDropdown(this.value)">
                             <option value="niks">--- Selecteer groep ---</option>
                             <option value="alles">Alle groepen</option>
                         </select>
