@@ -4,9 +4,11 @@ include_once('./includes/kern.php');
 session_start();
 
 $TBS = new clsTinyButStrong;
-
+$gelukt = false;
 $config["pagina"] = 'admin/excelfileInvoegen.html';
-$TBS->LoadTemplate('./html/admin/templateAdmin.html');
+
+
+
 
 $data = array();
 
@@ -56,8 +58,12 @@ if (isset($_POST["fileUploaden"])) {
                 }
             }
         }
+        $gelukt = true;
+    }else{
+        $fout=true;
     }
 }
+$TBS->LoadTemplate('./html/admin/templateAdmin.html');
 $TBS->Show() ;
 
 ?>

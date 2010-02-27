@@ -1,9 +1,18 @@
 > <a class="nav" href="admin.php?pagina=admin">admin</a> > studenten/groepen importeren via excel<br><br><br>
-<h3>File uploaden:</h3>
+<h2>Studenten aan groepen koppelen via Excel</h2>
 <br>
+<p>Om het koppelen van studenten aan groepen sneller te laten gaan kan u een xml-file met de nodige gegevens uploaden.</p>
+<p>De gegevens worden dan automatisch verwerkt en de studenten worden aan hun groep gekoppeld.</p>
+<p>Voor meer uitleg hoe u de excelfile moet opstellen en
+    deze opslaat als xml-file kan u terecht op de <a href="hulp.php" style="text-decoration: none">helppagina</a>.</p>
+<br>
+<h3>File uploaden:</h3>
 <form enctype="multipart/form-data" action="import.php" method="post">
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
     <p><input type="file" name="file" />
     <p><input type="submit" name="fileUploaden" value="Upload" /></p>
+    <p id="fout">Gelieve een correct bestand op te geven. Klik op <a href="hulp.php" style="text-decoration: none">Help</a> voor meer uitleg. [onload_1;block=p;when [var.fout]==1]</p>
+    <p style="color:green">De gegevens werden met succes verwerkt. [onload_1;block=p;when [var.gelukt]==1]</p>
     <p style="font-size: 10px"><a href="hulp.php">Help</a> </p>
+    
 </form>
