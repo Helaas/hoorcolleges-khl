@@ -1,0 +1,13 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentGroepOnt">studenten verwijderen groep</a> > <a class="nav" href="admin.php?pagina=studentGroepOntNaam">zoeken</a> > selectie maken<br><br><br>
+<h2>Studenten verwijderen uit groep</h2>
+
+<form action="admin.php?pagina=StudentGroepOntNaamOverzicht" method="POST">
+    Selecteer de studenten die u wenst te verwijderen uit hun groep:<br><br>
+            <ul>
+                <li>[blk1;block=li;nodata]Geen resultaat.</li>
+                <li><input type="checkbox" name="checkboxStudenten[]" value="[blk1.idGebruiker]" /> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
+            </ul>
+
+    <br><br>
+    <input type="submit" value="Verder" name="verderopnaamStudGroep" />
+</form>

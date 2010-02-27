@@ -1,0 +1,16 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentGroepOnt">studenten verwijderen groep</a> > zoeken op groep<br><br><br>
+<h2>Studenten verwijderen uit groep</h2>
+
+<form action="admin.php?pagina=resStudentGroepOntGroep" method="POST">
+    Groep:<br><br>
+    <select name="selectgroep" >
+                    <option value="leeg">[blk1;block=option;nodata]Geen resultaat.</option>
+                    <option value="[blk1.idGroep;block=option]">[blk1.naam;]</option>
+                </select>
+
+    <p id ="[onshow.typeboodschap;noerr]">
+        [onshow.foutboodschap;noerr]
+    </p>
+    <br><br>
+    <input type="submit" value="Verder" name="zoekopgroepStudGroep" />
+</form>

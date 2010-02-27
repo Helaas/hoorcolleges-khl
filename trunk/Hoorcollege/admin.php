@@ -10,6 +10,8 @@
 
     //foutafhandeling
     $typeboodschap = "fout";
+
+    $link = "admin.php?pagina=admin";
     
     
     if(isset ($_GET['foutboodschap'])) {
@@ -430,6 +432,50 @@
                 $foutboodschap = 'Technisch probleem, mogelijk is niet iedereen toegekent aan de groep, gelieve manueel te controleren';
             }
         }
+        else if(isset ($_POST['zoekopnaamStudGroep'])) {
+            $naam = (string) $_POST['naam'];
+            if(empty ($naam)) {
+                header("location: admin.php?pagina=studentGroepOntNaam&foutboodschap=Naam mag niet leeg zijn!");
+            }
+        }
+        else if(isset ($_POST['toekennenstudentenaanvakoverzichtknop'])) {
+            if(count($_POST['checkboxStudenten']) > 0) {
+                $checkbox2 = serialize($_POST['checkboxStudenten']);                
+            }            
+        }
+        else if(isset ($_POST['verderopnaamStudGroep'])) {
+            $checkbox2 = serialize($_POST['checkboxStudenten']);
+            $link = "admin.php?pagina=studentGroepOntNaam";
+        }
+        else if(isset ($_POST['voltStudentGroepOntknop'])) {
+            $ch = unserialize($_POST['checkbox2']);            
+
+            $count = count($ch);
+            $gelukt = false;
+
+            for($i=0; $i < $count; $i++) {                   
+                if(isStudentToegekentAanGroep($ch[$i])) {
+                    $gelukt = verwijderStudentVanAlleGroepen($ch[$i]);
+                }
+            }
+
+            if($gelukt == true) {
+                $typeboodschap = "juist";
+                $foutboodschap = 'Alle geselecteerden hebben geen groep meer.';
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Technisch probleem! Actie is mogelijk niet volledig gelukt! Gelieve manueel te controleren.';
+            }       
+        }
+        else if(isset ($_POST['zoekopgroepStudGroep'])) {
+            $link = "studentGroepOntGroep";
+            if($_POST['selectgroep'] == 'leeg') {
+                header("location: admin.php?pagina=studentGroepOntGroep&foutboodschap=U moet een groep kiezen!");
+            }
+        }
+
+
 
 
 
@@ -863,7 +909,7 @@
                             $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                             FROM hoorcollege_gebruiker g
                                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
-                                                            WHERE g.niveau = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '$naamBegintMet%'
+                                                            WHERE g.niveau = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '%$naamBegintMet%'
                                                             AND g.idGebruiker
                                                             IN (SELECT Gebruiker_idGebruiker
                                                                 FROM hoorcollege_gebruikergroep
@@ -875,7 +921,7 @@
                             $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                             FROM hoorcollege_gebruiker g
                                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
-                                                            WHERE g.niveau = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '$naamBegintMet%'
+                                                            WHERE g.niveau = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '%$naamBegintMet%'
                                                             AND g.idGebruiker
                                                             NOT IN (SELECT Gebruiker_idGebruiker
                                                                 FROM hoorcollege_gebruikergroep)
@@ -889,7 +935,7 @@
                         $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                             FROM hoorcollege_gebruiker g
                                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
-                                                            WHERE g.niveau = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '$naamBegintMet%'
+                                                            WHERE g.niveau = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '%$naamBegintMet%'
                                                             GROUP BY g.naam, g.voornaam ASC");
                         $studdata = serialize($data);
                     }
@@ -927,13 +973,13 @@
                             $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                            FROM hoorcollege_gebruiker g
                                                            LEFT JOIN hoorcollege_gebruikergroep gg ON g.idGebruiker = gg.Gebruiker_idGebruiker
-                                                           WHERE gg.Groep_idGroep = '$groep' AND g.naam LIKE '$naamBegintMet%' AND g.niveau = '1'");
+                                                           WHERE gg.Groep_idGroep = '$groep' AND g.naam LIKE '%$naamBegintMet%' AND g.niveau = '1'");
                             $studdata = serialize($data);
                         }
                         else {
                             $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                            FROM hoorcollege_gebruiker g
-                                                           WHERE g.naam LIKE '$naamBegintMet%' AND g.niveau = '1' AND g.idGebruiker
+                                                           WHERE g.naam LIKE '%$naamBegintMet%' AND g.niveau = '1' AND g.idGebruiker
                                                            NOT IN (SELECT Gebruiker_idGebruiker
                                                                 FROM hoorcollege_gebruikergroep)
                                                            GROUP BY g.naam, g.voornaam ASC");
@@ -944,7 +990,7 @@
                         $naamBegintMet = (string) $_POST['naamBegintMet'];
                         $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                        FROM hoorcollege_gebruiker g
-                                                       WHERE g.naam LIKE '$naamBegintMet%' AND g.niveau = '1'");
+                                                       WHERE g.naam LIKE '%$naamBegintMet%' AND g.niveau = '1'");
                         $studdata = serialize($data);
                     }
                     else if($filteroptiesVak) { //indien enkel de tweede is geselcteerd
@@ -998,6 +1044,31 @@
                 }
                 $TBS->MergeBlock('blk1',$namen);
                 
+            }
+            else if($_GET['pagina'] == 'resStudentGroepOntNaam') {
+                $naam = $_POST['naam'];
+                $TBS->MergeBlock('blk1', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
+                                                 FROM hoorcollege_gebruiker g
+                                                 WHERE g.naam LIKE '%$naam%' AND g.niveau = '1'");
+            }
+            else if($_GET['pagina'] == 'StudentGroepOntNaamOverzicht') {
+                $count = count($_POST['checkboxStudenten']);
+                for($i=0; $i < $count; $i++) {
+                    $namen[$i] = getGebruikerNaamViaId($_POST['checkboxStudenten'][$i]);
+                }
+                $TBS->MergeBlock('blk1',$namen);
+            }
+            else if($_GET['pagina'] == 'studentGroepOntGroep') {
+                //overzicht alle groepen
+                $TBS->MergeBlock('blk1', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            }
+            else if($_GET['pagina'] == 'resStudentGroepOntGroep') {
+                $groep = $_POST['selectgroep'];
+                //overzicht van alle studenten van een groep
+                $TBS->MergeBlock('blk1', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
+                                               FROM hoorcollege_gebruiker g
+                                               LEFT JOIN hoorcollege_gebruikergroep gg ON g.idGebruiker = gg.Gebruiker_idGebruiker
+                                               WHERE gg.Groep_idGroep = '$groep'");
             }
         }
         
