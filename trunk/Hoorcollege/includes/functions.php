@@ -836,4 +836,103 @@ function getStudentenVoorvak($vakid,$groepid) {
     return $items;
 }
 
+function getStudentenVoorvakAlles($vakid) {
+    global $db;
+    $vakid = (int)$vakid;
+
+    $items = array();
+    $resultaat = $db->Execute('SELECT idGebruiker, naam, voornaam
+                                FROM hoorcollege_gebruiker
+                                WHERE idGebruiker
+                                IN (
+                                    SELECT idGebruiker
+                                    FROM hoorcollege_gebruiker
+                                    WHERE idGebruiker
+                                    IN (
+                                        SELECT Gebruiker_idGebruiker
+                                        FROM hoorcollege_gebruiker_volgt_vak
+                                        WHERE Vak_idVak = '.$vakid.'
+                                    )
+                                 ) ORDER BY naam, voornaam');
+    while (!$resultaat->EOF) {
+        $items[$resultaat->fields["idGebruiker"]] = $resultaat->fields["naam"] . " " . $resultaat->fields["voornaam"];
+        $resultaat->MoveNext();
+    }
+
+    arrayNaarUTF($items);
+    return $items;
+}
+
+function getStudentenZonderGroep($vakid) {
+    global $db;
+    $vakid = (int)$vakid;
+
+    $alleStudentenVanVak = array();
+    $resultaat = $db->Execute('SELECT idGebruiker
+                                FROM hoorcollege_gebruiker
+                                WHERE idGebruiker
+                                IN (
+                                    SELECT Gebruiker_idGebruiker
+                                    FROM hoorcollege_gebruiker_volgt_vak
+                                    WHERE Vak_idVak = '.$vakid.'
+                                )');
+    while (!$resultaat->EOF) {
+        $alleStudentenVanVak[] = $resultaat->fields["idGebruiker"];
+        $resultaat->MoveNext();
+    }
+
+    $alleGroepen = getGroepenVoorvak($vakid);
+    $groepids ="";
+    
+    foreach ($alleGroepen as $sleutel => $value) {
+        $groepids .= $sleutel.",";
+    }
+
+    if (strlen($groepids) > 0){
+        $groepids = substr_replace($groepids,"",-1);
+    }
+
+    $alleStudentenInGroep = array();
+    $resultaat = $db->Execute('SELECT Gebruiker_idGebruiker
+                                FROM hoorcollege_gebruikergroep
+                                WHERE Groep_idGroep IN ('.$groepids.')');
+    while (!$resultaat->EOF) {
+        $alleStudentenInGroep[] = $resultaat->fields["Gebruiker_idGebruiker"];
+        $resultaat->MoveNext();
+    }
+
+
+    $studentids = "";
+
+
+
+
+    foreach ($alleStudentenVanVak as $value) {
+        if (!in_array($value, $alleStudentenInGroep)) $studentids .= $value.",";
+    }
+
+
+    if (strlen($studentids) > 0){
+        $studentids = substr_replace($studentids,"",-1);
+    }
+
+
+    $items = array();
+    $resultaat = $db->Execute('SELECT idGebruiker, naam, voornaam
+                                FROM hoorcollege_gebruiker
+                                WHERE idGebruiker
+                                IN ( '. $studentids .' )
+                                ORDER BY naam, voornaam');
+    while (!$resultaat->EOF) {
+        $items[$resultaat->fields["idGebruiker"]] = $resultaat->fields["naam"] . " " . $resultaat->fields["voornaam"];
+        $resultaat->MoveNext();
+    }
+
+    /**echo "<pre>";
+    print_r($items);
+    echo "</pre>";**/
+
+    arrayNaarUTF($items);
+    return $items;
+}
 ?>

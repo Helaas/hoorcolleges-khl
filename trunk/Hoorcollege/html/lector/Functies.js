@@ -706,7 +706,7 @@ function stateChangedVak()
         select.selectedIndex = 0;
         
         if (vaknaam != "--Selecteer een vak--"){
-            studentDiv.innerHTML = "voor "+vaknaam;
+            studentDiv.innerHTML = "voor <b>"+vaknaam+"</b>";
         } else {
             studentDiv.innerHTML = "";
         }
@@ -715,12 +715,12 @@ function stateChangedVak()
         /**
          * Leeg maken
          */
-          lengte = select.options.length;
-        for (var x=0; x<lengte;x++){
-            if (isNumeriek(select.options[x].value)){
-                select.removeChild(select.options[x]);
-            }
-        }
+         select.options.length = 0;
+         select.options[select.options.length] = new Option("--- Selecteer filter ---","niks");
+         select.options[select.options.length] = new Option("Iedereen","alles");
+         select.options[select.options.length] = new Option("Studenten zonder groep","zondergroep");
+
+
 
         for (var i=0; i<vakken.length;i++){
             var id = vakken[i].childNodes[0].childNodes[0].nodeValue;
@@ -742,7 +742,15 @@ function studentDropdown(id){
          }
 
         xmlhttpStudent.onreadystatechange=stateChangedStudent;
-        xmlhttpStudent.open("GET","maakHoorcollegeXML.php?f=studenten&vakid="+gekozenVak+"&groepid="+id,true);
+        if (id == "alles"){
+            xmlhttpStudent.open("GET","maakHoorcollegeXML.php?f=studentenAlles&vakid="+gekozenVak,true);
+        } else {
+            if (id=="zondergroep"){
+               xmlhttpStudent.open("GET","maakHoorcollegeXML.php?f=studentenZonderGroep&vakid="+gekozenVak,true);
+            } else {
+                xmlhttpStudent.open("GET","maakHoorcollegeXML.php?f=studenten&vakid="+gekozenVak+"&groepid="+id,true);
+            } 
+        }
         xmlhttpStudent.send(null);
 
     } else {
@@ -758,13 +766,11 @@ function stateChangedStudent()
         var vakken = antwoord.getElementsByTagName('student');
         var select = document.getElementById("lijstStudent");
 
-        /**
+         /**
          * Leeg maken
          */
-         var lengte = select.options.length;
-        for (var x=0; x<lengte;x++){
-            select.removeChild(select.options[x]);
-        }
+         select.options.length = 0;
+
 
         for (var i=0; i<vakken.length;i++){
             var id = vakken[i].childNodes[0].childNodes[0].nodeValue;

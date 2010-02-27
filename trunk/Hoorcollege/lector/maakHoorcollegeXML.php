@@ -27,5 +27,27 @@ if(isset($_GET['f']) &&  $_GET['f'] == "studenten" && isset($_GET['vakid'])&& is
 
 }
 
+if(isset($_GET['f']) &&  $_GET['f'] == "studentenAlles" && isset($_GET['vakid'])){
+    $items = getStudentenVoorvakAlles($_GET['vakid']);
+    foreach ($items as $sleutel => $waarde) {
+        echo "<student>";
+        echo "<id>".$sleutel."</id>";
+        echo "<naam>". $waarde."</naam>";
+        echo "</student>";
+    }
+
+}
+
+if(isset($_GET['f']) &&  $_GET['f'] == "studentenZonderGroep" && isset($_GET['vakid'])){
+    $items = getStudentenZonderGroep($_GET['vakid']);
+    foreach ($items as $sleutel => $waarde) {
+        echo "<student>";
+        echo "<id>".$sleutel."</id>";
+        echo "<naam>". $waarde."</naam>";
+        echo "</student>";
+    }
+
+}
+
 echo "</root>";
 ?>
