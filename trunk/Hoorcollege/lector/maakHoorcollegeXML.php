@@ -15,5 +15,17 @@ if(isset($_GET['f']) &&  $_GET['f'] == "dropdown" && isset($_GET['id'])){
     }
 
 }
+
+if(isset($_GET['f']) &&  $_GET['f'] == "studenten" && isset($_GET['vakid'])&& isset($_GET['groepid'])){
+    $items = getStudentenVoorvak($_GET['vakid'], $_GET['groepid']);
+    foreach ($items as $sleutel => $waarde) {
+        echo "<student>";
+        echo "<id>".$sleutel."</id>";
+        echo "<naam>". $waarde."</naam>";
+        echo "</student>";
+    }
+
+}
+
 echo "</root>";
 ?>

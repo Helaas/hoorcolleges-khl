@@ -681,6 +681,14 @@ function vakDropdown(id){
       alert ("Your browser does not support AJAX!");
       return;
      }
+        
+    var lijstMetStudenten = document.getElementById("lijstStudent");
+    if ( lijstMetStudenten.hasChildNodes() ){
+        while ( lijstMetStudenten.childNodes.length >= 1 ){
+            lijstMetStudenten.removeChild( lijstMetStudenten.firstChild );
+        }
+}
+
 
     xmlhttpVak.onreadystatechange=stateChangedVak;
     xmlhttpVak.open("GET","maakHoorcollegeXML.php?f=dropdown&id="+id,true);
@@ -707,7 +715,7 @@ function stateChangedVak()
         /**
          * Leeg maken
          */
-         var lengte = select.options.length;
+          lengte = select.options.length;
         for (var x=0; x<lengte;x++){
             if (isNumeriek(select.options[x].value)){
                 select.removeChild(select.options[x]);
@@ -733,14 +741,57 @@ function studentDropdown(id){
           return;
          }
 
-         alert(gekozenVak);
+        xmlhttpStudent.onreadystatechange=stateChangedStudent;
+        xmlhttpStudent.open("GET","maakHoorcollegeXML.php?f=studenten&vakid="+gekozenVak+"&groepid="+id,true);
+        xmlhttpStudent.send(null);
 
     } else {
         alert('U moet eerst een vak selecteren.');
     }
 
-/**
-    xmlhttpStudent.onreadystatechange=stateChangedVak;
-    xmlhttpStudent.open("GET","maakHoorcollegeXML.php?f=dropdown&id="+id,true);
-    xmlhttpStudent.send(null);**/
+}
+
+function stateChangedStudent()
+{
+    if (xmlhttpStudent.readyState==4){
+        var antwoord = xmlhttpStudent.responseXML;
+        var vakken = antwoord.getElementsByTagName('student');
+        var select = document.getElementById("lijstStudent");
+
+        /**
+         * Leeg maken
+         */
+         var lengte = select.options.length;
+        for (var x=0; x<lengte;x++){
+            select.removeChild(select.options[x]);
+        }
+
+        for (var i=0; i<vakken.length;i++){
+            var id = vakken[i].childNodes[0].childNodes[0].nodeValue;
+            var naam = vakken[i].childNodes[1].childNodes[0].nodeValue
+            select.options[select.options.length] = new Option(naam, id);
+        }
+
+    }
+}
+
+function selecteerStudent(){
+    var kieslijst = document.getElementById("lijstStudent");
+    var geselecteerd = document.getElementById("lijstStudentGeselecteerd");
+
+    for (var i = 0; i < kieslijst.options.length; i++) {
+       if (kieslijst.options[i].selected){
+           geselecteerd.options[geselecteerd.options.length] = new Option(kieslijst.options[i].innerHTML, kieslijst.options[i].value);
+       }
+    }    
+}
+
+function verwijderStudent(){
+    var geselecteerd = document.getElementById("lijstStudentGeselecteerd");
+    var lengte = geselecteerd.options.length
+    for (var i = 0; i < lengte; i++) {
+       if (geselecteerd.options[i].selected){
+         geselecteerd.removeChild(geselecteerd.options[i]); i--;
+       }
+    }
 }
