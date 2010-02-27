@@ -797,7 +797,7 @@ function verwijderStudent(){
     var lengte = geselecteerd.options.length
     for (var i = 0; i < lengte; i++) {
        if (geselecteerd.options[i]!=null && geselecteerd.options[i].selected){
-         geselecteerd.removeChild(geselecteerd.options[i]); i--;
+         geselecteerd.removeChild(geselecteerd.options[i]);i--;
        }
     }
 }
@@ -806,5 +806,26 @@ function allesSelecteren(){
     var form = document.getElementById("lijstStudentGeselecteerd");
     for (var i=0; i<form.options.length; i++){
         form.options[i].selected = true;
+    }
+}
+
+function verwijderCommentaar(id){
+    var xHRObjectCommentVerwijderen;
+    if (window.XMLHttpRequest) {
+        xHRObjectCommentVerwijderen = new XMLHttpRequest();
+    }
+    else
+    if (window.ActiveXObject) {
+        xHRObjectCommentVerwijderen = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xHRObjectCommentVerwijderen.onreadystatechange = getDataCommentVerwijderen; // callback
+    xHRObjectCommentVerwijderen.open("GET", "verwerkCommentaarVerwijderen.php?id="+id);
+    xHRObjectCommentVerwijderen.send(null);
+}
+
+function getDataCommentVerwijderen(){
+    if(xHRObjectCommentToevoegen.readyState == 4 && xHRObjectCommentToevoegen.status == 200){
+    //lege callback
     }
 }
