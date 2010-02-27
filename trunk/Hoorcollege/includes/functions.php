@@ -329,12 +329,21 @@ function kenGroepToeAanVak($groepId, $vakId, $vanId) {
 }
 
 //functie om student te verwijderen uit een groep, wordt onderandere in admin.php gebruikt
+function verwijderStudentVanAlleGroepen($studentId) {
+    global $db;
+    $gelukt =  $db->Execute("delete from hoorcollege_gebruikergroep
+                                    where Gebruiker_idGebruiker='$studentId'");
+    return $gelukt;
+}
+
+// NIET MEER GEBRUIKEN!!: functie om student te verwijderen uit een groep, wordt onderandere in admin.php gebruikt
 function verwijderStudentVanGroep($studentId, $groepId) {
     global $db;
     $gelukt =  $db->Execute("delete from hoorcollege_gebruikergroep
                                     where Gebruiker_idGebruiker='$studentId' && Groep_idGroep='$groepId'");
     return $gelukt;
 }
+
 
 //functie om alle studenten te verwijderen uit een groep, wordt onderandere in admin.php gebruikt
 function verwijderAlleStudentenVanGroep($groepId) {
