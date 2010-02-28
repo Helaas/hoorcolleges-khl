@@ -162,7 +162,7 @@ function autoSubmit2(form)
             var TD1 = document.createElement("td");
             TD1.setAttribute('className',"title-section");
             TD1.setAttribute('bgcolor',"#CFE7CF");
-            TD1.setAttribute('colSpan',"6");
+            TD1.setAttribute('colSpan',"7");
             var bvak = document.createElement("b");
             bvak.appendChild(document.createTextNode(vak));
             TD1.appendChild(bvak);
@@ -196,11 +196,12 @@ function autoSubmit2(form)
             link.appendChild(document.createTextNode('Wijzig onderwerp'));
             link.setAttribute('href',"editOnderwerp.php?gevraagdond="+ondid+"&gevraagdondnaam="+ond);
             TD4.appendChild(link);
+            TD4.setAttribute('colSpan',"2");
             TR2.appendChild(TD4);
             //remove onderwerp
             var TD5= document.createElement("td");
             TD5.setAttribute('bgcolor',"#FFF5D2");
-            TD5.setAttribute('colSpan',"1");
+            TD5.setAttribute('colSpan',"2");
             var link2 = document.createElement("a");
             link2.appendChild(document.createTextNode('Verwijder onderwerp'));
             link2.setAttribute('href',"DeleteOnderwerp.php?gevraagdond="+ondid);
@@ -211,7 +212,10 @@ function autoSubmit2(form)
             TD10.setAttribute('bgcolor',"#FFF5D2");
             TD10.appendChild(document.createTextNode(''));
             TR2.appendChild(TD10);
-
+            TD10=document.createElement('td');
+            TD10.setAttribute('bgcolor',"#FFF5D2");
+            TD10.appendChild(document.createTextNode(''));
+            TR2.appendChild(TD10);
 
            myTable.appendChild(TR2);
 
@@ -254,7 +258,7 @@ function autoSubmit2(form)
             ufield.appendChild(document.createTextNode('Wijzigen'));
             boldfield.appendChild(ufield);
             TD6.appendChild(boldfield);
-            TD6.setAttribute('width','20%');
+            TD6.setAttribute('width','10%');
             TR3.appendChild(TD6);
             //kolom4
             TD6= document.createElement("td");
@@ -262,6 +266,15 @@ function autoSubmit2(form)
             boldfield=document.createElement("b");
             ufield=document.createElement("em");
             ufield.appendChild(document.createTextNode('Verwijder'));
+            boldfield.appendChild(ufield);
+            TD6.appendChild(boldfield);
+            TR3.appendChild(TD6);
+            //kolom5
+            TD6= document.createElement("td");
+            TD6.setAttribute('bgcolor',"#F0F0F0");
+            boldfield=document.createElement("b");
+            ufield=document.createElement("em");
+            ufield.appendChild(document.createTextNode('Resultaten'));
             boldfield.appendChild(ufield);
             TD6.appendChild(boldfield);
             TR3.appendChild(TD6);
@@ -312,6 +325,14 @@ function autoSubmit2(form)
                        newField.appendChild(link);
                        newTR.appendChild(newField);
 
+
+                       newField = document.createElement("td");
+                       newField.setAttribute('bgcolor',"#F0F0F0");
+                       link = document.createElement("a");
+                       link.appendChild(document.createTextNode('Resultaten'));
+                       link.setAttribute('href',"BekijkResultatenHoorcollege.php?gevraagdhoorcoll="+id);
+                       newField.appendChild(link);
+                       newTR.appendChild(newField);
                        myTable.appendChild(newTR);
      }
                    }
@@ -342,6 +363,11 @@ function autoSubmit2(form)
                        newField.setAttribute('bgcolor',"#F0F0F0");
                        newTR.appendChild(newField);
 
+
+                       newField = document.createElement("td");
+                       newField.appendChild(document.createTextNode(''));
+                       newField.setAttribute('bgcolor',"#F0F0F0");
+                       newTR.appendChild(newField);
 
                        newField = document.createElement("td");
                        newField.appendChild(document.createTextNode(''));
