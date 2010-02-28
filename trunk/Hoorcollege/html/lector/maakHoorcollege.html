@@ -1,4 +1,5 @@
 <h2>Hoorcollege maken</h2>
+<div id="fout"> <strong>Hemeltje, er ging wat mis: <br /></strong>[var.foutboodschap;noerr]  [onload_1;block=div;when [var.fout]==1]</div>
 <form action="maakHoorcollege.php" name="Form" method="POST" onsubmit="allesSelecteren()">
     <h3>Vak en onderwerp</h3>
         Kies een vak: <br />
@@ -67,6 +68,7 @@
             </tr>
         </tbody>
     </table>
-    <input type="submit" name="verzenden" value="Hoorcollege aanmaken" />
+    <br /><br />
+    <input type="submit" name="verzenden" value="Hoorcollege aanmaken !" />
 </form>
-<script type="text/javascript" language="javascript">zetHoorcollegeWaarden([var.ond;noerr], [var._POST.keuze_flv;noerr], [var._POST.keuze_mp3;noerr], [var._POST.keuze_txt;noerr],"[var.studenten;noerr]");[onload_1;block=script;when [var.script]==1]</script>
+<script type="text/javascript" language="javascript">zetHoorcollegeWaarden([var.ond;noerr], [var._POST.keuze_flv;noerr], [var._POST.keuze_mp3;noerr], [var._POST.keuze_txt;noerr],"[var.studenten;noerr]");[onload_2;block=script;when [var.script]==1]</script>

@@ -2,6 +2,7 @@
     require_once('./../includes/kern.php');
     session_start();
     $script = false;
+    $fout = false;
 
 
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40){ //lector is ingelogged
@@ -44,8 +45,9 @@
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');
                 $TBS->MergeBlock("blk1",$db,$q);
             } else { //alles OK, hoorcollege maken
-                maakHoorcollege($_POST['vak'], $_POST['Ond'], $_POST['naam'], $_POST["keuze_flv"], $_POST["keuze_mp3"], $_POST["keuze_txt"],$_POST["studentGeselecteerd"]);
-                echo "ok";
+                $nieuweID = maakHoorcollege($_POST['vak'], $_POST['Ond'], $_POST['naam'], $_POST["keuze_flv"], $_POST["keuze_mp3"], $_POST["keuze_txt"],$_POST["studentGeselecteerd"]);
+                $config["pagina"] = "./lector/hoorcollegeGemaakt.html";
+                $TBS->LoadTemplate('./../html/lector/templateLector.html');
             }
 
         } else {

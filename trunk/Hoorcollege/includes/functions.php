@@ -1053,6 +1053,8 @@ function maakHoorcollege($vak, $ond, $naam, $keuze_flv, $keuze_mp3, $keuze_txt, 
                                     '". (int)$value . "', '". $nieuweId ."', '0', '0'
                                     )");
     }
+
+    return $nieuweId;
 }
 
 ?>

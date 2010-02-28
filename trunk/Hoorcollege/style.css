@@ -299,6 +299,13 @@ clear: both;
 visibility: hidden;
 }
 
+div#fout {
+    background-color: #bc2a4d;
+    padding: 8px;
+    margin: 10px 0;
+    color: #FFFFFF;
+}
+
 .clearfix {display: inline-table;}
 
 /* Hides from IE-mac \*/
