@@ -17,6 +17,27 @@
             echo $foutboodschap;
 
             if (strlen($foutboodschap)>0){ //foutboodschap weergeven enzo
+                $studenten = "";
+                $ond = 0;
+
+                /**
+                 * Lijst met geselecteerde studenten
+                 */
+                if (isset($_POST["studentGeselecteerd"]) || count($_POST["studentGeselecteerd"])<=0){
+                     foreach($_POST["studentGeselecteerd"] as $waarde){
+                         $studenten .= (int)$waarde.",";
+                     }
+
+                     if (strlen($studenten) > 0){
+                        $studenten = substr_replace($studenten,"",-1);
+                     }
+                 }
+
+                 if (isset($_POST['Ond'])){
+                     $ond = $_POST['Ond'];
+                 }
+
+
                 $fout = true;
                 $script = true;
                 $config["pagina"] = "./lector/maakHoorcollege.html";
