@@ -1,14 +1,44 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    TODO write content
-  </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="#" />
+        <meta name="keywords" content="#" />
+        <meta name="author" content="#" />
+        <script type="text/javascript" src="./../html/lector/Functies.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./../html/cbrte/html2xhtml.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./../html/cbrte/richtext_compressed.js"></script>
+        <link rel="stylesheet" type="text/css" href="./../reset.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="./../style.css" media="screen,print" />
+        <!--[if IE 6]>
+        <style>
+        #centerColumn {
+        float:left;
+        margin:0 10px 0 75px;
+        padding:6px 6px 6px 10px;
+        width:580px;
+        font-size:.9em;
+        color:#000000;
+        }
+        </style>
+        <![endif]-->
+        <title>KHLeuven - Hoorcollege</title>
+
+    </head>
+    <body>
+        <div id="container" class="clearfix" style="padding: 0; margin:0">
+            <div id="centerColumn" style="border-left:0">
+                <form action="" name="Form" method="POST">
+                    <h2>Verwijderen van bibliotheekitem "[onshow.itemNaam]"</h2>
+
+                    <p style="font-size: 12px; font-weight: bold">Door het item te verwijderen zal u ook de bijhorende hoorcolleges verwijderen! </p>
+                    <p style="font-size: 12px">Bent u zeker dat u het bibliotheekitem wilt verwijderen? </p>
+                    <p><input type="submit" name ="verwijderOK" value="Verwijder" style="font-size: 0.9em; padding: 0;"/>
+                    <input type="submit" name ="annuleer" value="Annuleer" style="font-size: 0.9em; padding: 0;"/> </p>
+                    <p><a href="bibliotheekPopupAlleItems.php">Terug naar overzicht</a></p>
+                </form>
+            </div>
+        </div>
+    </body>
 </html>
+
