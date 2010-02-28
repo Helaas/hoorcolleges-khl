@@ -23,7 +23,7 @@ if(isset ($_SESSION['gebruiker'])) {
                                                        where Vak_idVak in (
                                                              SELECT Vak_idVak
                                                              FROM hoorcollege_gebruiker_beheert_vak
-                                                             WHERE Gebruiker_idGebruiker=".(int)$gebruikerID."))");
+                                                             WHERE Gebruiker_idGebruiker=".(int)$gebruikerID.")) AND Hoorcollege_idHoorcollege=".(int)$_GET['gevraagdhoorcoll']);
 
                  if($result->fields["Hoorcollege_idHoorcollege"]!=null) {
 
