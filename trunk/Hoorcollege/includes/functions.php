@@ -808,30 +808,29 @@ function getStudentenVoorvak($vakid,$groepid) {
         $studentids .= $value.",";
     }
 
-
+    $items = array();
     if (strlen($studentids) > 0){
         $studentids = substr_replace($studentids,"",-1);
-    }
     
 
-    $items = array();
-    $resultaat = $db->Execute('SELECT idGebruiker, naam, voornaam
-                                FROM hoorcollege_gebruiker
-                                WHERE idGebruiker
-                                IN ( '. $studentids .' )
-                                ORDER BY naam, voornaam');
-    while (!$resultaat->EOF) {
-        $items[$resultaat->fields["idGebruiker"]] = $resultaat->fields["naam"] . " " . $resultaat->fields["voornaam"];
-        $resultaat->MoveNext();
+        $resultaat = $db->Execute('SELECT idGebruiker, naam, voornaam
+                                    FROM hoorcollege_gebruiker
+                                    WHERE idGebruiker
+                                    IN ( '. $studentids .' )
+                                    ORDER BY naam, voornaam');
+        while (!$resultaat->EOF) {
+            $items[$resultaat->fields["idGebruiker"]] = $resultaat->fields["naam"] . " " . $resultaat->fields["voornaam"];
+            $resultaat->MoveNext();
+        }
+
+        /**echo "<pre>";
+        print_r($alleStudentenVanVak);
+        print_r($alleStudentenInGroep);
+        print_r($filter);
+        print_r($items);
+        echo "</pre>";**/
     }
-
-    /**echo "<pre>";
-    print_r($alleStudentenVanVak);
-    print_r($alleStudentenInGroep);
-    print_r($filter);
-    print_r($items);
-    echo "</pre>";**/
-
+    
     arrayNaarUTF($items);
     return $items;
 }
@@ -911,28 +910,59 @@ function getStudentenZonderGroep($vakid) {
         if (!in_array($value, $alleStudentenInGroep)) $studentids .= $value.",";
     }
 
-
+    $items = array();
     if (strlen($studentids) > 0){
         $studentids = substr_replace($studentids,"",-1);
+
+        $resultaat = $db->Execute('SELECT idGebruiker, naam, voornaam
+                                    FROM hoorcollege_gebruiker
+                                    WHERE idGebruiker
+                                    IN ( '. $studentids .' )
+                                    ORDER BY naam, voornaam');
+        while (!$resultaat->EOF) {
+            $items[$resultaat->fields["idGebruiker"]] = $resultaat->fields["naam"] . " " . $resultaat->fields["voornaam"];
+            $resultaat->MoveNext();
+        }
     }
-
-
-    $items = array();
-    $resultaat = $db->Execute('SELECT idGebruiker, naam, voornaam
-                                FROM hoorcollege_gebruiker
-                                WHERE idGebruiker
-                                IN ( '. $studentids .' )
-                                ORDER BY naam, voornaam');
-    while (!$resultaat->EOF) {
-        $items[$resultaat->fields["idGebruiker"]] = $resultaat->fields["naam"] . " " . $resultaat->fields["voornaam"];
-        $resultaat->MoveNext();
-    }
-
     /**echo "<pre>";
     print_r($items);
     echo "</pre>";**/
 
     arrayNaarUTF($items);
+    return $items;
+}
+
+function getBibliotheekitemNaam($itemid) {
+    global $db;
+    $itemid = (int)$itemid;
+    return $db->GetOne("SELECT naam
+                        FROM hoorcollege_bibliotheekitem
+                        WHERE idBibliotheekItem =".$itemid);
+}
+
+function getStudenten($arrIds) {
+    global $db;
+    $studentids = "";
+
+    foreach ($arrIds as $value) {
+        $studentids .= (int)$value.",";
+    }
+
+    $items = array();
+    if (strlen($studentids) > 0){
+        $studentids = substr_replace($studentids,"",-1);
+
+        $resultaat = $db->Execute('SELECT idGebruiker, naam, voornaam
+                                    FROM hoorcollege_gebruiker
+                                    WHERE idGebruiker
+                                    IN ( '. $studentids .' )
+                                    ORDER BY naam, voornaam');
+        while (!$resultaat->EOF) {
+            $items[$resultaat->fields["idGebruiker"]] = $resultaat->fields["naam"] . " " . $resultaat->fields["voornaam"];
+            $resultaat->MoveNext();
+        }
+    }
+        
     return $items;
 }
 ?>

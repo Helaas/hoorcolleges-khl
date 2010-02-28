@@ -6,7 +6,7 @@
     <!-- Kies een eerste vak uit de vakken die deze gebruiker volgt !-->
     <option value="" name="Vak">--Selecteer een vak--</option>
     <!-- Vul dropdown op met TBS data !-->
-<option value="[blk1.idVak]" name="Vak">[blk1.naam;block=option]</option>
+<option value="[blk1.idVak]" name="Vak"[blk1.selected;noerr]>[blk1.naam;block=option]</option>
 </select>
 <div id="kiesond"></div>
 <div id="onderwerpform"></div>
@@ -66,3 +66,4 @@
     </table>
     <input type="submit" name="verzenden" value="Hoorcollege aanmaken" />
 </form>
+<script type="text/javascript" language="javascript">zetHoorcollegeWaarden(27, 28, 26, -1,"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17");[onload_1;block=script;when [var.script]==1]</script>

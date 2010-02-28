@@ -46,7 +46,7 @@ function autoSubmit(form,var1)
     xmlhttp.send(null);
 
 
-              
+
     //haal optie uit de XML en voeg toe aan dropdown
     var elems = xmlhttp.responseXML.getElementsByTagName("Onderwerp");
     var size = elems.length;
@@ -57,6 +57,7 @@ function autoSubmit(form,var1)
     document.getElementById("kiesond").appendChild(brk);
     var sel=document.createElement('select');
     sel.name='Ond';
+    sel.id='ond';
     if(var1=='autoSubmit2'){
         sel.onchange=function(){
             autoSubmit2(this.form);
@@ -74,7 +75,7 @@ function autoSubmit(form,var1)
         //onderwerp = naam van het onderwerp, id = id van het onderwerp, gebruiker krijgt de naam te zien, de var die doorgegoven word in 'onchange' is de id
         var inh=xmlhttp.responseXML.getElementsByTagName('Onderwerp')[i].firstChild.data;
         var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
-                 
+
         sel.options.add( new Option(inh,id));
     }
 
@@ -352,14 +353,14 @@ function autoSubmit2(form)
         }
             TableDiv.appendChild(myTable);
     }
-    
-
- 
 
 
 
-               
-                   
+
+
+
+
+
     }
 }
 
@@ -481,126 +482,6 @@ function valideerInput(form){
     }
 }
 
-//  ----momenteel niet meer nodig, oude code voor hoorcollege dropdown lijst met buttons, functionaliteit maakt geen deel meer uit van de website----
-//
-//function GenHoorcollDropdown(form){
-//
-//    var vakid= document.Form.vak.options[document.Form.vak.options.selectedIndex].value;
-//    var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
-//
-//if(ondid!=0){
-//    var xmlhttp;
-//    try {
-//        // Mozilla / Safari / IE7
-//        xmlhttp = new XMLHttpRequest();
-//    } catch (e) {
-//        // IE
-//        var XMLHTTP_IDS = new Array('MSXML2.XMLHTTP.5.0',
-//            'MSXML2.XMLHTTP.4.0',
-//            'MSXML2.XMLHTTP.3.0',
-//            'MSXML2.XMLHTTP',
-//            'Microsoft.XMLHTTP' );
-//        var success = false;
-//        for (var i=0;i < XMLHTTP_IDS.length && !success; i++) {
-//            try {
-//                xmlhttp = new ActiveXObject(XMLHTTP_IDS[i]);
-//                success = true;
-//            } catch (e) {}
-//        }
-//        if (!success) {
-//            throw new Error('Unable to create XMLHttpRequest.');
-//        }
-//    }
-//
-//
-//
-//    //xmlhttp request om via php een xml pagina aan te maken op basis van het meegegoven vakid
-//    xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"&gevraagdOnd="+ondid, false);
-//    xmlhttp.send(null);
-//
-//
-//
-//    //haal optie uit de XML en voeg toe aan dropdown
-//    var elems = xmlhttp.responseXML.getElementsByTagName("Naam");
-//    var size = elems.length;
-//
-//    var hoorcolldiv=document.getElementById("HoorcollegeToevoegen")
-//    //div dynamisch opvullen met een select gebaseerd op het gekozen onderwerp
-//    while ( hoorcolldiv.firstChild ){
-//        hoorcolldiv.removeChild( hoorcolldiv.firstChild );
-//    }
-//    var txtnode= document.createTextNode('Kies een hoorcollege:');
-//    document.getElementById("HoorcollegeToevoegen").appendChild(txtnode);
-//
-//
-//    var brk=document.createElement('br');
-//    document.getElementById("HoorcollegeToevoegen").appendChild(brk);
-//    var sel2=document.createElement('select');
-//    sel2.name='Hoorcollegeselect';
-//    var opt= document.createElement("option");
-//    opt.text='--Selecteer een hoorcollege--';
-//    opt.value=0;
-//    sel2.options.add(opt);
-//    document.getElementById("HoorcollegeToevoegen").appendChild(sel2);
-//    while(sel2.options.length>1){
-//        sel2.options[1]=null;
-//    }
-//    for(i = 0; i < size; i++){
-//        //onderwerp = naam van het onderwerp, id = id van het onderwerp, gebruiker krijgt de naam te zien, de var die doorgegoven word in 'onchange' is de id
-//        var inh=xmlhttp.responseXML.getElementsByTagName('Naam')[i].firstChild.data;
-//        var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
-//        sel2.options.add( new Option(inh,id));
-//    }
-//
-//    var knop= document.createElement('input');
-//    knop.setAttribute('type','button');
-//    knop.setAttribute('name','DeleteHoorcollege');
-//    knop.setAttribute('value','Delete');
-//    knop.setAttribute('onclick',"GoTo('DeleteHoorcollege.php?')");
-//    document.getElementById('HoorcollegeToevoegen').appendChild( document.createTextNode( '\u00A0\u00A0\u00A0' ) );
-//    document.getElementById('HoorcollegeToevoegen').appendChild(knop);
-//
-//}
-//}
-//function GoTo(url)
-//{
-//
-//    var hoorcollid= document.Form.Hoorcollegeselect.options[document.Form.Hoorcollegeselect.options.selectedIndex].value;
-//    var hoorcollnaam= document.Form.Hoorcollegeselect.options[document.Form.Hoorcollegeselect.options.selectedIndex].text;
-//    if(hoorcollid!=0){
-//        var confirmed = confirm("Bent u zeker dat u het hoorcollege \""+hoorcollnaam+"\" wilt verwijderen?");
-//        if (confirmed){
-//            window.location.href = url+"gevraagdhoorcoll="+hoorcollid;
-//        }
-//    }
-//}
-
-//goto voor onderwerp deleten
-//function GoTo2(url)
-//{
-//    var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
-//    var ondnaam= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].text;
-//
-//    if(ondid!=0){
-//        var confirmed = confirm("Bent u zeker dat u het onderwerp \""+ondnaam+"\" wilt verwijderen?");
-//        if (confirmed){
-//            window.location.href = url+"gevraagdond="+ondid;
-//        }
-//    }
-//}
-
-//goto voor onderwerp editen
-//function GoTo3(url)
-//{
-//    var ondid= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].value;
-//    var ondnaam= document.Form.Ond.options[document.Form.Ond.options.selectedIndex].text;
-//
-//    if(ondid!=0){
-//            window.location.href = url+"gevraagdond="+ondid+"&gevraagdondnaam="+ondnaam;
-//
-//    }
-//}
-
 function maakHoorcollegePopup(type){
         var geselecteerd = document.getElementById("keuze_"+type).value;
     	newwindow=window.open('bibliotheekPopup.php?type='+type+'&geselecteerd='+geselecteerd,'biblio','height=550,width=750');
@@ -673,6 +554,8 @@ function isNumeriek(value){
 
 var xmlhttpVak;
 var xmlhttpStudent;
+var xmlhttpBibItem;
+var xmlhttpVulStudent;
 
 function vakDropdown(id){
     xmlhttpVak=GetXmlHttpObject();
@@ -681,7 +564,7 @@ function vakDropdown(id){
       alert ("Your browser does not support AJAX!");
       return;
      }
-        
+
     var lijstMetStudenten = document.getElementById("lijstStudent");
     if ( lijstMetStudenten.hasChildNodes() ){
         while ( lijstMetStudenten.childNodes.length >= 1 ){
@@ -704,13 +587,13 @@ function stateChangedVak()
         var vaknaam = document.getElementById("Vak").options[document.getElementById("Vak").selectedIndex].innerHTML;
         var studentDiv = document.getElementById("divStudent");
         select.selectedIndex = 0;
-        
+
         if (vaknaam != "--Selecteer een vak--"){
             studentDiv.innerHTML = "voor <b>"+vaknaam+"</b>";
         } else {
             studentDiv.innerHTML = "";
         }
-        
+
 
         /**
          * Leeg maken
@@ -718,15 +601,14 @@ function stateChangedVak()
          select.options.length = 0;
          select.options[select.options.length] = new Option("--- Selecteer filter ---","niks");
          select.options[select.options.length] = new Option("Iedereen","alles");
-         select.options[select.options.length] = new Option("Studenten zonder groep","zondergroep");
-
-
 
         for (var i=0; i<vakken.length;i++){
             var id = vakken[i].childNodes[0].childNodes[0].nodeValue;
             var naam = vakken[i].childNodes[1].childNodes[0].nodeValue
             select.options[select.options.length] = new Option(naam, id);
         }
+
+         select.options[select.options.length] = new Option("Studenten zonder groep","zondergroep");
 
     }
 }
@@ -749,7 +631,7 @@ function studentDropdown(id){
                xmlhttpStudent.open("GET","maakHoorcollegeXML.php?f=studentenZonderGroep&vakid="+gekozenVak,true);
             } else {
                 xmlhttpStudent.open("GET","maakHoorcollegeXML.php?f=studenten&vakid="+gekozenVak+"&groepid="+id,true);
-            } 
+            }
         }
         xmlhttpStudent.send(null);
 
@@ -789,7 +671,7 @@ function selecteerStudent(){
        if (kieslijst.options[i].selected){
            geselecteerd.options[geselecteerd.options.length] = new Option(kieslijst.options[i].innerHTML, kieslijst.options[i].value);
        }
-    }    
+    }
 }
 
 function verwijderStudent(){
@@ -806,6 +688,110 @@ function allesSelecteren(){
     var form = document.getElementById("lijstStudentGeselecteerd");
     for (var i=0; i<form.options.length; i++){
         form.options[i].selected = true;
+    }
+}
+
+
+
+var volgorde = new Array()
+volgorde[1]="flv";
+volgorde[2]="txt";
+volgorde[3]="mp3";
+
+var ids = new Array()
+ids[1]=0;
+ids[2]=0;
+ids[3]=0;
+
+var teller = 1;
+
+/**
+ * Nodig bij wijzigen van hoorcollege en bij foute invoer bij het maken
+ */
+function zetHoorcollegeWaarden(onderwerpid, flvid, mp3id, txtid,studenten){
+    teller = 1;
+    vakDropdown(document.getElementById("Vak")[document.getElementById('Vak').selectedIndex].value);
+    autoSubmit(document.body.getElementsByTagName('form')[0],'autoSubmit2')
+    zetOnderwerp(onderwerpid);
+    ids[1]=flvid;
+    ids[2]=txtid;
+    ids[3]=mp3id;
+    zetBibItems();
+    vulGeselecteerdeStudenten(studenten);
+}
+
+function zetOnderwerp(id){
+    var onderwerp = document.getElementById("ond");
+    for (var i = 0; i < onderwerp.options.length; i++) {
+        if(onderwerp.options[i].value == id) onderwerp.options[i].selected = true;
+    }
+
+}
+
+function zetBibItems(){
+    xmlhttpBibItem=GetXmlHttpObject();
+
+    if (xmlhttpBibItem==null){
+      alert ("Your browser does not support AJAX!");
+      return;
+     }
+
+    xmlhttpBibItem.onreadystatechange=stateChangedBibItem;
+    xmlhttpBibItem.open("GET","maakHoorcollegeXML.php?f=bibitem&bibid="+ids[teller],true);
+    xmlhttpBibItem.send(null);
+}
+
+function stateChangedBibItem()
+{
+    if (xmlhttpBibItem.readyState==4){
+        var antwoord = xmlhttpBibItem.responseText;
+        var naam = "technische fout";
+
+        if (volgorde[teller] == "txt") naam = "tekst";
+        if (volgorde[teller] == "mp3") naam = "audio";
+        if (volgorde[teller] == "flv") naam = "video";
+
+        if (ids[teller]>0){
+            document.getElementById("feedback_"+volgorde[teller]).innerHTML = "Geselecteerde " + naam + ' : <strong>"' + antwoord +'"</strong>.';
+            document.getElementById("button_"+volgorde[teller]).value="Wijzig keuze";
+            document.getElementById("keuze_"+volgorde[teller]).value = ids[teller];
+        } else {
+            document.getElementById("feedback_"+volgorde[teller]).innerHTML = "Nog geen " + naam + " geselecteerd.";
+            document.getElementById("button_"+volgorde[teller]).value="Blader in bibliotheek";
+            document.getElementById("keuze_"+volgorde[teller]).value = "-1";
+        }
+
+        if (teller < 3){
+            teller++;
+            zetBibItems();
+        }
+    }
+}
+
+function vulGeselecteerdeStudenten(studenten){
+    xmlhttpVulStudent=GetXmlHttpObject();
+
+    if (xmlhttpVulStudent==null){
+      alert ("Your browser does not support AJAX!");
+      return;
+     }
+
+    xmlhttpVulStudent.onreadystatechange=stateChangedVulStudenten;
+    xmlhttpVulStudent.open("GET","maakHoorcollegeXML.php?f=studentenVanIds&studenten="+studenten,true);
+    xmlhttpVulStudent.send(null);
+}
+
+function stateChangedVulStudenten()
+{
+    if (xmlhttpVulStudent.readyState==4){
+        var antwoord = xmlhttpVulStudent.responseXML.getElementsByTagName('student');
+        var select = document.getElementById("lijstStudentGeselecteerd");
+
+        for (var i=0; i<antwoord.length;i++){
+            var id = antwoord[i].childNodes[0].childNodes[0].nodeValue;
+            var naam = antwoord[i].childNodes[1].childNodes[0].nodeValue
+            select.options[select.options.length] = new Option(naam, id);
+        }
     }
 }
 
