@@ -54,7 +54,7 @@ function verwijderVak($idVak) {
                                           where Vak_idVak = '$idVak'");
 
     //het vak zelf verwijderen
-    $resultaat = $db->Execute("delete from hoorcollege_vak
+    return $resultaat = $db->Execute("delete from hoorcollege_vak
                                           where idVak = '$idVak'");
 }
 
