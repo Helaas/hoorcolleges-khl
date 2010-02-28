@@ -10,14 +10,30 @@ if(isset ($_SESSION['gebruiker'])) {
     $gebruikerNiv = $gebruiker->getNiveau();
 
     if($gebruikerNiv==40) {
+                 $result = $db->Execute("
+                                        select Hoorcollege_idHoorcollege
+                                        from hoorcollege_onderwerphoorcollege
+                                        where Onderwerp_idOnderwerp in (
+                                                       select idOnderwerp
+                                                       from hoorcollege_onderwerp
+                                                       where Vak_idVak in (
+                                                             SELECT Vak_idVak
+                                                             FROM hoorcollege_gebruiker_beheert_vak
+                                                             WHERE Gebruiker_idGebruiker=".(int)$gebruiker->getIdGebruiker().")) AND Hoorcollege_idHoorcollege=".(int)$_GET['gevraagdhoorcoll']);
 
+          if($result->fields["Hoorcollege_idHoorcollege"]!=null) {
         //aangeven dat het antwoord een xml bestand is
         header("Content-type: text/xml");
-
+        $geengroep=false;
         //Enkel getallen mogen hier binnen
-        if (preg_match('/^[0-9]+$/iD', $_GET["gevraagdGroep"]) &&preg_match('/^[0-9]+$/iD', $_GET["gevraagdhoorcoll"])) {
-
-            $studenten = $db->Execute("SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikergroep WHERE Gebruiker_idGebruiker in (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikerhoorcollege WHERE hoorcollege_idHoorcollege =".(int)$_GET["gevraagdhoorcoll"].") and Groep_idGroep =".(int)$_GET["gevraagdGroep"]);
+        if ((preg_match('/^[0-9]+$/iD', $_GET["gevraagdGroep"]) || $_GET["gevraagdGroep"]=='geen') &&preg_match('/^[0-9]+$/iD', $_GET["gevraagdhoorcoll"])) {
+            if($_GET["gevraagdGroep"]=='geen'){
+            //$studenten = getStudentenZonderGroep($vakid);
+                $geengroep=true;
+            }
+            else{
+             $studenten = $db->Execute("SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikergroep WHERE Gebruiker_idGebruiker in (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikerhoorcollege WHERE hoorcollege_idHoorcollege =".(int)$_GET["gevraagdhoorcoll"].") and Groep_idGroep =".(int)$_GET["gevraagdGroep"]);
+             }
         }
 
         //xml file aanmaken
@@ -27,8 +43,12 @@ if(isset ($_SESSION['gebruiker'])) {
         
         while(!$studenten->EOF){
             $xml_file .= "<student>";
-
+            if($geengroep){
+            $naamQuery= $db->Execute('SELECT naam,voornaam FROM hoorcollege_gebruiker WHERE idGebruiker='.(int)$studenten->fields["idGebruiker"]);
+            }
+            else{
             $naamQuery= $db->Execute('SELECT naam,voornaam FROM hoorcollege_gebruiker WHERE idGebruiker='.(int)$studenten->fields["Gebruiker_idGebruiker"]);
+            }
             $xml_file .= "<naam>".$naamQuery->fields["voornaam"]." ".$naamQuery->fields["naam"]."</naam>";
 
 
@@ -36,14 +56,14 @@ if(isset ($_SESSION['gebruiker'])) {
                 $idVraag;
                 //select vragen van het gekozen hoorcollege
                 $alleVragenQuery = $db->Execute('SELECT * FROM hoorcollege_vraag WHERE Hoorcollege_idHoorcollege = '.(int)$_GET["gevraagdhoorcoll"]);
+                $tell1=1;
                 while (!$alleVragenQuery->EOF) {
                     $naamQuery= $db->Execute('SELECT naam,voornaam FROM hoorcollege_gebruiker WHERE idGebruiker='.(int)$studenten->fields["Gebruiker_idGebruiker"]);
-//                    $vragen[$alleVragenQuery->fields["idVraag"]]["voornaam"]=  $naamQuery->fields["voornaam"];
-//                    $vragen[$alleVragenQuery->fields["idVraag"]]["naam"]=  $naamQuery->fields["naam"];
-                    $vragen[$alleVragenQuery->fields["idVraag"]]["vraagstelling"] =  $alleVragenQuery->fields["vraagstelling"];
-                    $vragen[$alleVragenQuery->fields["idVraag"]]["id"] =  $alleVragenQuery->fields["idVraag"];
-                    $vragen[$alleVragenQuery->fields["idVraag"]]["juistAntwoord"] = getAntwoord($alleVragenQuery->fields["juistantwoord"]);
+                    $vragen[$tell1]["vraagstelling"] =  $alleVragenQuery->fields["vraagstelling"];
+                    $vragen[$tell1]["id"] =  $alleVragenQuery->fields["idVraag"];
+                    $vragen[$tell1]["juistAntwoord"] = getAntwoord($alleVragenQuery->fields["juistantwoord"]);
                     $alleVragenQuery->MoveNext();
+                    $tell1++;
                 }
 
                 //select antwoorden van de huidige student
@@ -51,19 +71,22 @@ if(isset ($_SESSION['gebruiker'])) {
                     LEFT OUTER JOIN hoorcollege_vraag ON Vraag_idVraag = idVraag
                     WHERE Gebruiker_idGebruiker = '.(int)$studenten->fields["Gebruiker_idGebruiker"].' AND Hoorcollege_idHoorcollege ='.(int)$_GET["gevraagdhoorcoll"]);
                 if($resultaat->fields["Vraag_idVraag"]!=null){
-                while (!$resultaat->EOF) {
-                                       $vragen[$resultaat->fields["Vraag_idVraag"]]["gegevenAntwoord"] = getAntwoord($resultaat->fields["MogelijkAntwoord_idMogelijkAntwoord"]);
+
+                $tell2=1;
+                while (!$resultaat->EOF) {                
+                   $vragen[$tell2]["gegevenAntwoord"] = getAntwoord($resultaat->fields["MogelijkAntwoord_idMogelijkAntwoord"]);
                    if(antwoordOk((int)$studenten->fields["Gebruiker_idGebruiker"], $resultaat->fields["Vraag_idVraag"])){
-                    $vragen[$resultaat->fields["Vraag_idVraag"]]["juist"] = "Juist";
-                    }else {$vragen[$resultaat->fields["Vraag_idVraag"]]["juist"] = "Fout";}
+                    $vragen[$tell2]["juist"] = "Juist";
+                    }else {$vragen[$tell2]["juist"] = "Fout";}
                     $resultaat->MoveNext();
+                    $tell2++;
+                   
                 }}
                 else{   for($tel=1;$tel<=count($vragen);$tel++){
                     $vragen[$tel]["gegevenAntwoord"] = "De gebruiker heeft deze vraag nog niet opgelost.";
                     $vragen[$tel]["juist"] = "-";
                     $resultaat->MoveNext();
                 }}
-
 
             for($teller=1;$teller<=count($vragen);$teller++){
                
@@ -92,6 +115,7 @@ if(isset ($_SESSION['gebruiker'])) {
 
        echo $xml_file;
 
+    }
     }
 }
 
