@@ -884,7 +884,7 @@ function VerwerkGroepSelectie(form){
 
 
     // if geldige groep gekozen, haal info studenten op en geef weer
-    if(groepid!=0 && groepid !='geen'){
+    if(groepid!=0){
 
 
 
@@ -1026,8 +1026,6 @@ function VerwerkGroepSelectie(form){
 
 
     }
-    else if(groepid=='geen'){
-        alert('Studenten zonder groep');
-    }
+
 
 }
