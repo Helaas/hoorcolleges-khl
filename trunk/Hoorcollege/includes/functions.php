@@ -1057,4 +1057,52 @@ function maakHoorcollege($vak, $ond, $naam, $keuze_flv, $keuze_mp3, $keuze_txt, 
     return $nieuweId;
 }
 
+function getWijzigenHoorcollege($id) {
+    global $db;
+    $id  = (int)$id;
+
+    $uitvoer = array();
+    $uitvoer["vak"] = 0;
+    $uitvoer["ond"] = 0;
+    $uitvoer["naam"] = "";
+    $uitvoer["keuze_flv"] = -1;
+    $uitvoer["keuze_mp3"] = -1;
+    $uitvoer["keuze_txt"] = -1;
+    $uitvoer["studenten"] = "";
+
+    $resultaat = $db->GetRow("SELECT * FROM hoorcollege_onderwerphoorcollege WHERE Hoorcollege_idHoorcollege = ".$id);
+    $uitvoer["vak"] = $resultaat["Onderwerp_Vak_idVak"];
+    $uitvoer["ond"] = $resultaat["Onderwerp_idOnderwerp"];
+    $uitvoer["naam"] = $db->GetOne("SELECT naam FROM hoorcollege_hoorcollege WHERE idHoorcollege  =".$id);
+
+    $resultaat = $db->Execute('SELECT BibliotheekItem_idBibliotheekItem, mimetype
+                                FROM hoorcollege_hoorcollegbibliotheekitem i
+                                INNER JOIN hoorcollege_bibliotheekitem b ON ( i.BibliotheekItem_idBibliotheekItem = b.idBibliotheekItem )
+                                WHERE i.Hoorcollege_idHoorcollege = ' . $id);
+    while (!$resultaat->EOF) {
+        $uitvoer["keuze_".$resultaat->fields["mimetype"]] = $resultaat->fields["BibliotheekItem_idBibliotheekItem"];
+        $resultaat->MoveNext();
+    }
+
+
+    $studentids = "";
+    
+    $resultaat = $db->Execute('SELECT Gebruiker_idGebruiker
+                                FROM hoorcollege_gebruikerhoorcollege
+                                WHERE Hoorcollege_idHoorcollege = ' . $id);
+    while (!$resultaat->EOF) {
+        $studentids .= $resultaat->fields["Gebruiker_idGebruiker"].",";
+        $resultaat->MoveNext();
+    }
+
+     if (strlen($studentids) > 0){
+        $studentids = substr_replace($studentids,"",-1);
+     }
+
+     $uitvoer["studenten"] = $studentids;
+
+     arrayNaarUTF($uitvoer);
+     return $uitvoer;
+}
+
 ?>

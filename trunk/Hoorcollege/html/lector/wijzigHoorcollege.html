@@ -1,0 +1,74 @@
+<h2>Hoorcollege wijzigen</h2>
+<div id="fout"> <strong>Hemeltje, er ging wat mis: <br /></strong>[var.foutboodschap;noerr]  [onload_1;block=div;when [var.fout]==1]</div>
+<form action="wijzigHoorcollege.php?id=[var._GET.id]" name="Form" method="POST" onsubmit="allesSelecteren()">
+    <h3>Vak en onderwerp</h3>
+        Kies een vak: <br />
+<select id="Vak" name="vak" onchange="vakDropdown(this.value);autoSubmit(this.form,'autoSubmit2')">
+    <!-- Kies een eerste vak uit de vakken die deze gebruiker volgt !-->
+    <option value="" name="Vak">--Selecteer een vak--</option>
+    <!-- Vul dropdown op met TBS data !-->
+<option value="[blk1.idVak]" name="Vak"[blk1.selected;noerr]>[blk1.naam;block=option]</option>
+</select>
+<div id="kiesond"></div>
+<div id="onderwerpform"></div>
+<div id="foutmelding"></div>
+        <h3>Naam</h3>
+        Geef het hoorcollege een naam:<br/>
+        <input type="text" name="naam" value="[var._POST.naam;noerr]" size="40" />
+        <h3>Componenten</h3>
+        Een hoorcollege kan uit verschillende componenten bestaan. U kan tot drie componenten per hoorcollege opnemen, één van elk type.
+        Opgelet: u moet minstens één component toekennen aan een hoorcollege.
+    <h4>Videocomponent</h4>
+        <input type="button" id ="button_flv" value="Blader in bibliotheek" onclick="maakHoorcollegePopup('flv')" />
+        <br /><br />
+        <div id="feedback_flv">Nog geen video geselecteerd.</div>
+        <input type="hidden" name="keuze_flv" id="keuze_flv" value="-1" />
+    <h4>Audiocomponent</h4>
+        <input type="button" id ="button_mp3" value="Blader in bibliotheek" onclick="maakHoorcollegePopup('mp3')" />
+        <br /><br />
+        <div id="feedback_mp3">Nog geen audio geselecteerd.</div>
+        <input type="hidden" name="keuze_mp3" id="keuze_mp3" value="-1" />
+    <h4>Tekstcomponent</h4>
+        <input type="button" id ="button_txt" value="Blader in bibliotheek" onclick="maakHoorcollegePopup('txt')" />
+        <br /><br />
+        <div id="feedback_txt">Nog geen tekst geselecteerd.</div>
+        <input type="hidden" name="keuze_txt" id="keuze_txt" value="-1" />
+    <h3>Studenten kiezen</h3>
+    <table border="0">
+        <tbody>
+            <tr>
+                <td width="300"><div>Beschikbare studenten <span id="divStudent"></span></div></td>
+                <td width="150">Actie studenten</td>
+                <td width="250">Geselecteerde studenten</td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top;">
+                    <div>
+                        <select id="selectGroep" name="groep" onchange="studentDropdown(this.value)">
+                            <option value="niks">--- Selecteer filter ---</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select name="" id="lijstStudent" size="20" multiple="multiple" style="width: 200px">
+                        </select>
+                    </div>
+                </td>
+                <td style="vertical-align:middle;padding-left: 20px;">
+                    <div>
+                        <input type="button" value=">>" onclick="selecteerStudent()"/> <br />
+                        <input type="button" value="<<" onclick="verwijderStudent()"/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <select name="studentGeselecteerd[]" id="lijstStudentGeselecteerd" size="20" multiple style="width: 200px">
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br /><br />
+    <input type="submit" name="verzenden" value="Hoorcollege aanmaken !" />
+</form>
+<script type="text/javascript" language="javascript">zetHoorcollegeWaarden([var.ond;noerr], [var._POST.keuze_flv;noerr], [var._POST.keuze_mp3;noerr], [var._POST.keuze_txt;noerr],"[var.studenten;noerr]");[onload_2;block=script;when [var.script]==1]</script>
