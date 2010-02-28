@@ -28,13 +28,16 @@
     <body>
         <div id="container" class="clearfix" style="padding: 0; margin:0">
             <div id="centerColumn" style="border-left:0">
-                <h2>Aanpassen van beschrijving item "[onshow.itemNaam]"</h2>
-                <form action=" " name="Form" method="POST">
+                <form action="bibliotheekPopupAlleItems?pagina=pasaan&itemId=[onshow.itemId]" name="Form" method="POST">
+                    <h2>Aanpassen van beschrijving item "[onshow.itemNaam]"</h2>
+
                     <p style="font-size: 12px">Geef de nieuwe beschrijving van het bibliotheekitem: </p>
-                    <p><input type="text" name="nieuweBeschrijving" value="[onshow._POST.nieuweBeschrijving;noerr]" style="font-size: 0.9em; width:170px;" /></p>
-                    <p><input type="submit" name ="beschrijvingVeranderen" value="Verander beschrijving" style="font-size: 0.9em; padding: 0;"/> </p>
+                    <p><input type="text" name="nieuweBeschrijving" value="[onshow._POST.nieuweBeschrijving;noerr]" style="font-size: 0.9em; width:300px;" />
+                        <input type="submit" name ="beschrijvingVeranderen" value="Verander beschrijving" style="font-size: 0.9em; padding: 0;"/> </p>
+
                     <p id="fout">De beschrijving werd niet aangepast wegens technische redenen, probeer opnieuw. [onload_1;block=p;when [var.fout]==1]</p>
                     <p style="color: green">De beschrijving werd gewijzigd. [onload_1;block=p;when [var.gelukt]==1]</p>
+                    <a href="bibliotheekPopupAlleItems.php">Terug naar overzicht</a>
                 </form>
             </div>
         </div>

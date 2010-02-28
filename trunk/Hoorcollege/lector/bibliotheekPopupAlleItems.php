@@ -3,6 +3,7 @@ require_once('./../includes/kern.php');
 session_start();
 $gelukt = false;
 
+
 if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40) { //lector is ingelogged
     $toegestaneTypes = array();
     $toegestaneTypes[] = "mp3";
@@ -25,10 +26,10 @@ if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40) {
         $itemNaam = getBibliotheekitemNaam($itemId);
         $TBS->LoadTemplate('./../html/lector/pasItemAan.html');
         if (isset($_POST["beschrijvingVeranderen"])) {
-                $nieuweBeschrijving = $_POST['nieuweBeschrijving'];
+                $nieuweBeschrijving = mysql_real_escape_string($_POST['nieuweBeschrijving']);
                 $db->Execute("UPDATE hoorcollege_bibliotheekitem SET beschrijving = '".$nieuweBeschrijving."'
                               WHERE idBibliotheekItem=".$itemId);
-                $gelukt = true;
+                $gelukt=true;
         }
 
     }else if($_GET['pagina'] == 'verwijder') {
