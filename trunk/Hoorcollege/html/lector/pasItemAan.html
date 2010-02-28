@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="#" />
+        <meta name="keywords" content="#" />
+        <meta name="author" content="#" />
+        <script type="text/javascript" src="./../html/lector/Functies.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./../html/cbrte/html2xhtml.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./../html/cbrte/richtext_compressed.js"></script>
+        <link rel="stylesheet" type="text/css" href="./../reset.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="./../style.css" media="screen,print" />
+        <!--[if IE 6]>
+        <style>
+        #centerColumn {
+        float:left;
+        margin:0 10px 0 75px;
+        padding:6px 6px 6px 10px;
+        width:580px;
+        font-size:.9em;
+        color:#000000;
+        }
+        </style>
+        <![endif]-->
+        <title>KHLeuven - Hoorcollege</title>
+
+    </head>
+    <body>
+        <div id="container" class="clearfix" style="padding: 0; margin:0">
+            <div id="centerColumn" style="border-left:0">
+                <h2>Aanpassen van beschrijving item "[onshow.itemNaam]"</h2>
+                <form action=" " name="Form" method="POST">
+                    <p style="font-size: 12px">Geef de nieuwe beschrijving van het bibliotheekitem: </p>
+                    <p><input type="text" name="nieuweBeschrijving" value="[onshow._POST.nieuweBeschrijving;noerr]" style="font-size: 0.9em; width:170px;" /></p>
+                    <p><input type="submit" name ="beschrijvingVeranderen" value="Verander beschrijving" style="font-size: 0.9em; padding: 0;"/> </p>
+                    <p id="fout">De beschrijving werd niet aangepast wegens technische redenen, probeer opnieuw. [onload_1;block=p;when [var.fout]==1]</p>
+                    <p style="color: green">De beschrijving werd gewijzigd. [onload_1;block=p;when [var.gelukt]==1]</p>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -940,6 +940,7 @@ function getBibliotheekitemNaam($itemid) {
                         WHERE idBibliotheekItem =".$itemid);
 }
 
+
 function getStudenten($arrIds) {
     global $db;
     $studentids = "";

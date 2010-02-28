@@ -815,3 +815,10 @@ function getDataCommentVerwijderen(){
     //lege callback
     }
 }
+
+
+function maakBibliotheekItemsPopup(){
+    	newwindow=window.open('bibliotheekPopupAlleItems.php','biblio','height=550,width=750');
+	if (window.focus) {newwindow.focus()}
+	return false;
+}

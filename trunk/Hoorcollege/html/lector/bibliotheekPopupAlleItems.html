@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="#" />
+        <meta name="keywords" content="#" />
+        <meta name="author" content="#" />
+        <script type="text/javascript" src="./../html/lector/Functies.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./../html/cbrte/html2xhtml.js"></script>
+        <script language="JavaScript" type="text/javascript" src="./../html/cbrte/richtext_compressed.js"></script>
+        <link rel="stylesheet" type="text/css" href="./../reset.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="./../style.css" media="screen,print" />
+        <!--[if IE 6]>
+        <style>
+        #centerColumn {
+        float:left;
+        margin:0 10px 0 75px;
+        padding:6px 6px 6px 10px;
+        width:580px;
+        font-size:.9em;
+        color:#000000;
+        }
+        </style>
+        <![endif]-->
+        <title>KHLeuven - Hoorcollege</title>
+
+    </head>
+    <body>
+        <div id="container" class="clearfix" style="padding: 0; margin:0">
+            <div id="centerColumn" style="border-left:0">
+                <h2>Overzicht bibliotheekitems</h2>
+                <form action="bibliotheekPopupAlleItems.php" id ="formulier" method="POST" style="padding-left:0;">
+                    <table width="700" border="0" cellspacing="1" cellpadding="0" style="font-size: 13px">
+                        <tr>
+                            <td colspan="0" bgcolor="#CFE7CF" class="title-section"><b>[blk2.mimetype;block=tr;headergrp=mimetype]</b></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="0" bgcolor="#FFF5D2"><u><b>[blk2.categorienaam;block=tr+tr;headergrp=categorienaam]</b></u></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="1" bgcolor="#F0F0F0"><strong><em>Pas aan</em></strong></td>
+                            <td colspan="1" bgcolor="#F0F0F0"><strong><em>Verwijder</em></strong></td>
+                            <td colspan="1" bgcolor="#F0F0F0"><strong><em>Naam</em></strong></td>
+                            <td colspan="1" bgcolor="#F0F0F0"><strong><em>Beschrijving</em></strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="1" bgcolor="#F0F0F0"><a href="bibliotheekPopupAlleItems?pagina=pasaan&itemId=[blk2.idBibliotheekItem]">Pas aan</a></td>
+                            <td colspan="1" bgcolor="#F0F0F0"><a href="bibliotheekPopupAlleItems?pagina=verwijder&itemId=[blk2.idBibliotheekItem]">Verwijder</a></td>
+                            <td colspan="1" bgcolor="#F0F0F0">[blk2.naam;block=tr]</td>
+                            <td colspan="1" bgcolor="#F0F0F0">[blk2.beschrijving;htmlconv=no]</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="1" bgcolor="#F0F0F0"><a href="bibliotheekPopupAlleItems?pagina=pasaan&itemId=[blk2.idBibliotheekItem]">Pas aan</a></td>
+                            <td colspan="1" bgcolor="#F0F0F0"><a href="bibliotheekPopupAlleItems?pagina=verwijder&itemId=[blk2.idBibliotheekItem]">Verwijder</a></td>
+                            <td colspan="1" bgcolor="#F0F0F0">[blk2.naam;block=tr]</td>
+                            <td colspan="1" bgcolor="#F0F0F0">[blk2.beschrijving;htmlconv=no]</td>
+                        </tr>
+                        <tr bgcolor="#FFCFB9">
+                            <td colspan="4">[blk2;block=tr;nodata]Geen componenten in deze categorie.</td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
