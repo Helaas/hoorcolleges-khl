@@ -935,9 +935,9 @@ function getStudentenZonderGroep($vakid) {
 function getBibliotheekitemNaam($itemid) {
     global $db;
     $itemid = (int)$itemid;
-    return $db->GetOne("SELECT naam
+    return utf8_encode($db->GetOne("SELECT naam
                         FROM hoorcollege_bibliotheekitem
-                        WHERE idBibliotheekItem =".$itemid);
+                        WHERE idBibliotheekItem =".$itemid));
 }
 
 
@@ -963,7 +963,82 @@ function getStudenten($arrIds) {
             $resultaat->MoveNext();
         }
     }
-        
+
+    arrayNaarUTF($items);
     return $items;
 }
+
+function maakHoorcollege($vak, $ond, $naam, $keuze_flv, $keuze_mp3, $keuze_txt, $arrStudids){
+    global $db;
+    $vak = (int)$vak;
+    $ond = (int)$ond;
+    $keuze_flv = (int)$keuze_flv;
+    $keuze_mp3 = (int)$keuze_mp3;
+    $keuze_txt = (int)$keuze_txt;
+    $naam = addslashes($naam);
+
+    $resultaat = $db->Execute("INSERT INTO hoorcollege_hoorcollege (
+                                                idHoorcollege ,
+                                                naam ,
+                                                VBC_aantal ,
+                                                VBC_geluid
+                                                )
+                                                VALUES (
+                                                NULL , '". $naam ."', '0', '0'
+                                                )");
+
+    $nieuweId = $db->Insert_ID();
+
+    if ($keuze_flv>0){
+        $resultaat = $db->Execute("INSERT INTO hoorcollege_hoorcollegbibliotheekitem (
+                                    Hoorcollege_idHoorcollege ,
+                                    BibliotheekItem_idBibliotheekItem
+                                    )
+                                    VALUES (
+                                    '". $nieuweId . "', '" . $keuze_flv . "'
+                                    )");
+    }
+
+    if ($keuze_mp3>0){
+        $resultaat = $db->Execute("INSERT INTO hoorcollege_hoorcollegbibliotheekitem (
+                                    Hoorcollege_idHoorcollege ,
+                                    BibliotheekItem_idBibliotheekItem
+                                    )
+                                    VALUES (
+                                    '". $nieuweId . "', '" . $keuze_mp3 . "'
+                                    )");
+    }
+
+    if ($keuze_txt>0){
+        $resultaat = $db->Execute("INSERT INTO hoorcollege_hoorcollegbibliotheekitem (
+                                    Hoorcollege_idHoorcollege ,
+                                    BibliotheekItem_idBibliotheekItem
+                                    )
+                                    VALUES (
+                                    '". $nieuweId . "', '" . $keuze_txt . "'
+                                    )");
+    }
+
+    $resultaat = $db->Execute("INSERT INTO hoorcollege_onderwerphoorcollege (
+                                Onderwerp_idOnderwerp ,
+                                Onderwerp_Vak_idVak ,
+                                Hoorcollege_idHoorcollege
+                                )
+                                VALUES (
+                                '". $ond . "', '". $vak . "', '". $nieuweId ."'
+                                )");
+
+    foreach ($arrStudids as $value) {
+        $resultaat = $db->Execute("INSERT INTO hoorcollege_gebruikerhoorcollege (
+                                    Gebruiker_idGebruiker,
+                                    Hoorcollege_idHoorcollege ,
+                                    reedsBekeken ,
+                                    VBCVerplicht
+                                    )
+                                    VALUES (
+                                    '". (int)$value . "', '". $nieuweId ."', '0', '0'
+                                    )");
+    }
+}
+
 ?>
