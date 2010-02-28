@@ -741,7 +741,7 @@ if(isset ($_GET['pagina'])) {
                     $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                             FROM hoorcollege_gebruiker g
                                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
-                                                            WHERE g.niveau = '1' and g.actief = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '$naamBegintMet%'
+                                                            WHERE g.niveau = '1' and g.actief = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '%$naamBegintMet%'
                                                             AND g.idGebruiker
                                                             IN (SELECT Gebruiker_idGebruiker
                                                                 FROM hoorcollege_gebruikergroep
@@ -753,7 +753,7 @@ if(isset ($_GET['pagina'])) {
                     $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                             FROM hoorcollege_gebruiker g
                                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
-                                                            WHERE g.niveau = '1' and g.actief = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '$naamBegintMet%'
+                                                            WHERE g.niveau = '1' and g.actief = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '%$naamBegintMet%'
                                                             AND g.idGebruiker
                                                             NOT IN (SELECT Gebruiker_idGebruiker
                                                                 FROM hoorcollege_gebruikergroep)
@@ -767,7 +767,7 @@ if(isset ($_GET['pagina'])) {
                 $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                             FROM hoorcollege_gebruiker g
                                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
-                                                            WHERE g.niveau = '1' and g.actief = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '$naamBegintMet%'
+                                                            WHERE g.niveau = '1' and g.actief = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '%$naamBegintMet%'
                                                             GROUP BY g.naam, g.voornaam ASC");
                 $studdata = serialize($data);
             }
@@ -805,13 +805,13 @@ if(isset ($_GET['pagina'])) {
                     $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                            FROM hoorcollege_gebruiker g
                                                            LEFT JOIN hoorcollege_gebruikergroep gg ON g.idGebruiker = gg.Gebruiker_idGebruiker
-                                                           WHERE gg.Groep_idGroep = '$groep' AND g.naam LIKE '$naamBegintMet%' AND g.niveau = '1' and g.actief = '1'");
+                                                           WHERE gg.Groep_idGroep = '$groep' AND g.naam LIKE '%$naamBegintMet%' AND g.niveau = '1' and g.actief = '1'");
                     $studdata = serialize($data);
                 }
                 else {
                     $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                            FROM hoorcollege_gebruiker g
-                                                           WHERE g.naam LIKE '$naamBegintMet%' AND g.niveau = '1' and g.actief = '1' AND g.idGebruiker
+                                                           WHERE g.naam LIKE '%$naamBegintMet%' AND g.niveau = '1' and g.actief = '1' AND g.idGebruiker
                                                            NOT IN (SELECT Gebruiker_idGebruiker
                                                                 FROM hoorcollege_gebruikergroep)
                                                            GROUP BY g.naam, g.voornaam ASC");
@@ -822,7 +822,7 @@ if(isset ($_GET['pagina'])) {
                 $naamBegintMet = (string) $_POST['naamBegintMet'];
                 $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                        FROM hoorcollege_gebruiker g
-                                                       WHERE g.naam LIKE '$naamBegintMet%' AND g.niveau = '1' and g.actief = '1'");
+                                                       WHERE g.naam LIKE '%$naamBegintMet%' AND g.niveau = '1' and g.actief = '1'");
                 $studdata = serialize($data);
             }
             else if($filteroptiesVak) { //indien enkel de tweede is geselcteerd

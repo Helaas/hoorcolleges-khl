@@ -1,4 +1,18 @@
-
+function aanvinken(elem, naam) {
+    checkb = document.getElementsByName(naam);
+    if(elem.checked == true) {
+        for (i = 0; i < checkb.length; i++) {
+            checkb[i].checked = true ;
+            document.getElementById("disknop").disabled = false;
+        }
+    }
+    else {
+        for (i = 0; i < checkb.length; i++) {
+            checkb[i].checked = false ;
+            document.getElementById("disknop").disabled = true;
+        }
+    }
+}
 
 function checkEnabled(naam) {
     checkb = document.getElementsByName(naam);

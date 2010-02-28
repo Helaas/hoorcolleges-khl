@@ -1,4 +1,4 @@
-> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentVakOnt">studenten ontkoppelen van vak</a> > <a class="nav" href="javascript:javascript:history.go(-1)">selectie ontkoppelen</a> > overzicht studenten ontkoppelen<br><br><br>
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentVakOnt">studenten ontkoppelen van vak</a> > <a class="nav" href="javascript:javascript:history.go(-1)">selectie ontkoppelen</a> > voltooien<br><br><br>
 <h2>Overzicht studenten ontkoppelen</h2>
         <form action="admin.php?pagina=admin" method="POST">
             <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
@@ -14,5 +14,7 @@
             <p id ="[onshow.typeboodschap;noerr]">
                 [onshow.foutboodschap;noerr]
             </p>
-            <input type="submit" value="Ontkoppelen" name="ontkopelgeselecteerdenvanvak" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+            <input type="submit" value="Voltooien" name="ontkopelgeselecteerdenvanvak" />
         </form>
+<br><br>
+<a href="javascript:history.go(-1);">Terug</a>

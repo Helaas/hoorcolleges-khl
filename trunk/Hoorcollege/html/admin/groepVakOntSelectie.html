@@ -1,13 +1,15 @@
 > <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=groepVakOnt">groepen ontkoppelen</a> > selectie groepen ontkoppelen<br><br><br>
 <h2>Selectie groepen ontkoppelen</h2>
 
-<form action="admin.php?pagina=groepVakOntOverzicht" method="POST">
+<form action="admin.php?pagina=groepVakOntOverzicht" method="POST">                
                 <input type="hidden" name="vak" value="[onshow.vak]" readonly="readonly" />
 
                 Selecteer de groepen om van het vak te ontkoppelen<br><br><br>
+                <input type="checkbox" name="chec" value="" onchange="aanvinken(this, 'checkbox[]')"/> Alles aanvinken
+                <br><br>
                 <ul>
                     <li>[blk1;block=li;nodata]Geen resultaat.</li>
-                    <li><input type="checkbox" name="checkbox[]" value="[blk1.idGroep]" /> [blk1.naam;block=li]</li>
+                    <li><input type="checkbox" name="checkbox[]" value="[blk1.idGroep]" onClick="checkEnabled('checkbox[]')"/> [blk1.naam;block=li]</li>
 
                 </ul>
 
@@ -19,7 +21,8 @@
                 <br>
                 <div>
                     [onload_1;block=div;when [var.knoptonen]==1]
-                    <input type="submit" value="Verder" name="ontkoppelengroepvanvakknopselectie" />
-                </div>
-                
+                    <input type="submit" id="disknop" value="Verder" disabled name="ontkoppelengroepvanvakknopselectie" />
+                </div>                
             </form>
+<br><br>
+<a href="admin.php?pagina=groepVak">Terug</a>

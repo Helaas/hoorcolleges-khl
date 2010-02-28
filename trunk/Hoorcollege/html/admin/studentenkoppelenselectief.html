@@ -4,11 +4,15 @@
     <form action="admin.php?pagina=overzichtstudentenkoppelenselectief" method="POST">
         <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
         Selecteer studenten om te ontkoppelen van het vak [onshow.vaknaam]:<br><br>
+        <input type="checkbox" name="chec" value="" onchange="aanvinken(this, 'checkbox[]')"/> Alles aanvinken
+                <br><br>
         <ul>
             <li>[blk1;block=li;nodata]Geen resultaat.</li>
-            <li><input type="checkbox" name="checkbox[]" value="[blk1.idGebruiker]" /> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
+            <li><input type="checkbox" name="checkbox[]" value="[blk1.idGebruiker]" onClick="checkEnabled('checkbox[]')"/> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
 
         </ul>
         <br><br>
-        <input type="submit" value="Verder" name="verderstudentenontkoppelenselectief" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+        <input type="submit" id="disknop" disabled value="Verder" name="verderstudentenontkoppelenselectief" />
     </form>
+    <br><br>
+<a href="admin.php?pagina=studentVakOnt">Terug</a>

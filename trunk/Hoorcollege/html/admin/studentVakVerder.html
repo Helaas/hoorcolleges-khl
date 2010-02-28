@@ -2,7 +2,8 @@
 <h2>Studenten toekennen aan vakken</h2>
 <h3>Selectie maken</h3>
 <form name="frm" action="admin.php?pagina=studentVakVerderOverzicht" method="POST">
-
+    <input type="checkbox" name="chec" value="" onchange="aanvinken(this, 'checkboxStudenten[]')"/> Alles aanvinken
+    <br><br>
     <ul>
         <li>[blk1;block=li;nodata]Geen resultaat.</li>
         <li><input type="checkbox" name="checkboxStudenten[]" value="[blk1.idGebruiker]" onClick="checkEnabled('checkboxStudenten[]')"/> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
@@ -14,5 +15,7 @@
         <option value="[blk2.idVak;block=option]">[blk2.naam;]</option>
     </select>
     <br><br><br>
-    <input type="submit" id="disknop" disabled value="Verder" name="toekennenstudentenaanvakoverzichtknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+    <input type="submit" id="disknop" disabled value="Verder" name="toekennenstudentenaanvakoverzichtknop" />
 </form>
+<br><br>
+<a href="javascript:history.go(-1);">Terug</a>
