@@ -1,22 +1,22 @@
 <form action="paswoordVeranderen.php" method="POST">
-    <h3>Paswoord veranderen</h3>
-    <p>Hier heeft u de mogelijkheid uw paswoord te veranderen:</p>
+    <h3>Wachtwoord veranderen</h3>
+    <p>Hier heeft u de mogelijkheid uw wachtwoord te veranderen:</p>
     <table style="font-size: 13px">
         <tr>
-            <td>Oud paswoord:    </td>
+            <td>Oud wachtwoord    </td>
             <td><input type="password" name="oudPW" value="[onshow._POST.oudPW;noerr]" style="font-size: 0.9em; width: 80px;" /></td>
         </tr>
         <tr>
-            <td>Nieuw paswoord:    </td>
+            <td>Nieuw wachtwoord    </td>
             <td><input type="password" name="nieuwPW" value="[onshow._POST.nieuwPW;noerr]" style="font-size: 0.9em; width: 80px;" /></td>
         </tr>
         <tr>
-            <td>Herhaal nieuw paswoord:     </td>
+            <td>Herhaal nieuw wachtwoord     </td>
             <td><input type="password" name="herhaalNieuwPW" value="[onshow._POST.herhaalNieuwPW;noerr]" style="font-size: 0.9em; width: 80px;" /></td>
     </table>
     <br>
     <p id="fout">[onshow.foutboodschap][onload_1;block=p;when [var.fout]==1]</p>
-    <p style="color: green">Uw paswoord werd gewijzigd. [onload_1;block=p;when [var.gelukt]==1]</p>
+    <p style="color: green">Uw wachtwoord werd gewijzigd. [onload_1;block=p;when [var.gelukt]==1]</p>
     <br>
-    <input type="submit" name ="paswoordVeranderen" value="Verander Paswoord" style="font-size: 0.9em; padding: 0;" />
+    <input type="submit" name ="paswoordVeranderen" value="Verander Wachtwoord" style="font-size: 0.9em; padding: 0;" />
 </form>
