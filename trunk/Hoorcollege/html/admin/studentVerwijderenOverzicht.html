@@ -1,0 +1,17 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentVerwijderen">studenten verwijderen</a> > <a class="nav" href="javascript:history.go(-1);">selectie maken</a> > voltooien<br><br><br>
+<h2>Voltooien</h2>
+<form action="admin.php?pagina=admin" method="POST">   
+    <input type="hidden" name="checkbox2" value="[onshow.checkbox2]" readonly="true" />
+
+    Volgende studenten worden definitief verwijderd:<br><br>
+
+        <ul>
+            <li>
+                [blk1.val;block=li]
+            </li>
+        </ul>
+        <br><br>    
+    <input type="submit" value="Voltooien" name="voltooienstudentenverwijderknop" />
+</form>
+<br><br>
+<a href="javascript:history.go(-1);">terug</a>

@@ -1,16 +1,19 @@
-> <a class="nav" href="admin.php?actie=admin">admin</a> > lectoren promoveren<br><br><br>
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > lectoren promoveren<br><br><br>
 <h2>Lectoren promoveren</h2>
-    <h3>Lectoren promoveren tot admin</h3>
-        <form action="admin.php?pagina=lectorPromoveren" method="POST">
-            Lector:&nbsp;&nbsp;&nbsp;
-            <select name="selectlector" >
-                <option value="kies">--- Kies ---</option>
-                <option value="[blk1.idGebruiker;block=option]">[blk1.naam;], [blk1.voornaam;]</option>
-            </select>
-            <br><br>
-            <p id ="[onshow.typeboodschap;noerr]">
-                    [onshow.foutboodschap;noerr]
-            </p>
-            <br>
-            <input type="submit" value="Promoveren" name="lectortotadminpromoveren" />
-        </form>
+<h3>Lectoren promoveren tot admin</h3>
+<form action="admin.php?pagina=lectorPromoveren" method="POST">
+    Lector:&nbsp;&nbsp;&nbsp;
+    <select name="selectlector" >
+        <option value="kies">--- Kies ---</option>
+        <option value="[blk1.idGebruiker;block=option]">[blk1.naam;], [blk1.voornaam;]</option>
+    </select>
+    <br><br>
+    <p id ="[onshow.typeboodschap;noerr]">
+        [onshow.foutboodschap;noerr]
+    </p>
+    <br>
+    <input type="submit" value="Promoveren" name="lectortotadminpromoveren" />
+</form>
+<br>
+<br>
+<a href="admin.php">Terug</a>

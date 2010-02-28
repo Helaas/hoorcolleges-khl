@@ -1,0 +1,25 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > studenten verwijderen<br><br><br>
+<h2>Studenten verwijderen</h2>
+<form action="admin.php?pagina=studentVerwijderenVerder" method="POST">
+    Filter opties:<br><br>
+    <input type="checkbox" name="filteroptiesNaam" value="OFF" />
+    Naam bevat: <input type="text" name="naamBegintMet" value="" size="15" />
+    <br><br>
+    <input type="checkbox" name="filteroptiesVak" value="OFF" />
+    Vak:
+    <select name="selectVak">
+        <option value="leeg">[blk1;block=option;nodata]Nog geen klassen</option>
+        <option value="[blk1.idVak;block=option]">[blk1.naam]</option>
+    </select>
+    <br><br>
+    <input type="checkbox" name="filteroptiesGroep" value="OFF" />
+    Groep:
+    <select name="selectGroep">
+        <option value="zonder">zonder groep</option>
+        <option value="[blk2.idGroep;block=option]">[blk2.naam]</option>
+    </select>
+    <br><br><br>
+    <input type="submit" value="Verder" name="studentenverwijderenverder"/>
+</form>
+<br><br>
+<a href="admin.php?pagina=admin">terug</a>

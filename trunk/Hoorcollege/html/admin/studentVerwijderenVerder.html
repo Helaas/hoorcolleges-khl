@@ -1,0 +1,16 @@
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentVerwijderen">studenten verwijderen</a> > selectie maken<br><br><br>
+<h2>Selectie maken</h2>
+<form action="admin.php?pagina=studentVerwijderenOverzicht" method="POST">
+    Selecteer de studenten die u definitief wilt verwijderen:<br><br>
+    <ul>
+        <li>[blk1;block=li;nodata]Geen resultaat.</li>
+        <li><input type="checkbox" name="checkboxStudenten[]" value="[blk1.idGebruiker]" /> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
+    </ul>   
+    <br>
+    <p id ="[onshow.typeboodschap;noerr]">
+        [onshow.foutboodschap;noerr]
+    </p>
+    <input type="submit" value="Verder" name="verderknopstudentenverwijderenselectie" />
+</form>
+<br><br>
+<a href="javascript:history.go(-1);">terug</a>

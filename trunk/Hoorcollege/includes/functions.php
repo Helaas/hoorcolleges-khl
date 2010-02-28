@@ -400,6 +400,7 @@ function verwijderGebruiker($email) {
 function verwijderStudent($studentId) {
     global $db;
     ontkoppelStudentVanAlleVakken($studentId);
+    verwijderStudentVanAlleGroepen($studentId);
     return $db->Execute("update hoorcollege_gebruiker set actief = '0' where idGebruiker = '$studentId'");
 }
 

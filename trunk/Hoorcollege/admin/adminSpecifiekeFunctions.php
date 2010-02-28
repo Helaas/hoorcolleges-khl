@@ -15,7 +15,7 @@
     }
 
     //methode om na te gaan naar welke pagina men moet navigeren (gebruikt in admin.php)
-    function verwerkPagina() {
+    function verwerkPagina() {        
         if(isset ($_GET['pagina'])) {
             return "./admin/" . $_GET['pagina'] . ".html";
         }
