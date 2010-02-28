@@ -1,0 +1,13 @@
+<form name="Form" method="get">
+    <p>Selecteer de groep waarvan u de resultaten wenst te bekijken:</p>
+<select id="Groepen" name="Groepen" onchange="VerwerkGroepSelectie(this.form)">
+    <!-- dropdown lijst met groepen !-->
+<option value="" name="groep">--Selecteer een groep--</option>
+<option value="[blk2.idGroep]" name="groep">[blk2.naam;block=option]</option>
+<option value="zonder">Studenten zonder groep</option>
+</select>
+    <input type="hidden" name="hoorcollid" value="[var.hoorcollid]"/>
+
+</form>
+<br><br>
+<div id="studentDiv"></div>
