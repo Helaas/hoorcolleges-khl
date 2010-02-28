@@ -1,6 +1,19 @@
 <?php
 include_once('kern.php');
 
+//methode om na te gaan of mensen een bepaalde vak krijgen van een bepaalde lector
+function geeftLesAanVakLector($idVak, $idLector) {
+    global $db;
+    $resultaat = $db->Execute("SELECT count( DISTINCT Gebruiker_idGebruiker ) AS aantal
+                               FROM hoorcollege_gebruiker_volgt_vak
+                               WHERE Vak_idVak = '$idVak'
+                               AND van = '$idLector'");
+    if($resultaat->fields["aantal"] > 0) {
+        return true;
+    }
+    else return false;
+}
+
 //methode om een groep te verwijderen uit de database
 function verwijderGroep($idGroep) {
     global $db;

@@ -301,13 +301,19 @@ else if(isset ($_POST['verderverwijderbeheerder'])) {
 else if(isset ($_POST['verderverwijderbeheerdervoltooien'])) {
     $vak = $_POST['vak'];
     $lector = $_POST['selectlector'];
-    if(verwijderBeheerderVanVak($lector, $vak)) {
-        $typeboodschap = "juist";
-        $foutboodschap = 'Lector is niet meer aan het vak toegekend!'; //dit is geen foutboodschap
+    if(geeftLesAanVakLector($vak, $lector)) {
+        $typeboodschap = "fout";
+        $foutboodschap = 'Actie niet gelukt: er zijn studenten die dit vak krijgen van deze lector!';
     }
     else {
-        $typeboodschap = "fout";
-        $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
+        if(verwijderBeheerderVanVak($lector, $vak)) {
+            $typeboodschap = "juist";
+            $foutboodschap = 'Lector is niet meer aan het vak toegekend!'; //dit is geen foutboodschap
+        }
+        else {
+            $typeboodschap = "fout";
+            $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
+        }
     }
 }
 else if(isset ($_POST['verwijderenvakverder'])) {
@@ -476,14 +482,14 @@ else if(isset ($_POST['zoekopgroepStudGroep'])) {
 }
 else if(isset ($_POST['verderknopstudentenverwijderenselectie'])) {
     if(count($_POST['checkboxStudenten']) > 0) {
-        $checkbox2 = serialize($_POST['checkboxStudenten']);        
-    }   
+        $checkbox2 = serialize($_POST['checkboxStudenten']);
+    }
 }
 else if(isset ($_POST['voltooienstudentenverwijderknop'])) {
-    $ch = unserialize($_POST['checkbox2']);    
+    $ch = unserialize($_POST['checkbox2']);
 
     $count = count($ch);
-    for($i=0; $i < $count; $i++) {        
+    for($i=0; $i < $count; $i++) {
         $gelukt = verwijderStudent($ch[$i]);
     }
 
@@ -513,7 +519,7 @@ if(isset ($_GET['pagina'])) {
         //dropdown opvullen voor filter selectie klas
         $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
 
-        
+
 
         if(!isset ($_POST['filteroptiesNaam']) && !isset ($_POST['filteroptiesVak']) && !isset ($_POST['filteroptiesGroep'])) {
             //standaard geladen als men nog geen filteropties heeft gekozen
@@ -1171,10 +1177,10 @@ if(isset ($_GET['pagina'])) {
     }
     else if($_GET['pagina'] == 'lectorDetails') {
         $id = $_GET['detailsLectorId'];
-            //overzicht van persoonlijke gegevens
-            $TBS->MergeBlock('blk32', $db, "SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1 AND idGebruiker = '$id' GROUP BY naam, voornaam asc");
-            //overzicht alle vakken van een lector
-            $TBS->MergeBlock('blk31', $db, "SELECT v.naam as naam
+        //overzicht van persoonlijke gegevens
+        $TBS->MergeBlock('blk32', $db, "SELECT * FROM hoorcollege_gebruiker WHERE niveau != 1 AND idGebruiker = '$id' GROUP BY naam, voornaam asc");
+        //overzicht alle vakken van een lector
+        $TBS->MergeBlock('blk31', $db, "SELECT v.naam as naam, v.idVak as id
                                             FROM hoorcollege_vak v
                                             LEFT JOIN hoorcollege_gebruiker_beheert_vak bv ON v.idVak = bv.Vak_idVak
                                             WHERE bv.Gebruiker_idGebruiker = '$id'
@@ -1187,11 +1193,11 @@ if(isset ($_GET['pagina'])) {
         $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
     }
     else if($_GET['pagina'] == 'studentVerwijderenOverzicht') {
-            $count = count($_POST['checkboxStudenten']);
-            for($i=0; $i < $count; $i++) {
-                $namen[$i] = getGebruikerNaamViaId($_POST['checkboxStudenten'][$i]);
-            }
-            $TBS->MergeBlock('blk1',$namen);            
+        $count = count($_POST['checkboxStudenten']);
+        for($i=0; $i < $count; $i++) {
+            $namen[$i] = getGebruikerNaamViaId($_POST['checkboxStudenten'][$i]);
+        }
+        $TBS->MergeBlock('blk1',$namen);
     }
     else if($_GET['pagina'] == 'studentVerwijderenVerder') {
         $filteroptiesNaam = false;
@@ -1330,7 +1336,22 @@ if(isset ($_GET['pagina'])) {
                     $studdata = serialize($data);
                 }
             }
-        }        
+        }
+    }
+    else if($_GET['pagina'] == 'vakDetails') {
+        $id = $_GET['Id'];
+        //overzicht om de beheerderders van een vak te tonen
+        $TBS->MergeBlock('blk33', $db, "SELECT *
+                                            FROM hoorcollege_gebruiker g
+                                            LEFT JOIN hoorcollege_gebruiker_beheert_vak bv ON g.idGebruiker = bv.Gebruiker_idGebruiker
+                                            WHERE bv.Vak_idVak = '$id'");
+        
+        //overzicht van alle studenten die het vak volgen
+        $TBS->MergeBlock('blk34', $db, "SELECT g.naam, g.voornaam, g.idGebruiker
+                                            FROM hoorcollege_gebruiker g
+                                            LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
+                                            WHERE vv.Vak_idVak = '$id'
+                                            GROUP BY g.naam, g.voornaam ASC");
     }
 }
 

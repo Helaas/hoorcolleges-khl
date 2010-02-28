@@ -1,16 +1,18 @@
 > <a class="nav" href="admin.php?pagina=admin">admin</a> > aanmaken vakken<br><br><br>
 <h2>Aanmaken vakken</h2>
-    <form action="admin.php?pagina=aanmakenVakken" method="POST">
-            Naam vak: <br><br><input type="text" name="vaknaam" value="[onshow._POST.vaknaam;noerr]" size="30" /><br><br>
-            <br><br>
-            Gegegeven door:<br><br>
-            <select name="selectlector" >
-                <option value="leeg">[blk1;block=option;nodata]Geen lectoren</option>
-                <option value="[blk1.idGebruiker;block=option]">[blk1.naam;], [blk1.voornaam;]</option>
-            </select>
-            <br><br>
-            <p id ="[onshow.typeboodschap;noerr]">
-                [onshow.foutboodschap;noerr]
-            </p>
-            <input type="submit" value="voegtoe" name="knopvoegtoevak" />
-        </form>
+<form action="admin.php?pagina=aanmakenVakken" method="POST">
+    Naam vak: <br><br><input type="text" name="vaknaam" value="[onshow._POST.vaknaam;noerr]" size="30" /><br><br>
+    <br><br>
+    Gegegeven door:<br><br>
+    <select name="selectlector" >
+        <option value="leeg">[blk1;block=option;nodata]Geen lectoren</option>
+        <option value="[blk1.idGebruiker;block=option]">[blk1.naam;], [blk1.voornaam;]</option>
+    </select>
+    <br><br>
+    <p id ="[onshow.typeboodschap;noerr]">
+        [onshow.foutboodschap;noerr]
+    </p>
+    <input type="submit" value="voegtoe" name="knopvoegtoevak" />
+</form>
+<br><br>
+<a href="admin.php">Terug</a>
