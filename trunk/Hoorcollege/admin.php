@@ -719,7 +719,7 @@ if(isset ($_GET['pagina'])) {
         $filteroptiesVak = false;
         $filteroptiesGroep = false;
 
-        if(isset ($_POST['studentVakVerder'])) { //nagaan of men op deze pagina wel via correcte weg is gekomen
+        if(isset ($_POST['studentVakVerderknop'])) { //nagaan of men op deze pagina wel via correcte weg is gekomen
             //aantal controles uitvoeren:
             if(isset ($_POST['filteroptiesNaam']) && !empty ($_POST['naamBegintMet'])) { //nagaan of filteroptiesnaam is ingevuld en deze niet leeg is, indien dat wel is wordt dat genegeerd
                 $filteroptiesNaam = true;

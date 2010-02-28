@@ -1,4 +1,28 @@
 
+
+function checkEnabled(naam) {
+    checkb = document.getElementsByName(naam);
+    
+    var gevr = false;
+
+    if(checkb.checked == true) {
+        gevr = true;
+    }
+
+    for (i = 0; i < checkb.length; i++) {
+        if(checkb[i].checked == true) {
+            gevr = true;
+        }
+    }
+    if(gevr == true) {
+        document.getElementById("disknop").disabled = false;
+    }
+    else {
+        document.getElementById("disknop").disabled = true;
+    }
+}
+
+
 function maakDropDown(dropDown) {
     var gekozenVak = dropDown.options[dropDown.selectedIndex].text;
     var id = dropDown.options[dropDown.selectedIndex].value; //het id van het vak dat gekozen is
