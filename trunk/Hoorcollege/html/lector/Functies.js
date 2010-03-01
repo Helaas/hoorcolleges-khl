@@ -162,7 +162,7 @@ function autoSubmit2(form)
             var TD1 = document.createElement("td");
             TD1.setAttribute('className',"title-section");
             TD1.setAttribute('bgcolor',"#CFE7CF");
-            TD1.setAttribute('colSpan',"8");
+            TD1.setAttribute('colSpan',"7");
             var bvak = document.createElement("b");
             bvak.appendChild(document.createTextNode(vak));
             TD1.appendChild(bvak);
@@ -201,7 +201,7 @@ function autoSubmit2(form)
             //remove onderwerp
             var TD5= document.createElement("td");
             TD5.setAttribute('bgcolor',"#FFF5D2");
-            TD5.setAttribute('colSpan',"3");
+            TD5.setAttribute('colSpan',"2");
             var link2 = document.createElement("a");
             link2.appendChild(document.createTextNode('Verwijder onderwerp'));
             link2.setAttribute('href',"DeleteOnderwerp.php?gevraagdond="+ondid);
@@ -279,15 +279,7 @@ function autoSubmit2(form)
             boldfield.appendChild(ufield);
             TD6.appendChild(boldfield);
             TR3.appendChild(TD6);
-            //kolom6
-            TD6= document.createElement("td");
-            TD6.setAttribute('bgcolor',"#F0F0F0");
-            boldfield=document.createElement("b");
-            ufield=document.createElement("em");
-            ufield.appendChild(document.createTextNode('Oefeningen'));
-            boldfield.appendChild(ufield);
-            TD6.appendChild(boldfield);
-            TR3.appendChild(TD6);
+
 
             myTable.appendChild(TR3);
 
@@ -341,15 +333,6 @@ function autoSubmit2(form)
                     link = document.createElement("a");
                     link.appendChild(document.createTextNode('Resultaten'));
                     link.setAttribute('href',"BekijkResultatenHoorcollege.php?gevraagdhoorcoll="+id+"&vak="+vakid);
-                    newField.appendChild(link);
-                    newTR.appendChild(newField);
-                    myTable.appendChild(newTR);
-
-                    newField = document.createElement("td");
-                    newField.setAttribute('bgcolor',"#F0F0F0");
-                    link = document.createElement("a");
-                    link.appendChild(document.createTextNode('Oefeningen'));
-                    link.setAttribute('href',"BeheerOefeningen.php?gevraagdhoorcoll="+id);
                     newField.appendChild(link);
                     newTR.appendChild(newField);
                     myTable.appendChild(newTR);
@@ -1070,246 +1053,6 @@ function VerwerkGroepSelectie(form){
 
 
     }
-
-
-}
-
-function VerwerkVraagSelectie(ihoorid){
-
-
-    var hoorid = ihoorid;
-
-
-
-    //genereer xmlhttp object
-    var xmlhttp=GetXmlHttpObject();
-    //Request
-    xmlhttp.open("GET", "VerwerkVraagSelectie.php?gevraagdhoorcoll="+hoorid, false);
-    xmlhttp.send(null);
-
-    //Div waar content inkomt
-    var vragenDiv = document.getElementById("vragenDiv");
-
-    //grootte van ontvangen xml bestand opvragen
-    var vragen = xmlhttp.responseXML.getElementsByTagName('Vraag');
-    var size = vragen.length;
-
-
-    //Huidige div leegmaken
-    while ( vragenDiv.firstChild ){
-        vragenDiv.removeChild( vragenDiv.firstChild );
-    }
-
-
-
-
-
-
-
-
-    //voor elke <Vraag>
-    for(var i=0;i<size;i++){
-         
-
-        //tabel
-        var myTable = document.createElement("table");
-        myTable.setAttribute('width','700');
-        myTable.setAttribute('border','0');
-        myTable.setAttribute('cellspacing','0');
-        myTable.setAttribute('cellpadding','0');
-        myTable.setAttribute('bordercolor', '#111111')
-        myTable.setAttribute('font-size','13px');
-
-        //Tr Vraag
-        var TR1 = document.createElement("tr");
-
-        var TD1 = document.createElement("td");
-        TD1.setAttribute('className',"title-section");
-        TD1.setAttribute('bgcolor',"#FFFFCC");
-        TD1.setAttribute('colSpan',"2");
-        var bvak = document.createElement("b");
-        p=document.createElement('p');
-        p.appendChild(document.createTextNode(xmlhttp.responseXML.getElementsByTagName('Vraagstelling')[i].firstChild.data));
-        bvak.appendChild(p);
-        TD1.setAttribute('width','40%');
-        TD1.appendChild(bvak);
-        TR1.appendChild(TD1);
-
-        //Verwijder Vraag
-        TD1 = document.createElement("td");
-        TD1.setAttribute('className',"title-section");
-        TD1.setAttribute('bgcolor',"#FFFFCC");
-        TD1.setAttribute('colSpan',"1");
-        var link = document.createElement("a");
-        link.appendChild(document.createTextNode('Verwijder Vraag'));
-        var vid=xmlhttp.responseXML.getElementsByTagName('Vraagid')[i].firstChild.data;
-        link.setAttribute('href',"DeleteVraag.php?vraagid="+vid);
-        link.setAttribute('onclick', "return confirm('Bent u zeker dat u deze vraag wilt verwijderen?')");
-        TD1.appendChild(link);
-        TR1.appendChild(TD1);
-
-        //Wijzig Vraag
-        TD1 = document.createElement("td");
-        TD1.setAttribute('className',"title-section");
-        TD1.setAttribute('bgcolor',"#FFFFCC");
-        TD1.setAttribute('colSpan',"1");
-        var link = document.createElement("a");
-        link.appendChild(document.createTextNode('Wijzig Vraag'));
-        var vid=xmlhttp.responseXML.getElementsByTagName('Vraagid')[i].firstChild.data;
-        link.setAttribute('href',"WijzigVraag.php?vraagid="+vid);
-        TD1.appendChild(link);
-        TR1.appendChild(TD1);
-
-
-        myTable.appendChild(TR1);
-        myTable.appendChild(document.createElement('br'));
-
-        //            //Tr Kolomnamen
-        //            TR2 = document.createElement("tr");
-        //            TD1 = document.createElement("td");
-        //            TD1.appendChild(document.createTextNode('\u00A0\u00A0'));
-        //            TD1.setAttribute('width','5%');
-        //            TR2.appendChild(TD1);
-        //            TD1 = document.createElement("td");
-        //            TD1.setAttribute('bgcolor',"#FFFFCC");
-        //
-        //            bvak = document.createElement("b");
-        //            var p=document.createElement('p');
-        //            p.appendChild(document.createTextNode('Antwoord'));
-        //            bvak.appendChild(p);
-        //            TD1.appendChild(bvak);
-        //            TR2.appendChild(TD1);
-        //
-        //            myTable.appendChild(TR2);
-
-
-
-        //Tr Oplossing
-        TR2 = document.createElement("tr");
-        TD1 = document.createElement("td");
-        TD1.appendChild(document.createTextNode('\u00A0\u00A0'));
-        TD1.setAttribute('width','5%');
-        TR2.appendChild(TD1);
-        TD1 = document.createElement("td");
-        TD1.setAttribute('bgcolor',"#CCFFCC");
-        var antw=xmlhttp.responseXML.getElementsByTagName('JuistAntwoord')[i].firstChild.data;
-        bvak = document.createElement("b");
-        p=document.createElement('p');
-        p.appendChild(document.createTextNode(antw));
-        bvak.appendChild(p);
-        TD1.setAttribute('width','60%');
-        TD1.appendChild(bvak);
-        TR2.appendChild(TD1);
-
-        //Blanco veld
-        TD1 = document.createElement("td");
-        TD1.setAttribute('className',"title-section");
-        TD1.setAttribute('bgcolor',"#CCFFCC");
-        TD1.setAttribute('colSpan',"1");
-        TR2.appendChild(TD1);
-
-        //Wijzig juistantwoord
-        TD1 = document.createElement("td");
-        TD1.setAttribute('className',"title-section");
-        TD1.setAttribute('bgcolor',"#CCFFCC");
-        TD1.setAttribute('colSpan',"1");
-        var link = document.createElement("a");
-        link.appendChild(document.createTextNode('Wijzig Oplossing'));
-        oplid=xmlhttp.responseXML.getElementsByTagName('JuistAntwoordId')[i].firstChild.data;
-        link.setAttribute('href',"WijzigAntwoord.php?vraagid="+oplid);
-        TD1.appendChild(link);
-        TR2.appendChild(TD1);
-
-
-        myTable.appendChild(TR2);
-        myTable.appendChild(document.createElement('br'));
-
-        var antwoorden=vragen[i].getElementsByTagName('rootantwoorden');
-        for(var j=0;j<antwoorden.length;j++){
-
-            var TR3=document.createElement("tr");
-            for(var k=0;k<antwoorden[j].getElementsByTagName('antwoord').length;k++){
-                //Antwoord
-                TR3=document.createElement("tr");
-                TD1 = document.createElement("td");
-                TD1.appendChild(document.createTextNode('\u00A0\u00A0'));
-                TD1.setAttribute('width','5%');
-                TR3.appendChild(TD1);
-                TD1= document.createElement("td");
-                TD1.setAttribute('bgcolor',"#FF9999");
-                p=document.createElement("p");
-                p.appendChild(document.createTextNode(antwoorden[j].getElementsByTagName('antwoord')[k].firstChild.data));
-                TD1.appendChild(p);
-                TR3.appendChild(TD1);
-                myTable.appendChild(TR3);
-
-
-                //Wijzig foutantwoord
-                TD1 = document.createElement("td");
-                TD1.setAttribute('className',"title-section");
-                TD1.setAttribute('bgcolor',"#FF9999");
-                TD1.setAttribute('colSpan',"1");
-                var link = document.createElement("a");
-                link.appendChild(document.createTextNode('Wijzig optie'));
-                oplid=antwoorden[j].getElementsByTagName('antwoordid')[k].firstChild.data;
-                link.setAttribute('href',"WijzigAntwoord.php?vraagid="+oplid);
-                TD1.appendChild(link);
-                TR3.appendChild(TD1);
-
-                //Delete foutantwoord
-                TD1 = document.createElement("td");
-                TD1.setAttribute('className',"title-section");
-                TD1.setAttribute('bgcolor',"#FF9999");
-                TD1.setAttribute('colSpan',"1");
-                var link = document.createElement("a");
-                link.appendChild(document.createTextNode('Verwijder optie'));
-                oplid=antwoorden[j].getElementsByTagName('antwoordid')[k].firstChild.data;
-                link.setAttribute('href',"VerwijderAntwoord.php?vraagid="+oplid);
-                TD1.appendChild(link);
-                TR3.appendChild(TD1);
-            }
-
-        }
-                var TR4=document.createElement("tr");
-                //blanco
-                TR3=document.createElement("tr");
-                TD1 = document.createElement("td");
-                TD1.appendChild(document.createTextNode('\u00A0\u00A0'));
-                TD1.setAttribute('width','5%');
-                TR4.appendChild(TD1);
-                //optie toevoegen
-                TD1 = document.createElement("td");
-                TD1.setAttribute('className',"title-section");
-                TD1.setAttribute('colSpan',"2");
-                var link = document.createElement("a");
-                link.appendChild(document.createTextNode('Voeg een nieuwe optie toe'));
-                link.setAttribute('href',"VoegOptieToe.php?vraagid="+vid);
-                TD1.appendChild(link);
-                TR4.appendChild(TD1);
-
-        myTable.appendChild(document.createElement('br'));
-        myTable.appendChild(TR4);
-        myTable.appendChild(document.createElement('br'));
-        myTable.appendChild(document.createElement('br'));
-        myTable.appendChild(document.createElement('br'));
-
-
-
-
-
-
-        document.getElementById('vragenDiv').appendChild(myTable);
-
-
-
-    }
-
-
-
-
-
-
-
 
 
 }
