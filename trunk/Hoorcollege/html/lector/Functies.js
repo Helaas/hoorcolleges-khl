@@ -302,7 +302,7 @@ function autoSubmit2(form)
                     var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
                     newField = document.createElement("td");
                     link = document.createElement("a");
-                    link.appendChild(document.createTextNode('Details'));
+                    link.appendChild(document.createTextNode('Bekijk'));
                     link.setAttribute('href',"./../hoorcollege.php?hoorcollege="+id);
                     newField.setAttribute('bgcolor',"#F0F0F0");
                     newField.appendChild(link);
