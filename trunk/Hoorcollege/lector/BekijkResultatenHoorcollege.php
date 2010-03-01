@@ -11,9 +11,10 @@ if(isset ($_SESSION['gebruiker'])) {
     $gebruikerID = $gebruiker->getIdGebruiker();
 
     $hoorcollid=$_GET['gevraagdhoorcoll'];
+    $vak=(int)$_GET['vak'];
     if($gebruikerNiv==40) {
 
-              if (preg_match('/^[0-9]+$/iD', $_GET['gevraagdhoorcoll'])  ) {
+              if (preg_match('/^[0-9]+$/iD', $_GET['gevraagdhoorcoll']) && preg_match('/^[0-9]+$/iD', $_GET['vak'])) {
                  //controle of het hoorcollege wel bij de lector hoort
                  $result = $db->Execute("
                                         select Hoorcollege_idHoorcollege
@@ -36,10 +37,21 @@ if(isset ($_SESSION['gebruiker'])) {
                 $Titel="Resultaten bekijken";
                 $tekstinhoud = "U probeerde de resultaten van een hoorcollege dat niet onder uw bevoegdheid valt te bekijken.";
                  }
+        $groepen = array();
+        $i=0;
+        $array = $db->Execute('SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+        while(!$array->EOF) {
+            if(isGroepToegekentAanVak($array->fields['idGroep'], $vak)) {
+                $groepen[$i]['idGroep'] = $array->fields['idGroep'];
+                $groepen[$i]['naam'] = $array->fields['naam'];
+                $i++;
+            }
+            $array->MoveNext();
+        }
 
 
             $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
-            $TBS->MergeBlock('blk2', $db, 'SELECT * FROM hoorcollege_groep GROUP BY naam asc');
+            $TBS->MergeBlock('blk2', $groepen);
             $TBS->Show() ;
         }
         else {

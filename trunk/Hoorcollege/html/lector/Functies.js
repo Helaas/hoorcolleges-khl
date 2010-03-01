@@ -331,7 +331,7 @@ function autoSubmit2(form)
                     newField.setAttribute('bgcolor',"#F0F0F0");
                     link = document.createElement("a");
                     link.appendChild(document.createTextNode('Resultaten'));
-                    link.setAttribute('href',"BekijkResultatenHoorcollege.php?gevraagdhoorcoll="+id);
+                    link.setAttribute('href',"BekijkResultatenHoorcollege.php?gevraagdhoorcoll="+id+"&vak="+vakid);
                     newField.appendChild(link);
                     newTR.appendChild(newField);
                     myTable.appendChild(newTR);
