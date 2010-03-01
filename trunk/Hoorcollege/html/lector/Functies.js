@@ -127,7 +127,7 @@ function autoSubmit2(form)
 
 
     //xmlhttp request om via php een xml pagina aan te maken met gegevens over de hoorcolleges die bij dit vak en onderwerp passen
-    xmlhttp.open("GET", "VerwerkDropdown2.php?gevraagdVak="+vakid+"&gevraagdOnd="+ondid, false);
+    xmlhttp.open("GET", "VerwerkDropDown2.php?gevraagdVak="+vakid+"&gevraagdOnd="+ondid, false);
     xmlhttp.send(null);
 
     var TableDiv = document.getElementById("TableDiv");
