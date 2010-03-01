@@ -1,8 +1,8 @@
 <?php
 
     //indien men niet ingelogd is als admin zal deze methode redirecten naar index.php (gebruikt in admin.php)
-    function verwerkLogin() {
-        if(!isset ($_SESSION['gebruiker']) || !$_SESSION['gebruiker']->getNiveau() == "99") {
+    function verwerkLogin() {        
+        if(!isset ($_SESSION['gebruiker']) || $_SESSION['gebruiker']->getNiveau() != "99") {
             header("location: index.php");
         }
     }

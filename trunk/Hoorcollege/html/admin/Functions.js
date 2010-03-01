@@ -1,3 +1,7 @@
+function aanvinken2(naam) {
+    alert("lala");
+}
+
 function aanvinken(elem, naam) {
     checkb = document.getElementsByName(naam);
     if(elem.checked == true) {
