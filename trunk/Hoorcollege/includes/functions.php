@@ -1127,4 +1127,74 @@ function getWijzigenHoorcollege($id) {
      return $uitvoer;
 }
 
+function wijzigHoorcollege($id, $vak, $ond, $naam, $keuze_flv, $keuze_mp3, $keuze_txt, $arrStudids){
+    global $db;
+    $id = (int)$id;
+    $vak = (int)$vak;
+    $ond = (int)$ond;
+    $keuze_flv = (int)$keuze_flv;
+    $keuze_mp3 = (int)$keuze_mp3;
+    $keuze_txt = (int)$keuze_txt;
+    $naam = addslashes($naam);
+    
+    $db->Execute("UPDATE hoorcollege_onderwerphoorcollege SET Onderwerp_idOnderwerp  = '" . $ond . "', Onderwerp_Vak_idVak = '". $vak ."'
+                WHERE Hoorcollege_idHoorcollege = ".$id);
+    $db->Execute("UPDATE hoorcollege_hoorcollege SET naam = '" . $naam . "' WHERE idHoorcollege = ". $id);
+    $db->Execute("DELETE FROM hoorcollege_hoorcollegbibliotheekitem WHERE Hoorcollege_idHoorcollege = ". $id);
+
+    if ($keuze_flv>0){
+        $resultaat = $db->Execute("INSERT INTO hoorcollege_hoorcollegbibliotheekitem (
+                                Hoorcollege_idHoorcollege ,
+                                BibliotheekItem_idBibliotheekItem
+                                )
+                                VALUES (
+                                '". $id . "', '" . $keuze_flv . "'
+                                )");
+    }
+
+    if ($keuze_mp3>0){
+        $resultaat = $db->Execute("INSERT INTO hoorcollege_hoorcollegbibliotheekitem (
+                                Hoorcollege_idHoorcollege ,
+                                BibliotheekItem_idBibliotheekItem
+                                )
+                                VALUES (
+                                '". $id . "', '" . $keuze_mp3 . "'
+                                )");
+    }
+
+    if ($keuze_txt>0){
+        $resultaat = $db->Execute("INSERT INTO hoorcollege_hoorcollegbibliotheekitem (
+                                Hoorcollege_idHoorcollege ,
+                                BibliotheekItem_idBibliotheekItem
+                                )
+                                VALUES (
+                                '". $id . "', '" . $keuze_txt . "'
+                                )");
+    }
+
+
+
+
+
+}
+
+function geeftLectorHoorcollege($lectorid, $hoorcollegeid){
+    global $db;
+    $lectorid = (int)$lectorid;
+    $hoorcollegeid  = (int)$hoorcollegeid;
+
+    $vakken = array();
+
+    $resultaat = $db->Execute('SELECT Vak_idVak
+                            FROM hoorcollege_gebruiker_beheert_vak
+                            WHERE Gebruiker_idGebruiker = ' . $lectorid);
+    while (!$resultaat->EOF) {
+        $vakken[] = $resultaat->fields["Vak_idVak"];
+        $resultaat->MoveNext();
+    }
+
+    return in_array($db->GetOne("SELECT Onderwerp_Vak_idVak
+                                FROM hoorcollege_onderwerphoorcollege
+                                WHERE Hoorcollege_idHoorcollege = ".$hoorcollegeid), $vakken);
+}
 ?>

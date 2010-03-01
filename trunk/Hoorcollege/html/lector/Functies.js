@@ -312,7 +312,7 @@ function autoSubmit2(form)
                     newField = document.createElement("td");
                     link = document.createElement("a");
                     link.appendChild(document.createTextNode('Wijzig'));
-                    link.setAttribute('href',"editHoorcollege.php");
+                    link.setAttribute('href',"wijzigHoorcollege.php?id="+id);
                     newField.appendChild(link);
                     newField.setAttribute('bgcolor',"#F0F0F0");
                     newTR.appendChild(newField);
@@ -602,7 +602,6 @@ function vakDropdown(id){
         }
     }
 
-
     xmlhttpVak.onreadystatechange=stateChangedVak;
     xmlhttpVak.open("GET","maakHoorcollegeXML.php?f=dropdown&id="+id,true);
     xmlhttpVak.send(null);
@@ -623,7 +622,8 @@ function stateChangedVak()
         } else {
             studentDiv.innerHTML = "";
         }
-
+        allesSelecteren();
+        verwijderStudent();
 
         /**
          * Leeg maken
