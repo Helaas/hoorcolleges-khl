@@ -266,6 +266,28 @@ function isGroepToegekentAanVak($groepId, $vakId) {
     return $gekent;
 
 }
+//methode om na ge gaan of een groep al toegekent is aan een vak en een hoorcollege
+function isGroepToegekentAanVakEnHoorcollege($groepId, $vakId,$hoorcollegeid) {
+    global $db;
+    $gekent = false;
+    $resultaat = $db->Execute("select Gebruiker_idGebruiker from hoorcollege_gebruikergroep where Groep_idGroep = '$groepId'");
+    while (!$resultaat->EOF && !$gekent) {
+        $gebruikerId = $resultaat->fields["Gebruiker_idGebruiker"];
+        $res2 = $db->Execute("select count(Gebruiker_idGebruiker) as aantal from hoorcollege_gebruiker_volgt_vak
+                                  where Gebruiker_idGebruiker = '$gebruikerId' && Vak_idVak = '$vakId' and Gebruiker_idGebruiker
+                                  in (SELECT Gebruiker_idGebruiker
+                                      FROM hoorcollege_gebruikerhoorcollege
+                                       WHERE Hoorcollege_idHoorcollege='$hoorcollegeid')");
+        if($res2->fields["aantal"] > 0) {
+            $gekent = true;
+        }
+        else {
+            $resultaat->MoveNext();
+        }
+    }
+    return $gekent;
+
+}
 
 function voegGebruikerToe($naam, $voornaam, $email) {
     global $db;

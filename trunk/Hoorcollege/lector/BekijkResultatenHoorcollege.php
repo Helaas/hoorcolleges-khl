@@ -41,7 +41,7 @@ if(isset ($_SESSION['gebruiker'])) {
         $i=0;
         $array = $db->Execute('SELECT * FROM hoorcollege_groep GROUP BY naam asc');
         while(!$array->EOF) {
-            if(isGroepToegekentAanVak($array->fields['idGroep'], $vak)) {
+                 if(isGroepToegekentAanVakEnHoorcollege($array->fields['idGroep'], $vak,(int)$_GET['gevraagdhoorcoll'])) {
                 $groepen[$i]['idGroep'] = $array->fields['idGroep'];
                 $groepen[$i]['naam'] = $array->fields['naam'];
                 $i++;
