@@ -1,13 +1,13 @@
 <?php
 include_once('./includes/kern.php');
 session_start();
-$config["pagina"] = "/student/paswoordVeranderen.html";
+$config["pagina"] = "paswoordVeranderen.html";
 $TBS = new clsTinyButStrong;
 
 $foutboodschap = '';
 $gelukt = false;
 
-if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
+if(isset ($_SESSION['gebruiker'])) {
     if (isset($_POST["paswoordVeranderen"])) {
         $paswoord = $_POST['oudPW'];
         $email = $_SESSION['gebruiker']->getEmail();
@@ -20,10 +20,17 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
                 $fout = true;
                 $foutboodschap = 'Het ingegeven nieuwe paswoord komt niet overeen met de herhaling van het paswoord.';
             }
-        }else{
+        }else {
             $fout = true;
             $foutboodschap = 'Uw ingegeven paswoord is incorrect.';
         }
+    }
+    if($_SESSION['gebruiker']->getNiveau() == 1) {
+        $TBS->LoadTemplate('./html/student/templateStudent.html');
+    }else if($_SESSION['gebruiker']->getNiveau() == 40) {
+        $TBS->LoadTemplate('./html/lector/templateLector.html');
+    }else if($_SESSION['gebruiker']->getNiveau() == 99) {
+        $TBS->LoadTemplate('./html/admin/templateAdmin.html');
     }
 }else if(!isset ($_SESSION['gebruiker'])) {
     header("location: login.php");
@@ -32,8 +39,6 @@ if(isset ($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) {
     $TBS->LoadTemplate('./html/template.html') ;
 }
 
-
-$TBS->LoadTemplate('./html/student/templateStudent.html') ;
 $TBS->Show() ;
 
 ?>
