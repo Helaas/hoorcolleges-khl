@@ -4,7 +4,7 @@
     <form action="admin.php?pagina=overzichtstudentenkoppelenselectief" method="POST">
         <input type="hidden" name="vak" value="[onshow.vak]" readonly="true" />
         Selecteer studenten om te ontkoppelen van het vak [onshow.vaknaam]:<br><br>
-        <input type="checkbox" name="chec" value="" onchange="aanvinken(this, 'checkbox[]')"/> Alles aanvinken
+        <input type="checkbox" name="chec" value="" onclick="aanvinken(this, 'checkbox[]')"/> Alles aanvinken
                 <br><br>
         <ul>
             <li>[blk1;block=li;nodata]Geen resultaat.</li>

@@ -2,7 +2,7 @@
 <h2>Studenten toekennen aan groepen</h2>
 <h3>Selectie maken</h3>
 <form action="admin.php?pagina=studentGroepVerderOverzicht" method="POST">
-    <input type="checkbox" name="chec" value="" onchange="aanvinken(this, 'checkboxStudenten[]')"/> Alles aanvinken<br><br>
+    <input type="checkbox" name="chec" value="" onclick="aanvinken(this, 'checkboxStudenten[]')"/> Alles aanvinken<br><br>
     <input type="hidden" name="studdata" value="[onshow.studdata]" readonly="true" />
     <ul>
         <li>[blk1;block=li;nodata]Geen resultaat.</li>

@@ -1,6 +1,13 @@
-function aanvinken2(naam) {
-    alert("lala");
+function enableKnop() {
+    if(document.frm.filteroptiesNaam.checked == true || document.frm.filteroptiesVak.checked || document.frm.filteroptiesGroep.checked) {
+       document.getElementById("disknop2").disabled = false;
+    }
+    else {
+        document.getElementById("disknop2").disabled = true;
+    }
 }
+
+
 
 function aanvinken(elem, naam) {
     checkb = document.getElementsByName(naam);

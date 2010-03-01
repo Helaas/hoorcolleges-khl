@@ -1,26 +1,26 @@
 > <a class="nav" href="admin.php?pagina=admin">admin</a> > studenten aan groep<br><br><br>
 <h2>Studenten toekennen aan groepen</h2>
         <h3>Selectief</h3>
-        <form action="admin.php?pagina=studentGroepVerder" method="POST">
+        <form name="frm" action="admin.php?pagina=studentGroepVerder" method="POST">
              Filter opties:<br><br>
-             <input type="checkbox" name="filteroptiesNaam" value="OFF" />
+             <input type="checkbox" name="filteroptiesNaam" onclick="enableKnop()" value="OFF" />
              Naam: <input type="text" name="naamBegintMet" value="" size="15" />
              <br><br>
-            <input type="checkbox" name="filteroptiesVak" value="OFF" />
+            <input type="checkbox" name="filteroptiesVak" onclick="enableKnop()" value="OFF" />
             Vak:
              <select name="selectVak">
                  <option value="leeg">[blk1;block=option;nodata]Nog geen klassen</option>
                 <option value="[blk1.idVak;block=option]">[blk1.naam]</option>
             </select>
             <br><br>
-           <input type="checkbox" name="filteroptiesGroep" value="OFF" />
+           <input type="checkbox" name="filteroptiesGroep" onclick="enableKnop()" value="OFF" />
             Groep:
             <select name="selectGroep">
                 <option value="zonder">zonder groep</option>
                 <option value="[blk2.idGroep;block=option]">[blk2.naam]</option>
             </select>
             <br><br><br>
-            <input type="submit" value="Verder" name="studentGroepVerder"/>
+            <input type="submit" id="disknop2" disabled value="Verder" name="studentGroepVerder"/>
         </form>
         <br><br>
 <a href="admin.php">Terug</a>
