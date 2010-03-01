@@ -515,7 +515,7 @@ function maakHoorcollegePopup(type){
     newwindow=window.open('bibliotheekPopup.php?type='+type+'&geselecteerd='+geselecteerd,'biblio','height=550,width=750');
     if (window.focus) {
         newwindow.focus()
-        }
+    }
     return false;
 
 }
@@ -852,7 +852,7 @@ function maakBibliotheekItemsPopup(){
     newwindow=window.open('bibliotheekPopupAlleItems.php','biblio','height=550,width=750');
     if (window.focus) {
         newwindow.focus()
-        }
+    }
     return false;
 }
 
@@ -889,8 +889,8 @@ function VerwerkGroepSelectie(form){
 
 
 
-    //voor elke <student>
-    for(var i=0;i<size;i++){
+        //voor elke <student>
+        for(var i=0;i<size;i++){
 
 
             //tabel
@@ -905,7 +905,9 @@ function VerwerkGroepSelectie(form){
             var TR1 = document.createElement("tr");
             var TD1 = document.createElement("td");
             TD1.setAttribute('className',"title-section");
-            TD1.setAttribute('bgcolor',"#CFE7CF");
+            if(studenten[i].getElementsByTagName('rootvraag').length!=0){
+                TD1.setAttribute('bgcolor',"#CFE7CF");
+            }
             TD1.setAttribute('colSpan',"4");
             var naam=xmlhttp.responseXML.getElementsByTagName('naam')[i].firstChild.data;
             var bvak = document.createElement("b");
@@ -913,96 +915,120 @@ function VerwerkGroepSelectie(form){
             TD1.appendChild(bvak);
             TR1.appendChild(TD1);
 
+            //enkel indien er vragen in het hoorcollege zitten
+            if(studenten[i].getElementsByTagName('rootvraag').length!=0){
+                //tr voor kolomnamen
+                var TR2 = document.createElement("tr");
+                //kolom1
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                var boldfield=document.createElement("b");
+                var ufield=document.createElement("em");
+                ufield.appendChild(document.createTextNode('Vraag'));
+                boldfield.appendChild(ufield);
+                p=document.createElement("p");
+                p.appendChild(boldfield);
+                TD1.setAttribute('width','25%');
+                TD1.appendChild(p);
+                TR2.appendChild(TD1);
+                //kolom2
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield=document.createElement("b");
+                ufield=document.createElement("em");
+                ufield.appendChild(document.createTextNode('Oplossing'));
+                boldfield.appendChild(ufield);
+                TD1.setAttribute('width','25%');
+                TD1.appendChild(boldfield);
+                TR2.appendChild(TD1);
+                //kolom3
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield=document.createElement("b");
+                ufield=document.createElement("em");
+                ufield.appendChild(document.createTextNode('Antwoord'));
+                boldfield.appendChild(ufield);
+                TD1.appendChild(boldfield);
+                TD1.setAttribute('width','25%');
+                TR2.appendChild(TD1);
+                //kolom4
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield=document.createElement("b");
+                ufield=document.createElement("em");
+                ufield.appendChild(document.createTextNode('Resultaat'));
+                boldfield.appendChild(ufield);
+                TD1.appendChild(boldfield);
+                TD1.setAttribute('width','25%');
+                TR2.appendChild(TD1);
 
-             //tr voor kolomnamen
-             var TR2 = document.createElement("tr");
-            //kolom1
-            TD1= document.createElement("td");
-            TD1.setAttribute('bgcolor',"#F0F0F0");
-            var boldfield=document.createElement("b");
-            var ufield=document.createElement("em");
-            ufield.appendChild(document.createTextNode('Vraag'));
-            boldfield.appendChild(ufield);
-            p=document.createElement("p");
-            p.appendChild(boldfield);
-            TD1.setAttribute('width','25%');
-            TD1.appendChild(p);
-            TR2.appendChild(TD1);
-            //kolom2
-            TD1= document.createElement("td");
-            TD1.setAttribute('bgcolor',"#F0F0F0");
-            boldfield=document.createElement("b");
-            ufield=document.createElement("em");
-            ufield.appendChild(document.createTextNode('Oplossing'));
-            boldfield.appendChild(ufield);
-            TD1.setAttribute('width','25%');
-            TD1.appendChild(boldfield);
-            TR2.appendChild(TD1);
-            //kolom3
-            TD1= document.createElement("td");
-            TD1.setAttribute('bgcolor',"#F0F0F0");
-            boldfield=document.createElement("b");
-            ufield=document.createElement("em");
-            ufield.appendChild(document.createTextNode('Antwoord'));
-            boldfield.appendChild(ufield);
-            TD1.appendChild(boldfield);
-            TD1.setAttribute('width','25%');
-            TR2.appendChild(TD1);
-            //kolom4
-            TD1= document.createElement("td");
-            TD1.setAttribute('bgcolor',"#F0F0F0");
-            boldfield=document.createElement("b");
-            ufield=document.createElement("em");
-            ufield.appendChild(document.createTextNode('Resultaat'));
-            boldfield.appendChild(ufield);
-            TD1.appendChild(boldfield);
-            TD1.setAttribute('width','25%');
-            TR2.appendChild(TD1);
+                myTable.appendChild(TR1);
+                myTable.appendChild(TR2);
+            }
 
-            myTable.appendChild(TR1);
-            myTable.appendChild(TR2);
+            //als geen vragen toegekend zijn aan dit hoorcollege, enkel de tr met studentnaam tonen.
+            if(studenten[i].getElementsByTagName('rootvraag').length==0){
+                myTable.appendChild(TR1);
+            }
 
 
             //Vul tabel op met XML gegevens
             var vragen=studenten[i].getElementsByTagName('rootvraag');
+            if(vragen.length==0){
+                var foutdiv=document.getElementById('foutmelding');
+                while ( foutdiv.firstChild ){
+                    foutdiv.removeChild( foutdiv.firstChild );
+                }
+
+                var err=document.createElement('p');
+                err.id='fout';
+                var txt= document.createTextNode("Dit hoorcollege bevat geen vragen.");
+                err.appendChild(txt);
+                err.appendChild(document.createElement('br'));
+                err.appendChild(document.createElement('br'));
+                err.appendChild(document.createElement('br'));
+                txt= document.createTextNode("De volgende leden van deze groep zijn toegekend aan dit hoorcollege:");
+                err.appendChild(txt);
+                foutdiv.appendChild(err);
+            }
             for(var j=0;j<vragen.length;j++){
 
-            var TR3=document.createElement("tr");
+                var TR3=document.createElement("tr");
 
-            //Vraag
-            TD1= document.createElement("td");
-            TD1.setAttribute('bgcolor',"#F0F0F0");
-            p=document.createElement("p");
-            p.appendChild(document.createTextNode(vragen[j].getElementsByTagName('Vraag')[0].firstChild.data));
-            TD1.appendChild(p);
-            TR3.appendChild(TD1);
+                //Vraag
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                p=document.createElement("p");
+                p.appendChild(document.createTextNode(vragen[j].getElementsByTagName('Vraag')[0].firstChild.data));
+                TD1.appendChild(p);
+                TR3.appendChild(TD1);
 
-            //Oplossing
-            TD1= document.createElement("td");
-            TD1.setAttribute('bgcolor',"#F0F0F0");
-            p=document.createElement("p");
-            p.appendChild(document.createTextNode(vragen[j].getElementsByTagName('juistantwoord')[0].firstChild.data));
-            TD1.appendChild(p);
-            TR3.appendChild(TD1);
+                //Oplossing
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                p=document.createElement("p");
+                p.appendChild(document.createTextNode(vragen[j].getElementsByTagName('juistantwoord')[0].firstChild.data));
+                TD1.appendChild(p);
+                TR3.appendChild(TD1);
 
-            //Antwoord
-            TD1= document.createElement("td");
-            TD1.setAttribute('bgcolor',"#F0F0F0");
-            p=document.createElement("p");
-            p.appendChild(document.createTextNode(vragen[j].getElementsByTagName('gegevenantwoord')[0].firstChild.data));
-            TD1.appendChild(p);
-            TR3.appendChild(TD1);
+                //Antwoord
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                p=document.createElement("p");
+                p.appendChild(document.createTextNode(vragen[j].getElementsByTagName('gegevenantwoord')[0].firstChild.data));
+                TD1.appendChild(p);
+                TR3.appendChild(TD1);
 
 
-            //Resultaat
-            TD1= document.createElement("td");
-            TD1.setAttribute('bgcolor',"#F0F0F0");
-            p=document.createElement("p");
-            p.appendChild(document.createTextNode(vragen[j].getElementsByTagName('correct')[0].firstChild.data));
-            TD1.appendChild(p);
-            TR3.appendChild(TD1);
+                //Resultaat
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                p=document.createElement("p");
+                p.appendChild(document.createTextNode(vragen[j].getElementsByTagName('correct')[0].firstChild.data));
+                TD1.appendChild(p);
+                TR3.appendChild(TD1);
 
-            myTable.appendChild(TR3);
+                myTable.appendChild(TR3);
             }
 
 
@@ -1016,7 +1042,7 @@ function VerwerkGroepSelectie(form){
             document.getElementById('studentDiv').appendChild(document.createElement('br'));
 
 
-}
+        }
 
 
 
