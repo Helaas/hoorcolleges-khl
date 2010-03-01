@@ -1,5 +1,6 @@
 <?php
     require("./../includes/kern.php");
+    arrTest();
 
     $nieuweID = 14;
 

@@ -44,9 +44,11 @@
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');
                 $TBS->MergeBlock("blk1",$db,$q);
             } else { //alles OK, hoorcollege maken
-                //$nieuweID = maakHoorcollege($_POST['vak'], $_POST['Ond'], $_POST['naam'], $_POST["keuze_flv"], $_POST["keuze_mp3"], $_POST["keuze_txt"],$_POST["studentGeselecteerd"]);
                 wijzigHoorcollege($_GET["id"], $_POST['vak'], $_POST['Ond'], $_POST['naam'], $_POST["keuze_flv"], $_POST["keuze_mp3"], $_POST["keuze_txt"],$_POST["studentGeselecteerd"]);
-                $config["pagina"] = "./lector/hoorcollegeGemaakt.html";
+                $boodschap["reden"] = "Hoorcollege succesvol aangepast";
+                $boodschap["inhoud"] = "Uw wijzigingen zijn met succes opgeslagen.";
+                $boodschap["link"] = "index.php";
+                $config["pagina"] = "./algemeneBoodschap.html";
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');
             }
 

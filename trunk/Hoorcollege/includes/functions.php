@@ -1174,6 +1174,37 @@ function wijzigHoorcollege($id, $vak, $ond, $naam, $keuze_flv, $keuze_mp3, $keuz
 
 
 
+    //huidige studenten vergelijken
+    $studentenOud = array();
+    $resultaat = $db->Execute('SELECT Gebruiker_idGebruiker
+                                FROM hoorcollege_gebruikerhoorcollege
+                                WHERE Hoorcollege_idHoorcollege = ' . $id);
+    while (!$resultaat->EOF) {
+        $studentenOud[] = $resultaat->fields["Gebruiker_idGebruiker"];
+        $resultaat->MoveNext();
+    }
+
+
+    $vergelijk = vergelijkArrays($studentenOud,$arrStudids);
+
+
+    foreach ($vergelijk["verwijderd"] as $value) {
+        $resultaat = $db->Execute("DELETE FROM hoorcollege_gegevenantwoord WHERE Gebruiker_idGebruiker = ".(int)$value);
+        $resultaat = $db->Execute("DELETE FROM hoorcollege_vbc WHERE Gebruiker_idGebruiker = ".(int)$value);
+        $resultaat = $db->Execute("DELETE FROM hoorcollege_gebruikerhoorcollege WHERE Gebruiker_idGebruiker = ". (int)$value ." AND Hoorcollege_idHoorcollege = ".$id);
+    }
+
+    foreach ($vergelijk["nieuw"] as $value) {
+        $resultaat = $db->Execute("INSERT INTO hoorcollege_gebruikerhoorcollege (
+                            Gebruiker_idGebruiker,
+                            Hoorcollege_idHoorcollege ,
+                            reedsBekeken ,
+                            VBCVerplicht
+                            )
+                            VALUES (
+                            '". (int)$value . "', '". $id ."', '0', '0'
+                            )");
+    }
 
 
 }
@@ -1197,4 +1228,32 @@ function geeftLectorHoorcollege($lectorid, $hoorcollegeid){
                                 FROM hoorcollege_onderwerphoorcollege
                                 WHERE Hoorcollege_idHoorcollege = ".$hoorcollegeid), $vakken);
 }
+
+function vergelijkArrays($oudeArray=array(), $nieuweArray=array()){
+    if(!is_array($oudeArray) || !is_array($nieuweArray)){return false;};
+
+    $oudeArray=array_unique($oudeArray);
+    $nieuweArray=array_unique($nieuweArray);
+    $beiden=array_intersect($oudeArray, $nieuweArray);
+
+    return array(
+    'beiden'=>$beiden,
+    'nieuw'=>array_diff($nieuweArray, $oudeArray),
+    'verwijderd'=>array_diff($oudeArray, $beiden)
+    );
+    
+}
+
+function arrTest(){
+    $ids1 = array();
+    $ids2 = array();
+
+    $ids1[] = 1;$ids1[] = 2;$ids1[] = 3;$ids1[] = 4;
+    $ids2[] = 5;$ids2[] = 2;$ids2[] = 3;$ids2[] = 4;
+
+    echo "<pre>";
+    print_r(vergelijkArrays($ids1,$ids2));
+    echo "</pre>";
+}
+
 ?>
