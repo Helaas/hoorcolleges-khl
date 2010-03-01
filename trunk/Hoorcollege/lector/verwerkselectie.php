@@ -27,7 +27,7 @@ if(isset($_SESSION['gebruiker'])) {
             $TBS->Show() ;
         }
         else {
-            $config["pagina"] = "./FileUpload/UploadTekst.html";
+            $config["pagina"] = "./FileUpload/uploadTekst.html";
             $TBS->LoadTemplate('./../html/lector/templateLector.html');
             $TBS->Show() ;
         }
