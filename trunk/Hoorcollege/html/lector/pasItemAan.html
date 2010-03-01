@@ -28,15 +28,27 @@
     <body>
         <div id="container" class="clearfix" style="padding: 0; margin:0">
             <div id="centerColumn" style="border-left:0">
-                <form action="" name="Form" method="POST">
+                <form action="" name="Form" method="POST" onsubmit="return submitForm2();">
                     <h2>Aanpassen van naam en/of beschrijving bibliotheekitem "[onshow.itemNaam]"</h2>
 
                     <p style="font-size: 12px">Geef de nieuwe naam van het bibliotheekitem: </p>
                     <p><input type="text" name="nieuweNaam" value="[onshow._POST.nieuweNaam;noerr]" style="font-size: 0.9em; width:300px;" /></p>
-                    <p style="font-size: 12px">Geef de nieuwe beschrijving van het bibliotheekitem: </p>
-                    <p><input type="text" name="nieuweBeschrijving" value="[onshow._POST.nieuweBeschrijving;noerr]" style="font-size: 0.9em; width:300px;" /></p>
-                    <p><input type="submit" name ="itemAanpassen" value="Wijzigen" style="font-size: 0.9em; padding: 0;"/> </p>
-                    <a href="bibliotheekPopupAlleItems.php">Terug naar overzicht</a>
+                    <div id="RTE" >
+                        <p style="font-size: 12px">Geef de nieuwe beschrijving van het bibliotheekitem: </p>
+                        <script language="JavaScript" type="text/javascript">
+                            initRTE("./../html/cbrte/images/", "./../html/cbrte/", "", true);
+                        </script>
+                        <noscript><p><b>Javascript must be enabled to use this form.</b></p></noscript>
+
+                        <script language="JavaScript" type="text/javascript">
+                            var rte1 = new richTextEditor('rte1');
+                            rte1.html = '<?=$content;?>';
+                            rte1.toggleSrc = false;
+                            rte1.build();
+                        </script>
+                    </div>
+                    <p><br></br><input type="submit" name ="itemAanpassen" value="Wijzigen" style="font-size: 0.9em; padding: 0;"/> </p>
+                    <p><a href="bibliotheekPopupAlleItems.php">Terug naar overzicht</a></p>
                 </form>
             </div>
         </div>

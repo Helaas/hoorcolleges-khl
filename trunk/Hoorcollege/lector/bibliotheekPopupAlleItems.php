@@ -25,22 +25,24 @@ if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40) {
         $itemNaam = getBibliotheekitemNaam($itemId);
         $TBS->LoadTemplate('./../html/lector/pasItemAan.html');
         if (isset($_POST["itemAanpassen"])) {
-            if($_POST['nieuweNaam'] != "" && $_POST['nieuweBeschrijving'] != "") {
+            if($_POST['nieuweNaam'] != "" && $_POST['rte1'] != "") {
                 $nieuweNaam = mysql_real_escape_string($_POST['nieuweNaam']);
-                $nieuweBeschrijving = mysql_real_escape_string($_POST['nieuweBeschrijving']);
+                $nieuweBeschrijving = mysql_real_escape_string($_POST['rte1']);
                 $db->Execute("UPDATE hoorcollege_bibliotheekitem SET naam = '".$nieuweNaam."',
                               beschrijving = '".$nieuweBeschrijving."'
                               WHERE idBibliotheekItem=".$itemId);
                 header('location: bibliotheekPopupAlleItems.php');
-            }else if($_POST['nieuweNaam'] != "" && $_POST['nieuweBeschrijving'] == ""){
+            }else if($_POST['nieuweNaam'] != "" && $_POST['rte1'] == ""){
                 $nieuweNaam = mysql_real_escape_string($_POST['nieuweNaam']);
                 $db->Execute("UPDATE hoorcollege_bibliotheekitem SET naam = '".$nieuweNaam."'
                               WHERE idBibliotheekItem=".$itemId);
                 header('location: bibliotheekPopupAlleItems.php');
-            }else if($_POST['nieuweNaam'] == "" && $_POST['nieuweBeschrijving'] != ""){
-                $nieuweBeschrijving = mysql_real_escape_string($_POST['nieuweBeschrijving']);
+            }else if($_POST['nieuweNaam'] == "" && $_POST['rte1'] != ""){
+                $nieuweBeschrijving = mysql_real_escape_string($_POST['rte1']);
                 $db->Execute("UPDATE hoorcollege_bibliotheekitem SET beschrijving = '".$nieuweBeschrijving."'
                               WHERE idBibliotheekItem=".$itemId);
+                header('location: bibliotheekPopupAlleItems.php');
+            }else{
                 header('location: bibliotheekPopupAlleItems.php');
             }
         }
