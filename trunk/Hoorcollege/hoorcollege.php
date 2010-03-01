@@ -3,7 +3,7 @@
 require("./includes/kern.php");
 session_start();
 
-if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 1) { //student is ingelogged
+if(isset($_SESSION['gebruiker']) && ($_SESSION['gebruiker']->getNiveau() == 1 || $_SESSION['gebruiker']->getNiveau() == 40)) { //student is ingelogged
 
     //validateNumber controleert of de variabele gevuld is + numeriek is
     if (validateNumber($_GET["hoorcollege"]) && magGebruikerHoorcollegeZien($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])) {

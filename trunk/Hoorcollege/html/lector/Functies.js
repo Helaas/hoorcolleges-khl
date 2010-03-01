@@ -299,10 +299,11 @@ function autoSubmit2(form)
                     newTR.appendChild(newTd);
                     newTR.appendChild(newField);
 
+                    var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
                     newField = document.createElement("td");
                     link = document.createElement("a");
                     link.appendChild(document.createTextNode('Details'));
-                    link.setAttribute('href',"details.php");
+                    link.setAttribute('href',"./../hoorcollege.php?hoorcollege="+id);
                     newField.setAttribute('bgcolor',"#F0F0F0");
                     newField.appendChild(link);
                     newTR.appendChild(newField);
@@ -316,7 +317,7 @@ function autoSubmit2(form)
                     newField.setAttribute('bgcolor',"#F0F0F0");
                     newTR.appendChild(newField);
 
-                    var id=xmlhttp.responseXML.getElementsByTagName('Id')[i].firstChild.data;
+              
                     newField = document.createElement("td");
                     newField.setAttribute('bgcolor',"#F0F0F0");
                     link = document.createElement("a");
