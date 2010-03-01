@@ -3,11 +3,16 @@
 
 <form action="admin.php?pagina=StudentGroepOntNaamOverzicht" method="POST">
     Selecteer de studenten die u wenst te verwijderen uit hun groep:<br><br>
+    <input type="checkbox" name="chec" value="" onchange="aanvinken(this, 'checkboxStudenten[]')"/> Alles aanvinken
+    <br><br>
             <ul>
                 <li>[blk1;block=li;nodata]Geen resultaat.</li>
-                <li><input type="checkbox" name="checkboxStudenten[]" value="[blk1.idGebruiker]" /> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
+                <li><input type="checkbox" name="checkboxStudenten[]" value="[blk1.idGebruiker]" onClick="checkEnabled('checkboxStudenten[]')" /> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
             </ul>
 
     <br><br>
-    <input type="submit" value="Verder" name="verderopnaamStudGroep" />
+    <input type="submit" id="disknop" disabled value="Verder" name="verderopnaamStudGroep" />
 </form>
+<br>
+<br>
+<a href="javascript:history.go(-1);">Terug</a>

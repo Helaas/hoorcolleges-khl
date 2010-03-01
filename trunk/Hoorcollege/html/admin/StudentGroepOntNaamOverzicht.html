@@ -1,4 +1,4 @@
-> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentGroepOnt">studenten verwijderen groep</a> > <a class="nav" href="[onshow.link]">zoeken</a> > <a class="nav" href="javascript:history.go(-1)">selectie maken</a> > voltooien<br><br><br>
+> <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentGroepOnt">studenten verwijderen groep</a> > <a class="nav" href="javascript:history.go(-2)">zoeken</a> > <a class="nav" href="javascript:history.go(-1)">selectie maken</a> > voltooien<br><br><br>
 <h2>Voltooing</h2>
     <form action="admin.php?pagina=admin" method="POST">        
         <input type="hidden" name="checkbox2" value="[onshow.checkbox2]" readonly="true" />
@@ -11,5 +11,7 @@
             </li>
         </ul>
         <br><br>
-        <input type="submit" value="Voltooien" name="voltStudentGroepOntknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
+        <input type="submit" value="Voltooien" name="voltStudentGroepOntknop" />
     </form>
+<br><br>
+<a href="javascript:history.go(-1);">Terug</a>

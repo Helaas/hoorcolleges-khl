@@ -356,13 +356,19 @@ else if(isset ($_POST['wijziggroepnaam'])) { //indien men een groepsnaam probeer
     if(!empty ($_POST['nieuwenaam'])) {
         $idGroep = (int) $_POST['selectgroep'];
         $naam = (string) $_POST['nieuwenaam'];
-        if(wijzigGroepsnaam($idGroep, $naam)) {
-            $typeboodschap = "juist";
-            $foutboodschap = 'Groepsnaam is succesvol gewijzigd!'; //dit is geen foutboodschap
+        if(!bestaatGroep($naam)) {
+            if(wijzigGroepsnaam($idGroep, $naam)) {
+                $typeboodschap = "juist";
+                $foutboodschap = 'Groepsnaam is succesvol gewijzigd!'; //dit is geen foutboodschap
+            }
+            else {
+                $typeboodschap = "fout";
+                $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
+            }
         }
         else {
             $typeboodschap = "fout";
-            $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
+            $foutboodschap = 'Deze groep bestaat al!';
         }
     }
     else if($_POST['selectgroep'] == 'leeg') {
@@ -1352,6 +1358,14 @@ if(isset ($_GET['pagina'])) {
                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
                                             WHERE vv.Vak_idVak = '$id'
                                             GROUP BY g.naam, g.voornaam ASC");
+    }
+    else if($_GET['pagina'] == 'groepDetails') {
+        $id = $_GET['detailsGroepId'];
+        //overzicht om de leden
+        $TBS->MergeBlock('blk1', $db, "SELECT *
+                                       FROM hoorcollege_gebruiker g
+                                       LEFT JOIN hoorcollege_gebruikergroep bv ON g.idGebruiker = bv.Gebruiker_idGebruiker
+                                       WHERE bv.Groep_idGroep = '$id'");    
     }
 }
 

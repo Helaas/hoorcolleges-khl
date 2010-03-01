@@ -1,21 +1,24 @@
 > <a class="nav" href="admin.php?pagina=admin">admin</a> > <a class="nav" href="admin.php?pagina=studentGroep">studenten aan groep</a> > selectie maken<br><br><br>
 <h2>Studenten toekennen aan groepen</h2>
-        <h3>Selectie maken</h3>
-        <form action="admin.php?pagina=studentGroepVerderOverzicht" method="POST">
-            <input type="hidden" name="studdata" value="[onshow.studdata]" readonly="true" />
-            <ul>
-                <li>[blk1;block=li;nodata]Geen resultaat.</li>
-                <li><input type="checkbox" name="checkboxStudenten[]" value="[blk1.idGebruiker]" /> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
-            </ul>
-            <br><br><br>
-            Koppelen aan:<br><br>
-                    Groep: <select name="selectgroep" >
-                        <option value="leeg">[blk2;block=option;nodata]Geen resultaat.</option>
-                        <option value="[blk2.idGroep;block=option]">[blk2.naam;]</option>
-                    </select>
-                <br><br><br>
-                <p id ="[onshow.typeboodschap;noerr]">
-                        [onshow.foutboodschap;noerr]
-                    </p>
-                <input type="submit" value="Verder" name="toekennenstudentenaangroepoverzichtknop" />&nbsp;&nbsp;<input type="submit" value="Annuleer" name="annuleer" />
-        </form>
+<h3>Selectie maken</h3>
+<form action="admin.php?pagina=studentGroepVerderOverzicht" method="POST">
+    <input type="checkbox" name="chec" value="" onchange="aanvinken(this, 'checkboxStudenten[]')"/> Alles aanvinken<br><br>
+    <input type="hidden" name="studdata" value="[onshow.studdata]" readonly="true" />
+    <ul>
+        <li>[blk1;block=li;nodata]Geen resultaat.</li>
+        <li><input type="checkbox" name="checkboxStudenten[]" value="[blk1.idGebruiker]" onClick="checkEnabled('checkboxStudenten[]')"/> [blk1.naam;block=li], [blk1.voornaam;block=li]</li>
+    </ul>
+    <br><br><br>
+    Koppelen aan:<br><br>
+    Groep: <select name="selectgroep" >
+        <option value="leeg">[blk2;block=option;nodata]Geen resultaat.</option>
+        <option value="[blk2.idGroep;block=option]">[blk2.naam;]</option>
+    </select>
+    <br><br><br>
+    <p id ="[onshow.typeboodschap;noerr]">
+        [onshow.foutboodschap;noerr]
+    </p>
+    <input type="submit" id="disknop" disabled value="Verder" name="toekennenstudentenaangroepoverzichtknop" />
+</form>
+<br><br>
+<a href="admin.php?pagina=studentGroep">Terug</a>
