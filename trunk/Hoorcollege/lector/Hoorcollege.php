@@ -1,9 +1,9 @@
 <?php
-// && heeftHoorcollegeVragen($_GET["hoorcollege"]) && magGebruikerVragenBeantwoorden($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])
-require("./includes/kern.php");
+
+include_once('./../includes/kern.php');
 session_start();
 
-if(isset($_SESSION['gebruiker']) && ($_SESSION['gebruiker']->getNiveau() == 1 || $_SESSION['gebruiker']->getNiveau() == 40)) { //student is ingelogged
+if(isset($_SESSION['gebruiker']) &&  $_SESSION['gebruiker']->getNiveau() == 40) {
 
     //validateNumber controleert of de variabele gevuld is + numeriek is
     if (validateNumber($_GET["hoorcollege"]) && magGebruikerHoorcollegeZien($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"])) {
@@ -38,12 +38,8 @@ if(isset($_SESSION['gebruiker']) && ($_SESSION['gebruiker']->getNiveau() == 1 ||
         if (isset($items["txt"])) $tekst = true;
 
 
-        $config["pagina"] = "./hoorcollege/template.html";
-        if($_SESSION['gebruiker']->getNiveau() == 40){
-            
-            $TBS->LoadTemplate('./html/lector/hoorcollegeTemplate.html');
-        }
-        else {$TBS->LoadTemplate('./html/student/templateStudent.html');}
+        $config["pagina"] = "./hoorcollege/templateVoorLector.html";
+       $TBS->LoadTemplate('./html/lector/templateLectorVoorHoorcollege.html');
 
         /**
          * Hoorcollege reacties bekijken + plaatsen
@@ -74,12 +70,12 @@ if(isset($_SESSION['gebruiker']) && ($_SESSION['gebruiker']->getNiveau() == 1 ||
         $fout["reden"] = "Geen hoorcollege beschikbaar";
         $fout["inhoud"] = "U beschikt over onvoldoende rechten om dit hoorcollege te bekijken.";
         $config["pagina"] = "./algemeneFout.html";
-        $TBS->LoadTemplate('./html/student/templateStudent.html');
+        $TBS->LoadTemplate('./html/lector/templateLectorVoorHoorcollege.html');
     }
 
 } else { //geen student / niet ingelogged
     $config["pagina"] = "./FileUpload/Error1Login.html";
-    $TBS->LoadTemplate('./html/template.html');
+    $TBS->LoadTemplate('./html/lector/templateLectorVoorHoorcollege.html');
 }
 
 $TBS->Show();
