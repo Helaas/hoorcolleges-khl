@@ -20,7 +20,7 @@ if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40) {
                                  WHERE BibliotheekCategorie_Gebruiker_idGebruiker =". (int)$_SESSION['gebruiker']->getIdGebruiker()."
                                  ORDER BY mimetype, bc.naam, bi.naam ");
 
-    if($_GET['pagina'] == 'pasaan') {
+    if(isset($_GET['pagina']) && $_GET['pagina'] == 'pasaan') {
         $itemId = $_GET['itemId'];
         $itemNaam = getBibliotheekitemNaam($itemId);
         $TBS->LoadTemplate('./../html/lector/pasItemAan.html');
@@ -45,7 +45,7 @@ if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40) {
             }
         }
 
-    }else if($_GET['pagina'] == 'verwijder') {
+    }else if(isset($_GET['pagina']) && $_GET['pagina'] == 'verwijder') {
         $itemId = $_GET['itemId'];
         $itemNaam = getBibliotheekitemNaam($itemId);
         $TBS->LoadTemplate('./../html/lector/verwijderItem.html');
