@@ -1234,7 +1234,7 @@ function VerwerkVraagSelectie(ihoorid){
                 TD1 = document.createElement("td");
                 TD1.appendChild(document.createTextNode('\u00A0\u00A0'));
                 TD1.setAttribute('width','5%');
-                TR3.appendChild(TD1)
+                TR3.appendChild(TD1);
                 TD1= document.createElement("td");
                 TD1.setAttribute('bgcolor',"#FF9999");
                 p=document.createElement("p");
@@ -1270,7 +1270,25 @@ function VerwerkVraagSelectie(ihoorid){
             }
 
         }
+                var TR4=document.createElement("tr");
+                //blanco
+                TR3=document.createElement("tr");
+                TD1 = document.createElement("td");
+                TD1.appendChild(document.createTextNode('\u00A0\u00A0'));
+                TD1.setAttribute('width','5%');
+                TR4.appendChild(TD1);
+                //optie toevoegen
+                TD1 = document.createElement("td");
+                TD1.setAttribute('className',"title-section");
+                TD1.setAttribute('colSpan',"2");
+                var link = document.createElement("a");
+                link.appendChild(document.createTextNode('Voeg een nieuwe optie toe'));
+                link.setAttribute('href',"VoegOptieToe.php?vraagid="+vid);
+                TD1.appendChild(link);
+                TR4.appendChild(TD1);
 
+        myTable.appendChild(document.createElement('br'));
+        myTable.appendChild(TR4);
         myTable.appendChild(document.createElement('br'));
         myTable.appendChild(document.createElement('br'));
         myTable.appendChild(document.createElement('br'));
