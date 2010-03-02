@@ -303,7 +303,7 @@ function autoSubmit2(form)
                     newField = document.createElement("td");
                     link = document.createElement("a");
                     link.appendChild(document.createTextNode('Bekijk'));
-                    link.setAttribute('href',"./../hoorcollege.php?hoorcollege="+id);
+                    link.setAttribute('href',"hoorcollege.php?hoorcollege="+id);
                     newField.setAttribute('bgcolor',"#F0F0F0");
                     newField.appendChild(link);
                     newTR.appendChild(newField);

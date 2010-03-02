@@ -1,0 +1,27 @@
+<h2>Hoorcollege "[var.hoorcolInfo.naam]"</h2>
+
+[onshow.video;if  [val]=1;then  '[onload; file='./../html/hoorcollege/videoLector.html';getbody]';else  '']
+[onshow.audio;if  [val]=1;then  '[onload; file='./../html/hoorcollege/audioLector.html';getbody]';else  '']
+[onshow.tekst;if  [val]=1;then  '[onload; file='./../html/hoorcollege/tekst.html';getbody]';else  '']
+
+<h3>Opmerkingen</h3>
+
+
+<h3>Reacties:</h3>
+<div id="commentaren" style="font-size: 13px">
+    <div id="commentaar" >
+    <p>[blk1.naam;block=div] [blk1.voornaam;block=div] zegt:</p>
+    <p>[blk1.inhoud]</p>
+    <p style="font-size: 9px">Geplaatst op [blk1.datum]</p>
+    </div>
+</div>
+<br>
+<br>
+<h3>Zelf een reactie geven:</h3>
+<br>
+
+<textarea id="tekst" name="tekst" cols="50" rows="5"></textarea>
+<br>
+<input type="submit" value="Toevoegen" onclick="submitCommentaar()"/>
+<input type="hidden" id="naamGebruiker" value="[onshow.gebruikersNaam]"/>
+<input type="hidden" id="idHoorcollege" value="[onshow.idHoorcollege]"/>
