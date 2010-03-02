@@ -1321,9 +1321,14 @@ function maakVBC($id,$aantal,$audio,$arrIds){
       $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 1 WHERE Gebruiker_idGebruiker IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
 }
 
-function wijzigVBC($id,$arrIds){
+function wijzigVBC($id,$aantal,$audio,$arrIds){
     global $db;
     $id = (int)$id;
+    $aantal = (int)$aantal;
+    $audio = (int)$audio;
+
+    $db->Execute("UPDATE hoorcollege_hoorcollege SET VBC_aantal = '"  . $aantal .  "',
+                  VBC_geluid = '" . $audio . "' WHERE idHoorcollege = " . $id);
 
     $studentids = "";
 
@@ -1360,13 +1365,14 @@ function staatStudentReedsInVbc($idStudent, $idHoorcollege){
 }
 
 function vbcBepaaldeStudentResetten($idStudent, $idHoorcollege){
-    $db->Execute("DELETE FROM hoorcollege_vbc WHERE Gebruiker_idGebruiker = ".$idStudent. "AND Hoorcollege_idHoorcollege = ".$idHoorcollege);
+    global $db;
+    $db->Execute("DELETE FROM hoorcollege_vbc WHERE Gebruiker_idGebruiker = ".$idStudent. " AND Hoorcollege_idHoorcollege = ".$idHoorcollege);
 }
 
 function vbcVanVolledigHoorcollegeResetten($idHoorcollege){
+    global $db;
     $db->Execute("DELETE FROM hoorcollege_vbc WHERE Hoorcollege_idHoorcollege = ".$idHoorcollege);
 }
-
 function wijzigMCVragen($id,$arr){
     global $db;
     $id = (int)$id;

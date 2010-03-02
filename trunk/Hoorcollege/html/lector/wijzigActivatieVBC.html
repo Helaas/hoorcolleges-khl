@@ -4,38 +4,57 @@
     de KHL waarop de student dan moet klikken om te bevestigen dat hij nog steeds kijkt.</p>
 <div id="fout"> <strong>Er is een technische fout opgetreden: <br /></strong>[var.foutboodschap;noerr]  [onload_1;block=div;when [var.fout]==1]</div>
 <form action="wijzigActivatieVBC.php?id=[var._GET.id;noerr]" method="POST" onsubmit="allesSelecteren()">
+    <h3>Aantal logo's</h3>
+    Stel het aantal logo's in die periodiek verschijnen boven op de video. <br />
+    <input type="text" name="aantal" value="[onshow.aantal]" size="4" />
+
+    <h3>Geluidseffecten</h3>
+    Aangeven of de gebruikers geluidseffecten krijgt bij het al dan niet succesvol klikken op een logo. <br/>
+    Uitschakelen: <input type="radio" name="audio" value="0" checked="[checked; when [var.audioAan]==0]" /> Inschakelen: <input type="radio" name="audio" value="1" checked="[checked; when [var.audioAan]==1]"/>
+
     <h3>Studenten selecteren</h3>
     <table border="0">
-            <tbody>
-                <tr>
-                    <td width="300">Studenten die het hoorcollege volgen</td>
-                    <td width="150">Actie studenten</td>
-                    <td width="250">Studenten waarbij VBC geactiveerd</td>
-                </tr>
-                <tr>
-                    <td style="vertical-align:top;">
-                        <div>
-                            <select name="" id="lijstStudent" size="20" multiple="multiple" style="width: 200px">
-                                <option value="[blk1.idGebruiker;block=option]" name="Vak">[blk1.naam] [blk1.voornaam]</option>
-                            </select>
-                        </div>
-                    </td>
-                    <td style="vertical-align:middle;padding-left: 20px;">
-                        <div>
-                            <input type="button" value=">>" onclick="selecteerStudent()"/> <br />
-                            <input type="button" value="<<" onclick="verwijderStudent()"/>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <select name="studentGeselecteerd[]" id="lijstStudentGeselecteerd" size="20" multiple style="width: 200px">
-                                <option value="[blk2.idGebruiker;block=option]" name="Vak">[blk2.naam] [blk2.voornaam]</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <br /><br />
+        <tbody>
+            <tr>
+                <td width="300">Studenten die het hoorcollege volgen</td>
+                <td width="150">Actie studenten</td>
+                <td width="250">Studenten waarbij VBC geactiveerd</td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top;">
+                    <div>
+                        <select name="" id="lijstStudent" size="20" multiple="multiple" style="width: 200px">
+                            <option value="[blk1.idGebruiker;block=option]" name="Vak">[blk1.naam] [blk1.voornaam]</option>
+                        </select>
+                    </div>
+                </td>
+                <td style="vertical-align:middle;padding-left: 20px;">
+                    <div>
+                        <input type="button" value=">>" onclick="selecteerStudent()"/> <br />
+                        <input type="button" value="<<" onclick="verwijderStudent()"/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <select name="studentGeselecteerd[]" id="lijstStudentGeselecteerd" size="20" multiple style="width: 200px">
+                            <option value="[blk2.idGebruiker;block=option]" name="Vak">[blk2.naam] [blk2.voornaam]</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br /><br />
     <input type="submit" value="VBC activeren !" name="verzenden" />
+
+    <h3>Reset VBC van student</h3>
+    Kies een student waarvan u het volledige VBC wilt resetten
+    <br /><br />
+    <div>
+        <select id="selectGroep" name="student">
+            <option value="alle">Alle studenten van het hoorcollege</option>
+            <option value="[blk3.idGebruiker]">[blk3.naam;block=option] [blk3.voornaam;block=option]</option>
+        </select>
+        <input type="submit" value="Reset VBC" name="reset" />
+    </div>
 </form>
