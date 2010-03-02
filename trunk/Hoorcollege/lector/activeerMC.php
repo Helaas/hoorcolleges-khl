@@ -69,7 +69,9 @@
             } else { //alles ok, inserten
                 maakMCVragen($_GET["id"],$_SESSION["vraag"]);
                 unset($_SESSION["vraag"]);
-                echo "ok";
+                $nieuweID = $_GET["id"];
+                $config["pagina"] = "./lector/activeerMCOK.html";
+                $TBS->LoadTemplate('./../html/lector/templateLector.html');
             }
 
         } else { //vragen en stuff kunnen toevoegen

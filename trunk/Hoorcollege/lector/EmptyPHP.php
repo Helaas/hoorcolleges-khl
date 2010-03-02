@@ -4,7 +4,7 @@
 
     $nieuweID = 14;
 
-    $config["pagina"] = "./lector/hoorcollegeGemaakt.html";
+    $config["pagina"] = "./lector/activeerMCOK.html";
     $TBS->LoadTemplate('./../html/lector/templateLector.html');
 
     $TBS->Show();
