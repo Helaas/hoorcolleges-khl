@@ -1561,8 +1561,16 @@ function wijzigMCVragen($id,$arr){
 
 
     /**
-     * Vragen deleten
+     * Antwoorden deleten
      */
+     foreach ($teverwijderenAntwoorden as $sleutel => $waarde){
+        $db->Execute("DELETE FROM hoorcollege_gegevenantwoord WHERE Vraag_idVraag = ".$sleutel);
+        if (isset($waarde) && is_array($waarde)){
+            foreach ($waarde as $sleutel2 => $waarde2 ){
+                $db->Execute("DELETE FROM hoorcollege_mogelijkantwoord WHERE idMogelijkAntwoord = ".$sleutel2);
+            }
+        }
+    }
 
 }
 
