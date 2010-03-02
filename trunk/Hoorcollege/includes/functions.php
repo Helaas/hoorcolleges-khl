@@ -1339,11 +1339,11 @@ function wijzigVBC($id,$arrIds){
 
         $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 1 WHERE Gebruiker_idGebruiker IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
         $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 0 WHERE Gebruiker_idGebruiker NOT IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
-        $db->Execute("DELETE FROM hoorcollege_vbc WHERE Gebruiker_idGebruiker NOT IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
+ 
 
     }else{
          $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 0 WHERE Hoorcollege_idHoorcollege = ".$id);
-         $db->Execute("DELETE FROM hoorcollege_vbc WHERE Hoorcollege_idHoorcollege = ".$id);
+        
     }
 
 }
@@ -1357,6 +1357,14 @@ function staatStudentReedsInVbc($idStudent, $idHoorcollege){
     if($resultaat->fields["aantal"] == 0) {
         $db->Execute("INSERT INTO hoorcollege_vbc (Gebruiker_idGebruiker, Hoorcollege_idHoorcollege)VALUES(".$idStudent.", ".$idHoorcollege.")");
     }
+}
+
+function vbcBepaaldeStudentResetten($idStudent, $idHoorcollege){
+    $db->Execute("DELETE FROM hoorcollege_vbc WHERE Gebruiker_idGebruiker = ".$idStudent. "AND Hoorcollege_idHoorcollege = ".$idHoorcollege);
+}
+
+function vbcVanVolledigHoorcollegeResetten($idHoorcollege){
+    $db->Execute("DELETE FROM hoorcollege_vbc WHERE Hoorcollege_idHoorcollege = ".$idHoorcollege);
 }
 
 ?>
