@@ -4,9 +4,9 @@
     session_start();
     $fout = false;
 
-    echo "<pre>";
+   /** echo "<pre>";
     print_r($_SESSION["vraag"]);
-echo "</pre>";
+echo "</pre>";**/
     if(isset($_GET["reset"])) unset($_SESSION["vraag"]);
     if (!isset($_SESSION["vraag"])){ //hier komt de magie
         $_SESSION["vraag"] = array();
@@ -30,8 +30,6 @@ echo "</pre>";
 
             $resultaat->MoveNext();
         }
-
-
     }
     
     /**
@@ -73,8 +71,8 @@ echo "</pre>";
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');
                 $TBS->MergeBlock("blk1",$_SESSION["vraag"]);
             } else { //alles ok, inserten
-                //maakMCVragen($_GET["id"],$_SESSION["vraag"]);
-                unset($_SESSION["vraag"]);
+                wijzigMCVragen($_GET["id"],$_SESSION["vraag"]);
+                //unset($_SESSION["vraag"]);
                 $nieuweID = $_GET["id"];
                 $config["pagina"] = "./lector/activeerMCOK.html";
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');

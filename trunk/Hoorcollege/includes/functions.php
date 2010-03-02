@@ -1367,4 +1367,97 @@ function vbcVanVolledigHoorcollegeResetten($idHoorcollege){
     $db->Execute("DELETE FROM hoorcollege_vbc WHERE Hoorcollege_idHoorcollege = ".$idHoorcollege);
 }
 
+function wijzigMCVragen($id,$arr){
+    global $db;
+    $id = (int)$id;
+
+    $juist = array();
+    $oudevragen = array();
+
+    $oudevragenids = array();
+    $nieuwevragenids = array();
+
+    $intevoegenVragen = array();
+    $teverwijderenVragen = array();
+
+    $resultaat = $db->Execute('SELECT idVraag, vraagstelling, juistantwoord
+                                FROM hoorcollege_vraag
+                                WHERE Hoorcollege_idHoorcollege = ' . $id);
+    while (!$resultaat->EOF) {
+        $oudevragenids[] = $resultaat->fields["idVraag"];
+        $oudevragen[$resultaat->fields["idVraag"]]["vraagstelling"] = $resultaat->fields["vraagstelling"];
+
+        $resultaatAntwoord = $db->Execute('SELECT idMogelijkAntwoord, antwoord
+                                            FROM hoorcollege_mogelijkantwoord
+                                            WHERE Vraag_idVraag =' . $resultaat->fields["idVraag"]);
+         while (!$resultaatAntwoord->EOF) {
+             $juist = 0;
+             if ($resultaat->fields["juistantwoord"] == $resultaatAntwoord->fields["idMogelijkAntwoord"]) $juist = 1;
+              $oudevragen[$resultaat->fields["idVraag"]]["mogelijkantwoorden"][$resultaatAntwoord->fields["idMogelijkAntwoord"]] =
+                                                                            array ("antwoord" => $resultaatAntwoord->fields["antwoord"],
+                                                                            "juist" => $juist);
+             $resultaatAntwoord->MoveNext();
+         }
+
+        $resultaat->MoveNext();
+    }
+
+    foreach ($arr as $sleutel => $waarde){
+        $nieuwevragenids[] = $sleutel;
+    }
+
+    $vergelijk = vergelijkArrays($oudevragenids, $nieuwevragenids);
+
+    foreach($vergelijk["nieuw"] as $waarde){
+        $intevoegenVragen[$waarde]["vraagstelling"] = $arr[$waarde]["vraagstelling"];
+        $intevoegenVragen[$waarde]["mogelijkantwoorden"] = $arr[$waarde]["mogelijkantwoorden"];
+    }
+
+    foreach($vergelijk["verwijderd"] as $waarde){
+        $teverwijderenVragen[$waarde]["vraagstelling"] = $oudevragen[$waarde]["vraagstelling"];
+        $teverwijderenVragen[$waarde]["mogelijkantwoorden"] = $oudevragen[$waarde]["mogelijkantwoorden"];
+    }
+
+    echo "<pre>";
+    print_r($oudevragen);
+    print_r(vergelijkArrays($oudevragenids, $nieuwevragenids));
+    print_r($intevoegenVragen);
+    print_r($teverwijderenVragen);
+    echo "</pre>";
+
+    /**foreach ($arr as $sleutel => $waarde){
+       $db->Execute("INSERT INTO hoorcollege_vraag (
+                    idVraag ,
+                    vraagstelling ,
+                    juistantwoord ,
+                    Hoorcollege_idHoorcollege
+                    )
+                    VALUES (
+                    NULL , '" . addslashes($waarde["vraagstelling"]) . "', NULL , '" . $id . "'
+                    )");
+         $nieuweId = $db->Insert_ID();
+        foreach ($waarde["mogelijkantwoorden"] as $sleutel2 => $waarde2 ){
+            $db->Execute("INSERT INTO hoorcollege_mogelijkantwoord (
+                            idMogelijkAntwoord ,
+                            antwoord ,
+                            Vraag_idVraag
+                            )
+                            VALUES (
+                            NULL , '" . $waarde2["antwoord"] . "', '" . $nieuweId . "'
+                            ) ");
+
+            if ($waarde2["juist"] == "1"){
+                $nieuweIdAnt = $db->Insert_ID();
+                $juist[$nieuweId] = $nieuweIdAnt;
+            }
+
+        }
+    }
+
+    foreach ($juist as $sleutel => $waarde ){
+        $db->Execute("UPDATE hoorcollege_vraag SET juistantwoord  = '". $waarde ."' WHERE hoorcollege_vraag.idVraag = ". $sleutel);
+    }**/
+
+}
+
 ?>
