@@ -905,10 +905,8 @@ function VerwerkGroepSelectie(form){
             var TR1 = document.createElement("tr");
             var TD1 = document.createElement("td");
             TD1.setAttribute('className',"title-section");
-            if(studenten[i].getElementsByTagName('rootvraag').length!=0){
-                TD1.setAttribute('bgcolor',"#CFE7CF");
-            }
-            TD1.setAttribute('colSpan',"4");
+            TD1.setAttribute('bgcolor',"#CFE7CF");
+            TD1.setAttribute('colSpan',"5");
             var naam=xmlhttp.responseXML.getElementsByTagName('naam')[i].firstChild.data;
             var bvak = document.createElement("b");
             bvak.appendChild(document.createTextNode(naam));
@@ -919,21 +917,26 @@ function VerwerkGroepSelectie(form){
             if(studenten[i].getElementsByTagName('rootvraag').length!=0){
                 //tr voor kolomnamen
                 var TR2 = document.createElement("tr");
+                //Indent
+                var newTd = document.createElement("td");
+                newTd.appendChild(document.createTextNode('\u00A0'));
+                newTd.setAttribute('colSpan',"0");
+                TR2.appendChild(newTd);
+
+
                 //kolom1
                 TD1= document.createElement("td");
-                TD1.setAttribute('bgcolor',"#F0F0F0");
+                TD1.setAttribute('bgcolor',"#FFFBD6");
                 var boldfield=document.createElement("b");
                 var ufield=document.createElement("em");
                 ufield.appendChild(document.createTextNode('Vraag'));
                 boldfield.appendChild(ufield);
-                p=document.createElement("p");
-                p.appendChild(boldfield);
                 TD1.setAttribute('width','25%');
-                TD1.appendChild(p);
+                TD1.appendChild(boldfield);
                 TR2.appendChild(TD1);
                 //kolom2
                 TD1= document.createElement("td");
-                TD1.setAttribute('bgcolor',"#F0F0F0");
+                TD1.setAttribute('bgcolor',"#FFFBD6");
                 boldfield=document.createElement("b");
                 ufield=document.createElement("em");
                 ufield.appendChild(document.createTextNode('Oplossing'));
@@ -943,7 +946,7 @@ function VerwerkGroepSelectie(form){
                 TR2.appendChild(TD1);
                 //kolom3
                 TD1= document.createElement("td");
-                TD1.setAttribute('bgcolor',"#F0F0F0");
+                TD1.setAttribute('bgcolor',"#FFFBD6");
                 boldfield=document.createElement("b");
                 ufield=document.createElement("em");
                 ufield.appendChild(document.createTextNode('Antwoord'));
@@ -953,7 +956,7 @@ function VerwerkGroepSelectie(form){
                 TR2.appendChild(TD1);
                 //kolom4
                 TD1= document.createElement("td");
-                TD1.setAttribute('bgcolor',"#F0F0F0");
+                TD1.setAttribute('bgcolor',"#FFFBD6");
                 boldfield=document.createElement("b");
                 ufield=document.createElement("em");
                 ufield.appendChild(document.createTextNode('Resultaat'));
@@ -986,14 +989,16 @@ function VerwerkGroepSelectie(form){
                 err.appendChild(txt);
                 err.appendChild(document.createElement('br'));
                 err.appendChild(document.createElement('br'));
-                err.appendChild(document.createElement('br'));
-                txt= document.createTextNode("De volgende leden van deze groep zijn toegekend aan dit hoorcollege:");
-                err.appendChild(txt);
                 foutdiv.appendChild(err);
             }
             for(var j=0;j<vragen.length;j++){
 
                 var TR3=document.createElement("tr");
+
+                var newTd = document.createElement("td");
+                newTd.appendChild(document.createTextNode('\u00A0\u00A0\u00A0'));
+                newTd.setAttribute('colSpan',"0");
+                TR3.appendChild(newTd);
 
                 //Vraag
                 TD1= document.createElement("td");
@@ -1032,13 +1037,183 @@ function VerwerkGroepSelectie(form){
             }
 
 
+               myTable.appendChild(document.createElement('br'));
+             
 
+                //VBC Sectie
+                var vbc=studenten[i].getElementsByTagName('VBC');
+                var vbcIsIngeschakeld=studenten[i].getElementsByTagName('VBCNietUitgevoerd');
+                var TRvbc=document.createElement("tr");
+
+                //Indent
+                var newTd = document.createElement("td");
+                newTd.appendChild(document.createTextNode('\u00A0\u00A0\u00A0'));
+                newTd.setAttribute('colSpan',"0");
+                TRvbc.appendChild(newTd);
+                //titel
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#FFFBD6");
+                p=document.createElement("b");
+                p.appendChild(document.createTextNode('Video Bekeken Controle'));
+                TD1.appendChild(p);
+                TD1.setAttribute('colspan',0);
+                TRvbc.appendChild(TD1);
+                myTable.appendChild(TRvbc);
+
+                //als vbc verplicht voor deze student
+                if(vbc.length!=0){
+                    
+                //Kolomnamen
+                 TRvbc=document.createElement("tr");
+
+                //Indent
+                var newTd = document.createElement("td");
+                newTd.appendChild(document.createTextNode('\u00A0\u00A0\u00A0'));
+                newTd.setAttribute('colSpan',"0");
+                TRvbc.appendChild(newTd);
+
+                //kolom1
+            
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                var boldfield=document.createElement("b");
+                var ufield=document.createElement("em");
+                ufield.appendChild(document.createTextNode('Te Bekijken'));
+                boldfield.appendChild(ufield);
+                p=document.createElement("p");
+                p.appendChild(boldfield);
+                TD1.setAttribute('width','25%');
+                TD1.appendChild(p);
+                TRvbc.appendChild(TD1);
+                //kolom2
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield=document.createElement("b");
+                ufield=document.createElement("em");
+                ufield.appendChild(document.createTextNode('Aantal getoonde hoofden'));
+                boldfield.appendChild(ufield);
+                TD1.setAttribute('width','25%');
+                TD1.appendChild(boldfield);
+                TRvbc.appendChild(TD1);
+                //kolom3
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield=document.createElement("b");
+                ufield=document.createElement("em");
+                ufield.appendChild(document.createTextNode('Aantal geklikte hoofden'));
+                boldfield.appendChild(ufield);
+                TD1.appendChild(boldfield);
+                TD1.setAttribute('width','25%');
+                TRvbc.appendChild(TD1);
+                //kolom4
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield=document.createElement("b");
+                ufield=document.createElement("em");
+                ufield.appendChild(document.createTextNode('Score'));
+                boldfield.appendChild(ufield);
+                TD1.appendChild(boldfield);
+                TD1.setAttribute('width','25%');
+                TRvbc.appendChild(TD1);
+
+                  myTable.appendChild(TRvbc);
+
+                 //Data
+                 TRvbc=document.createElement("tr");
+
+                //Indent
+                var newTd = document.createElement("td");
+                newTd.appendChild(document.createTextNode('\u00A0\u00A0\u00A0'));
+                newTd.setAttribute('colSpan',"0");
+                TRvbc.appendChild(newTd);
+
+                //kolom1
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield.appendChild(ufield);
+                p=document.createElement("p");
+                p.appendChild(document.createTextNode(vbc[0].getElementsByTagName('teBekijken')[0].firstChild.data));
+                TD1.setAttribute('width','25%');
+                TD1.appendChild(p);
+                TRvbc.appendChild(TD1);
+                //kolom2
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield.appendChild(ufield);
+                p=document.createElement("p");
+                var antget =vbc[0].getElementsByTagName('AantalGetoond')[0].firstChild.data;
+                p.appendChild(document.createTextNode(antget));
+                TD1.setAttribute('width','25%');
+                TD1.appendChild(p);
+                TRvbc.appendChild(TD1);
+                //kolom3
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield.appendChild(ufield);
+                p=document.createElement("p");
+                var antgek =vbc[0].getElementsByTagName('AantalGeklikt')[0].firstChild.data;
+                p.appendChild(document.createTextNode(antgek));
+                TD1.setAttribute('width','25%');
+                TD1.appendChild(p);
+                TRvbc.appendChild(TD1);
+                //kolom4
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                boldfield.appendChild(ufield);
+                p=document.createElement("p");
+                var score= (antgek/antget)*100;
+                if(antget!=0){
+                p.appendChild(document.createTextNode(Math.round(score)+'%'));
+                }
+                else {p.appendChild(document.createTextNode('-'));}
+                TD1.setAttribute('width','25%');
+                TD1.appendChild(p);
+                TRvbc.appendChild(TD1);
+
+                myTable.appendChild(TRvbc);
+                }
+
+            else {
+                TRvbc=document.createElement("tr");
+                
+                //Indent
+                var newTd = document.createElement("td");
+                newTd.appendChild(document.createTextNode('\u00A0\u00A0\u00A0'));
+                newTd.setAttribute('colSpan',"0");
+                TRvbc.appendChild(newTd);
+
+               if(vbcIsIngeschakeld.length==0){
+                //VBC uitgeschakeld voor deze student
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                p=document.createElement('p');
+                p.appendChild(document.createTextNode('VBC is voor deze student niet ingeschakeld.'));
+                TD1.setAttribute('colspan','4');
+                TD1.appendChild(p);
+                TRvbc.appendChild(TD1);
+                myTable.appendChild(TRvbc);
+               }
+               else{
+                //VBC is ingeschakeld maar de student heeft het hoorcollege nog niet bekeken
+                TD1= document.createElement("td");
+                TD1.setAttribute('bgcolor',"#F0F0F0");
+                p=document.createElement('p');
+                p.appendChild(document.createTextNode('De student heeft het hoorcollege nog niet bekeken.'));
+                TD1.setAttribute('colspan','4');
+                TD1.appendChild(p);
+                TRvbc.appendChild(TD1);
+                myTable.appendChild(TRvbc);
+               }
+            }
+        
 
 
 
 
 
             document.getElementById('studentDiv').appendChild(myTable);
+            document.getElementById('studentDiv').appendChild(document.createElement('br'));
+            document.getElementById('studentDiv').appendChild(document.createElement('br'));
             document.getElementById('studentDiv').appendChild(document.createElement('br'));
 
 

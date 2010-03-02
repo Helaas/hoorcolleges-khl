@@ -56,6 +56,26 @@ if(isset ($_SESSION['gebruiker'])) {
       
             $xml_file .= "<naam>".$naamQuery->fields["voornaam"]." ".$naamQuery->fields["naam"]."</naam>";
 
+            $VBCQuery= $db->Execute('SELECT * FROM hoorcollege_vbc WHERE Gebruiker_idGebruiker='.$id.' and Hoorcollege_idHoorcollege='.(int)$_GET["gevraagdhoorcoll"].' and gebruiker_idGebruiker in (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikerhoorcollege WHERE Hoorcollege_idHoorcollege='.$_GET["gevraagdhoorcoll"].' and VBCVerplicht=1)');
+
+            if($VBCQuery->fields["teBekijken"]==null){
+
+            $IsVerplichtQuery= $db->Execute('SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikerhoorcollege WHERE Hoorcollege_idHoorcollege='.(int)$_GET["gevraagdhoorcoll"].' and VBCVerplicht=1 and Gebruiker_idGebruiker='.$id);
+                if($IsVerplichtQuery->fields["Gebruiker_idGebruiker"]!=null){
+            $xml_file .= "<VBCNietUitgevoerd>";
+            $xml_file .= "De student heeft het hoorcollege nog niet bekeken.";
+            $xml_file .= "</VBCNietUitgevoerd>";
+                }
+            }
+            while (!$VBCQuery->EOF) {
+            $xml_file .= "<VBC>";
+            $xml_file .= "<teBekijken>".$VBCQuery->fields["teBekijken"]."</teBekijken>";
+            $xml_file .= "<AantalGetoond>".$VBCQuery->fields["getoonde"]."</AantalGetoond>";
+            $xml_file .= "<AantalGeklikt>".$VBCQuery->fields["geklikt"]."</AantalGeklikt>";
+            $xml_file .= "</VBC>";
+            $VBCQuery->MoveNext();
+            }
+
 
               $vragen = array();
                 $idVraag;
