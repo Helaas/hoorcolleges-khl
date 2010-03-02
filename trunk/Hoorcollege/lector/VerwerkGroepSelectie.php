@@ -26,11 +26,15 @@ if(isset ($_SESSION['gebruiker'])) {
         header("Content-type: text/xml");
         $geengroep=false;
         //Enkel getallen mogen hier binnen
-        if ((preg_match('/^[0-9]+$/iD', $_GET["gevraagdGroep"]) || $_GET["gevraagdGroep"]=='geen') &&preg_match('/^[0-9]+$/iD', $_GET["gevraagdhoorcoll"])) {
+        if ((preg_match('/^[0-9]+$/iD', $_GET["gevraagdGroep"]) || $_GET["gevraagdGroep"]=='geen'|| $_GET["gevraagdGroep"]=='Iedereen') &&preg_match('/^[0-9]+$/iD', $_GET["gevraagdhoorcoll"])) {
             if($_GET["gevraagdGroep"]=='geen'){
-            
+             
             $studenten = $db->Execute("select idGebruiker from hoorcollege_gebruiker where idGebruiker not in(select Gebruiker_idGebruiker from hoorcollege_gebruikergroep) and idGebruiker in(SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikerhoorcollege WHERE hoorcollege_idHoorcollege =".(int)$_GET["gevraagdhoorcoll"].")");
             $geengroep=true;
+            }
+            else if($_GET["gevraagdGroep"]=='Iedereen'){
+
+            $studenten=$db->Execute("select Gebruiker_idGebruiker from hoorcollege_gebruikerhoorcollege WHERE hoorcollege_idHoorcollege=".(int)$_GET['gevraagdhoorcoll']);
             }
             else{
              $studenten = $db->Execute("SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikergroep WHERE Gebruiker_idGebruiker in (SELECT Gebruiker_idGebruiker FROM hoorcollege_gebruikerhoorcollege WHERE hoorcollege_idHoorcollege =".(int)$_GET["gevraagdhoorcoll"].") and Groep_idGroep =".(int)$_GET["gevraagdGroep"]);
