@@ -32,7 +32,7 @@ if(isset ($_SESSION['gebruiker'])) {
             else {
                 $tekstinhoud = "Het onderwerp werd niet toegevoegd omdat er al een onderwerp met deze naam bestaat.";
                 $Titel="Foutmelding";
-                $config["pagina"] = "./Lector/Boodschap.html";
+                $config["pagina"] = "./lector/Boodschap.html";
             }
 
 
