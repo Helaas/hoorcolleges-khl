@@ -2,9 +2,12 @@
 Op deze pagina kan u vragen toevoegen aan een hoorcollege. Gebruik het bolletje om het correcte antwoord aan te duiden.
 <div id="fout"> <strong>Hemeltje, er ging wat mis: <br /></strong>[var.foutboodschap;noerr]  [onload_1;block=div;when [var.fout]==1]</div>
 <form action="activeerMC.php?id=[var._GET.id]" method="POST">
-     <div><br /><strong>Vraag [blk1.#]: </strong>[blk1.vraagstelling;block=div;sub1=mogelijkantwoorden;noerr]
-         <div><span style="display:none">[blk1.mogelijkantwoorden;magnet=div;noerr]</span><input type="radio" name="antwoorden[[blk1.id]]" value="[blk1_sub1.id]" [blk1_sub1.#;if  [val]=1;then 'checked';else  '';noerr] /> [blk1_sub1.antwoord;block=div]</div>
-         <br/><br/><br/><input type="text" name="ant[[blk1.id]]" value="" size="30" /> <input type="submit" name="nieuwant" value="Maak nieuw mogelijk antwoord" />
+     <div><br /><br/>
+         <div style="background-color: #eeeeee;border:1px solid #cccccc;padding:6px;margin-bottom: 20px;">
+             <strong>Vraag [blk1.#]: </strong>[blk1.vraagstelling;block=div;sub1=mogelijkantwoorden;noerr]
+             <div style="margin-left: 10px;"><span style="display:none">[blk1.mogelijkantwoorden;magnet=div;noerr]</span><strong>Mogelijk antwoord [blk1_sub1.#]: </strong><input type="radio" onclick="zetGeselecteerdeMPVraag([blk1.id], [blk1_sub1.id])" name="juist[[blk1.id]]" value="[blk1_sub1.id]" [blk1_sub1.juist;if  [val]=1;then 'checked';else  '';noerr] /> [blk1_sub1.antwoord;block=div]</div>
+             <br/><br/><br/><input type="text" name="ant[[blk1.id]]" value="" size="30" /> <input type="submit" name="nieuwant" value="Maak nieuw mogelijk antwoord" />
+         </div>
      </div>
 
     <br/><br/>

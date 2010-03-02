@@ -4,8 +4,13 @@
     session_start();
     $fout = false;
 
-if(isset($_GET["reset"])) unset($_SESSION["vraag"]);
-if (!isset($_SESSION["vraag"])) $_SESSION["vraag"] = array();
+    if(isset($_GET["reset"])) unset($_SESSION["vraag"]);
+    if (!isset($_SESSION["vraag"])) $_SESSION["vraag"] = array();
+
+    if(isset($_GET["zetGeselecteerdVraag"]) && is_numeric($_GET["zetGeselecteerdVraag"]) && isset($_GET["zetGeselecteerdAnt"]) && is_numeric($_GET["zetGeselecteerdAnt"])){
+        $_SESSION["vraag"][$_GET["zetGeselecteerdVraag"]]["mogelijkantwoorden"][$_GET["zetGeselecteerdAnt"]]["juist"] = 1;
+        exit();
+    }
 
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
         $foutboodschap = "";
@@ -21,12 +26,12 @@ if (!isset($_SESSION["vraag"])) $_SESSION["vraag"] = array();
 
         }
 
-        print_r($_POST);
         if (isset($_POST["nieuwant"])){
             foreach ($_POST["ant"] as $sleutel => $value) {
                 if (!empty($value)){
                     @$_SESSION["vraag"][$sleutel]["mogelijkantwoorden"][] = array ("antwoord" => $value,
-                                                            "id" => count($_SESSION["vraag"][$sleutel]["mogelijkantwoorden"]) );
+                                                            "id" => count($_SESSION["vraag"][$sleutel]["mogelijkantwoorden"]),
+                                                            "juist" => "0");
                 }
             }
         }

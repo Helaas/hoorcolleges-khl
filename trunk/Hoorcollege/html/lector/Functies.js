@@ -1056,3 +1056,18 @@ function VerwerkGroepSelectie(form){
 
 
 }
+
+var xmlhtppSelectie;
+
+function zetGeselecteerdeMPVraag(vraag, selectie){
+    xmlhtppSelectie=GetXmlHttpObject();
+
+    if (xmlhtppSelectie==null){
+        alert ("Your browser does not support AJAX!");
+        return;
+    }
+
+    //xmlhtppSelectie.onreadystatechange=zetSelectieState; //callback niet nodig
+    xmlhtppSelectie.open("GET","activeerMC.php?id=8&zetGeselecteerdVraag="+ vraag +"&zetGeselecteerdAnt="+selectie,true);
+    xmlhtppSelectie.send(null);
+}

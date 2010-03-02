@@ -1256,4 +1256,10 @@ function arrTest(){
     echo "</pre>";
 }
 
+function maakMCVragen($arr){
+    $db->Execute('');
+
+
+}
+
 ?>
