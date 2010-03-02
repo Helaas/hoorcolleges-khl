@@ -1439,14 +1439,12 @@ function wijzigMCVragen($id,$arr){
     }
 
     foreach($vergelijk["beiden"] as $waarde){ //kijken of er wijzigingen zijn aan de vragen
-        $nieuwevragen = array();
-        $deletevragen = array();
-        //foreach($waarde["mogelijkantwoorden"] as $waarde2){
-            
-        //}
+        echo "<pre>"; print_r(vergelijkArrays($oudeantwoordenids[$waarde], $nieuweantwoordenids[$waarde])); echo "</pre>";
+        $vgl = vergelijkArrays($oudeantwoordenids[$waarde], $nieuweantwoordenids[$waarde]);
+        $intevoegenAntwoorden[$waarde]["juist"] = 0;
      }
 
-    echo "<pre>";
+    echo "<pre>\n---";
     print_r($oudevragen);
     print_r($arr);
     print_r(vergelijkArrays($oudevragenids, $nieuwevragenids));
