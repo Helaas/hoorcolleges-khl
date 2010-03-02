@@ -1,13 +1,14 @@
 <h2>Video bekeken controle activeren</h2>
 <p>Met VBC (video bekeken controle) bent u in staat te controleren of uw studenten wel degelijk naar een hoorcollege hebben gekeken. Periodiek verschijnt er een logo van de KHL waarop de student dan moet klikken om te bevestigen dat hij nog steeds kijkt.</p>
-<form action="activeerVBC.php?id=[var._GET.id;noerr]" method="POST">
+<div id="fout"> <strong>Hemeltje, er ging wat mis: <br /></strong>[var.foutboodschap;noerr]  [onload_1;block=div;when [var.fout]==1]</div>
+<form action="activeerVBC.php?id=[var._GET.id;noerr]" method="POST" onsubmit="allesSelecteren()">
     <h3>Aantal logo's</h3>
     Stel het aantal logo's in die periodiek verschijnen boven op de video. <br />
     <input type="text" name="aantal" value="8" size="4" />
 
     <h3>Geluidseffecten</h3>
     Aangeven of de gebruikers geluidseffecten krijgt bij het al dan niet succesvol klikken op een logo. <br/>
-    Uitschakelen: <input type="radio" name="audio" value="nee" checked="checked" /> Inschakelen: <input type="radio" name="audio" value="ja" />
+    Uitschakelen: <input type="radio" name="audio" value="0" checked="checked" /> Inschakelen: <input type="radio" name="audio" value="1" />
 
     <h3>Studenten selecteren</h3>
     <table border="0">

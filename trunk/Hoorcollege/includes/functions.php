@@ -1270,7 +1270,7 @@ function maakMCVragen($id,$arr){
                     Hoorcollege_idHoorcollege
                     )
                     VALUES (
-                    NULL , '" . $waarde["vraagstelling"] . "', NULL , '" . $id . "'
+                    NULL , '" . addslashes($waarde["vraagstelling"]) . "', NULL , '" . $id . "'
                     )");
          $nieuweId = $db->Insert_ID();
         foreach ($waarde["mogelijkantwoorden"] as $sleutel2 => $waarde2 ){
@@ -1295,6 +1295,30 @@ function maakMCVragen($id,$arr){
         $db->Execute("UPDATE hoorcollege_vraag SET juistantwoord  = '". $waarde ."' WHERE hoorcollege_vraag.idVraag = ". $sleutel);
     }
 
+}
+
+function maakVBC($id,$aantal,$audio,$arrIds){
+    global $db;
+    $id = (int)$id;
+    $aantal = (int)$aantal;
+    $audio = (int)$audio;
+
+    $db->Execute("UPDATE hoorcollege_hoorcollege SET VBC_aantal = '"  . $aantal .  "',
+                  VBC_geluid = '" . $audio . "' WHERE idHoorcollege = " . $id);
+
+
+    $studentids = "";
+
+
+    foreach($arrIds as $waarde){
+        $studentids = $waarde.",";
+    }
+
+     if (strlen($studentids) > 0){
+        $studentids = substr_replace($studentids,"",-1);
+     }
+
+      $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 1 WHERE Gebruiker_idGebruiker IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
 }
 
 ?>
