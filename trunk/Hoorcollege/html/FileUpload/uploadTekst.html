@@ -41,8 +41,8 @@ rte1.build();
 </div>
 <br>
 <p>Kies een naam voor het tekstbestand:
-<input type="txt" id="filenaam" name="bestandsnaam" value="" /></p>
-<input type="submit" value="Upload tekst" />
+<input type="txt" id="filenaam" name="bestandsnaam" value="" onkeyup="valideerInputFilename(this.form)"/></p>
+<input type="submit" id="uploadknop" value="Upload tekst" disabled="true" />
 <br>
 <div id="foutmelding"></div>
 </form>

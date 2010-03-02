@@ -510,6 +510,30 @@ function valideerInput(form){
     }
 }
 
+function valideerInputFilename(form){
+    var reg = new RegExp("^[a-zA-Z0-9\+\#\ \_]+$");
+    var inp= form.filenaam.value;
+    var MijnDiv=document.getElementById("foutmelding")
+
+    if(reg.test(inp)){
+        while ( MijnDiv.firstChild ){
+            MijnDiv.removeChild( MijnDiv.firstChild );
+        }
+        form.uploadknop.disabled=false;
+    }
+    else{
+        form.uploadknop.disabled=true;
+        while ( MijnDiv.firstChild ){
+            MijnDiv.removeChild( MijnDiv.firstChild );
+        }
+        var err=document.createElement('p');
+        err.id='fout';
+        var txt= document.createTextNode("De bestandsnaam mag geen speciale tekens bevatten en moet ingevuld zijn.");
+        err.appendChild(txt);
+        MijnDiv.appendChild(err);
+    }
+}
+
 function maakHoorcollegePopup(type){
     var geselecteerd = document.getElementById("keuze_"+type).value;
     newwindow=window.open('bibliotheekPopup.php?type='+type+'&geselecteerd='+geselecteerd,'biblio','height=550,width=750');

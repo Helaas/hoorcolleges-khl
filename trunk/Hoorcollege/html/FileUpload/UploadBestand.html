@@ -6,7 +6,7 @@
 Kies een bestand: <input name="uploadedfile" id="fileupload" type="file" /><br />
 <br>
 Kies een naam voor het bestand:
-<input type="txt" name="bestandsnaam" value="" id="filenaam" />
+<input type="txt" name="bestandsnaam" value="" id="filenaam" onkeyup="valideerInputFilename(this.form)"/>
 <br>
 <br>
 </div>
@@ -31,7 +31,7 @@ rte1.build();
 </script>
 </div>
  
-<input type="submit" value="Upload File" />
+<input type="submit" id="uploadknop" value="Upload File" disabled="true" />
 <br>
 <div id="foutmelding"></div>
 </form>
