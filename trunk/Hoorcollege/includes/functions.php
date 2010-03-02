@@ -1439,20 +1439,38 @@ function wijzigMCVragen($id,$arr){
     }
 
     foreach($vergelijk["beiden"] as $waarde){ //kijken of er wijzigingen zijn aan de vragen
-        echo "<pre>"; print_r(vergelijkArrays($oudeantwoordenids[$waarde], $nieuweantwoordenids[$waarde])); echo "</pre>";
+        //echo "<pre>"; print_r(vergelijkArrays($oudeantwoordenids[$waarde], $nieuweantwoordenids[$waarde])); echo "</pre>";
         $vgl = vergelijkArrays($oudeantwoordenids[$waarde], $nieuweantwoordenids[$waarde]);
-        $intevoegenAntwoorden[$waarde]["juist"] = 0;
+        foreach ($vgl["nieuw"] as $waarde2){
+            $intevoegenAntwoorden[$waarde][]=  array ("antwoord" =>  $arr[$waarde]["mogelijkantwoorden"][$waarde2]["antwoord"],
+                                                                            "juist" => $arr[$waarde]["mogelijkantwoorden"][$waarde2]["juist"]);
+        }
+        foreach ($vgl["verwijderd"] as $waarde2){
+            $teverwijderenAntwoorden[$waarde][$waarde2] = array ("antwoord" =>  $oudevragen[$waarde]["mogelijkantwoorden"][$waarde2]["antwoord"],
+                                                                            "juist" => $oudevragen[$waarde]["mogelijkantwoorden"][$waarde2]["juist"]);
+        }
+        foreach ($vgl["beiden"] as $waarde2){ //als er een vraag wordt toegevoegd en gedelete tegelijk
+            if ($arr[$waarde]["mogelijkantwoorden"][$waarde2]["antwoord"] != $oudevragen[$waarde]["mogelijkantwoorden"][$waarde2]["antwoord"]){
+                $intevoegenAntwoorden[$waarde][] = array ("antwoord" =>  $arr[$waarde]["mogelijkantwoorden"][$waarde2]["antwoord"],
+                                                                            "juist" => $arr[$waarde]["mogelijkantwoorden"][$waarde2]["juist"]);
+                $teverwijderenAntwoorden[$waarde][$waarde2] = array ("antwoord" =>  $oudevragen[$waarde]["mogelijkantwoorden"][$waarde2]["antwoord"],
+                                                                            "juist" => $oudevragen[$waarde]["mogelijkantwoorden"][$waarde2]["juist"]);
+            }
+        }
      }
 
     echo "<pre>\n---";
-    print_r($oudevragen);
+    /**print_r($oudevragen);
     print_r($arr);
-    print_r(vergelijkArrays($oudevragenids, $nieuwevragenids));
+    print_r(vergelijkArrays($oudevragenids, $nieuwevragenids));**/
     print_r($intevoegenVragen);
     print_r($teverwijderenVragen);
     echo "----\n";
-    print_r($oudeantwoordenids);
-    print_r($nieuweantwoordenids);
+    /**print_r($oudeantwoordenids);
+    print_r($nieuweantwoordenids);**/
+    echo "---\n";
+    print_r($intevoegenAntwoorden);
+    print_r($teverwijderenAntwoorden);
     echo "</pre>";
 
     /**foreach ($arr as $sleutel => $waarde){
