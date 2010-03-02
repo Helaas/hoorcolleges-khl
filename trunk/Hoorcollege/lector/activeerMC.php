@@ -7,8 +7,21 @@
     if(isset($_GET["reset"])) unset($_SESSION["vraag"]);
     if (!isset($_SESSION["vraag"])) $_SESSION["vraag"] = array();
 
-    if(isset($_GET["zetGeselecteerdVraag"]) && is_numeric($_GET["zetGeselecteerdVraag"]) && isset($_GET["zetGeselecteerdAnt"]) && is_numeric($_GET["zetGeselecteerdAnt"])){
+    if(isset($_GET["actie"]) && $_GET["actie"] == "select" && isset($_GET["zetGeselecteerdVraag"]) && is_numeric($_GET["zetGeselecteerdVraag"]) && isset($_GET["zetGeselecteerdAnt"]) && is_numeric($_GET["zetGeselecteerdAnt"])){
+        foreach($_SESSION["vraag"][$_GET["zetGeselecteerdVraag"]]["mogelijkantwoorden"] as &$waarde){
+            $waarde["juist"] = 0;
+        }
         $_SESSION["vraag"][$_GET["zetGeselecteerdVraag"]]["mogelijkantwoorden"][$_GET["zetGeselecteerdAnt"]]["juist"] = 1;
+        exit();
+    }
+
+    if(isset($_GET["actie"]) && $_GET["actie"] == "del" && isset($_GET["zetGeselecteerdVraag"]) && is_numeric($_GET["zetGeselecteerdVraag"]) && isset($_GET["zetGeselecteerdAnt"]) && is_numeric($_GET["zetGeselecteerdAnt"])){
+        unset($_SESSION["vraag"][$_GET["zetGeselecteerdVraag"]]["mogelijkantwoorden"][$_GET["zetGeselecteerdAnt"]]);
+        exit();
+    }
+
+    if(isset($_GET["actie"]) && $_GET["actie"] == "delVraag" && isset($_GET["zetGeselecteerdVraag"]) && is_numeric($_GET["zetGeselecteerdVraag"])){
+        unset($_SESSION["vraag"][$_GET["zetGeselecteerdVraag"]]);
         exit();
     }
 
@@ -21,7 +34,6 @@
             } else {
                 $id = count($_SESSION["vraag"]);
                 $_SESSION["vraag"][$id]["vraagstelling"] = $_POST["vraag"];
-                $_SESSION["vraag"][$id]["id"] = $id;
             }
 
         }
@@ -30,7 +42,6 @@
             foreach ($_POST["ant"] as $sleutel => $value) {
                 if (!empty($value)){
                     @$_SESSION["vraag"][$sleutel]["mogelijkantwoorden"][] = array ("antwoord" => $value,
-                                                            "id" => count($_SESSION["vraag"][$sleutel]["mogelijkantwoorden"]),
                                                             "juist" => "0");
                 }
             }

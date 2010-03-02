@@ -1058,6 +1058,8 @@ function VerwerkGroepSelectie(form){
 }
 
 var xmlhtppSelectie;
+var xmlhttpDel;
+var xmlhttpDelVraag;
 
 function zetGeselecteerdeMPVraag(vraag, selectie){
     xmlhtppSelectie=GetXmlHttpObject();
@@ -1068,6 +1070,44 @@ function zetGeselecteerdeMPVraag(vraag, selectie){
     }
 
     //xmlhtppSelectie.onreadystatechange=zetSelectieState; //callback niet nodig
-    xmlhtppSelectie.open("GET","activeerMC.php?id=8&zetGeselecteerdVraag="+ vraag +"&zetGeselecteerdAnt="+selectie,true);
+    xmlhtppSelectie.open("GET","activeerMC.php?actie=select&zetGeselecteerdVraag="+ vraag +"&zetGeselecteerdAnt="+selectie,true);
     xmlhtppSelectie.send(null);
+}
+
+function delGeselecteerdeMPOptie(vraag, selectie){
+    xmlhttpDel=GetXmlHttpObject();
+
+    if (xmlhttpDel==null){
+        alert ("Your browser does not support AJAX!");
+        return;
+    }
+
+    xmlhttpDel.onreadystatechange=delSelectieState; //callback niet nodig
+    xmlhttpDel.open("GET","activeerMC.php?actie=del&zetGeselecteerdVraag="+ vraag +"&zetGeselecteerdAnt="+selectie);
+    xmlhttpDel.send(null);
+}
+
+function delSelectieState(){
+    if(xmlhttpDel.readyState == 4){
+        window.location = window.location.href;
+    }
+}
+
+function delGeselecteerdeMPVraag(vraag){
+    xmlhttpDelVraag=GetXmlHttpObject();
+
+    if (xmlhttpDelVraag==null){
+        alert ("Your browser does not support AJAX!");
+        return;
+    }
+
+    xmlhttpDelVraag.onreadystatechange=delVraagSelectieState; //callback niet nodig
+    xmlhttpDelVraag.open("GET","activeerMC.php?actie=delVraag&zetGeselecteerdVraag="+ vraag);
+    xmlhttpDelVraag.send(null);
+}
+
+function delVraagSelectieState(){
+    if(xmlhttpDelVraag.readyState == 4){
+        window.location = window.location.href;
+    }
 }
