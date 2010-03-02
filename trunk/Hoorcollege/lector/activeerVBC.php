@@ -7,7 +7,6 @@ require_once('./../includes/kern.php');
         
         if (isset($_POST["verzenden"])){
             $foutboodschap = "";
-            print_r($_POST);
             if (!isset($_POST["aantal"]) || !is_numeric($_POST["aantal"]) || empty($_POST["aantal"])|| $_POST["aantal"]<=0) $foutboodschap .= "- Het aantal logo's moet een numeriek getal zijn groter dan 0.\n";
             if (!isset($_POST["audio"]) || !is_numeric($_POST["audio"])) $foutboodschap .= "- U moet een kiezen of u geluidseffecten wenst of niet.\n";
             if (!isset($_POST["studentGeselecteerd"]) || !is_array($_POST["studentGeselecteerd"]) ||  count($_POST["studentGeselecteerd"])<=0) $foutboodschap .= "- U moet minstens één student selecteren.";
@@ -27,7 +26,9 @@ require_once('./../includes/kern.php');
 
             } else {
                 maakVBC($_GET["id"],$_POST["aantal"],$_POST["audio"],$_POST["studentGeselecteerd"]);
-                echo 'ok';
+                $nieuweID = $_GET["id"];
+                $config["pagina"] = "./lector/activeerVBCOK.html";
+                $TBS->LoadTemplate('./../html/lector/templateLector.html');
             }
             
             

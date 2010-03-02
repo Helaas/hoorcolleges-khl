@@ -1311,7 +1311,7 @@ function maakVBC($id,$aantal,$audio,$arrIds){
 
 
     foreach($arrIds as $waarde){
-        $studentids = $waarde.",";
+        $studentids .= (int)$waarde.",";
     }
 
      if (strlen($studentids) > 0){
