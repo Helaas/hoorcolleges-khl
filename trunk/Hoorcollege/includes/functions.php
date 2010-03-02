@@ -1379,7 +1379,7 @@ function wijzigMCVragen($id,$arr){
     global $db;
     $id = (int)$id;
 
-    $juist = array();
+    $juisteAntw = array();
     $oudevragen = array();
 
     $oudevragenids = array();
@@ -1473,7 +1473,10 @@ function wijzigMCVragen($id,$arr){
     print_r($teverwijderenAntwoorden);
     echo "</pre>";
 
-    /**foreach ($arr as $sleutel => $waarde){
+    /**
+     * In te voegen vragen
+     * */
+    foreach ($intevoegenVragen as $sleutel => $waarde){
        $db->Execute("INSERT INTO hoorcollege_vraag (
                     idVraag ,
                     vraagstelling ,
@@ -1496,15 +1499,32 @@ function wijzigMCVragen($id,$arr){
 
             if ($waarde2["juist"] == "1"){
                 $nieuweIdAnt = $db->Insert_ID();
-                $juist[$nieuweId] = $nieuweIdAnt;
+                $juisteAntw[$nieuweId] = $nieuweIdAnt;
             }
 
         }
     }
 
-    foreach ($juist as $sleutel => $waarde ){
+    foreach ($juisteAntw as $sleutel => $waarde ){
         $db->Execute("UPDATE hoorcollege_vraag SET juistantwoord  = '". $waarde ."' WHERE hoorcollege_vraag.idVraag = ". $sleutel);
-    }**/
+    }
+
+
+    /**
+     * Vragen verwijderen
+     */
+    foreach ($teverwijderenVragen as $sleutel => $waarde){
+        $db->Execute("DELETE FROM hoorcollege_gegevenantwoord WHERE Vraag_idVraag = ".$sleutel);
+        
+        if (isset($waarde["mogelijkantwoorden"]) && is_array($waarde["mogelijkantwoorden"])){
+            foreach ($waarde["mogelijkantwoorden"] as $sleutel2 => $waarde2 ){
+                $db->Execute("DELETE FROM hoorcollege_mogelijkantwoord WHERE idMogelijkAntwoord = ".$sleutel2);
+            }
+        }
+
+        $db->Execute("DELETE FROM hoorcollege_vraag WHERE idVraag = ".$sleutel);
+    }
+
 
 }
 
