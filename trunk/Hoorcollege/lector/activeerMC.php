@@ -1,6 +1,6 @@
 <?php
     require_once('./../includes/kern.php');
-    //$TBS->NoErr = true;
+    $TBS->NoErr = true;
     session_start();
     $fout = false;
 
@@ -27,48 +27,68 @@
 
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
         $foutboodschap = "";
-        if (isset($_POST["nieuwevraag"])){
-            if (empty($_POST["vraag"])){
+        //evalueren en indien juist opslaan
+        if (isset($_POST["opslaan"])){
+            $foutboodschap = "";
+
+            if (count($_SESSION["vraag"])<=0){
+                $foutboodschap .= "- U moet ten minste één vraag opgeven";
+            }
+
+            $heeftAllesEenAntwoord = true;
+            foreach ($_SESSION["vraag"] as $waarde){
+                $juist = false;
+                if (!isset($waarde["mogelijkantwoorden"]) || !is_array($waarde["mogelijkantwoorden"])){$heeftAllesEenAntwoord = false; break; }
+                foreach ($waarde["mogelijkantwoorden"] as $waarde2 ){
+                    if($waarde2["juist"] == "1"){
+                        $juist = true;
+                        break;
+                    }
+                }
+                if (!$juist){
+                    $heeftAllesEenAntwoord = false;
+                    break;
+                }
+            }
+
+            if (!$heeftAllesEenAntwoord){
+                    $foutboodschap .= "Elke vraag moet minstens één mogelijk antwoord hebben, waarvan er één antwoord moet geselecteerd worden als het juiste antwoord. Selecteer het bolletje naast een mogelijk antwoord om het te markeren als het juiste antwoord.";
+            } 
+            
+            if (strlen($foutboodschap)>1) { //fouten gevonden
                 $fout = true;
-                $foutboodschap = "De vraag mag niet leeg zijn";
-            } else {
-                $id = count($_SESSION["vraag"]);
-                $_SESSION["vraag"][$id]["vraagstelling"] = $_POST["vraag"];
+                $config["pagina"] = "./lector/activeerMC.html";
+                $TBS->LoadTemplate('./../html/lector/templateLector.html');
+                $TBS->MergeBlock("blk1",$_SESSION["vraag"]);
+            } else { //alles ok, inserten
+                echo "alles ok";
             }
 
-        }
+        } else { //vragen en stuff kunnen toevoegen
+            if (isset($_POST["nieuwevraag"])){
+                if (empty($_POST["vraag"])){
+                    $fout = true;
+                    $foutboodschap = "De vraag mag niet leeg zijn";
+                } else {
+                    $id = count($_SESSION["vraag"]);
+                    $_SESSION["vraag"][$id]["vraagstelling"] = $_POST["vraag"];
+                }
 
-        if (isset($_POST["nieuwant"])){
-            foreach ($_POST["ant"] as $sleutel => $value) {
-                if (!empty($value)){
-                    @$_SESSION["vraag"][$sleutel]["mogelijkantwoorden"][] = array ("antwoord" => $value,
-                                                            "juist" => "0");
+            }
+
+            if (isset($_POST["nieuwant"])){
+                foreach ($_POST["ant"] as $sleutel => $value) {
+                    if (!empty($value)){
+                        @$_SESSION["vraag"][$sleutel]["mogelijkantwoorden"][] = array ("antwoord" => $value,
+                                                                "juist" => "0");
+                    }
                 }
             }
+
+            $config["pagina"] = "./lector/activeerMC.html";
+            $TBS->LoadTemplate('./../html/lector/templateLector.html');
+            $TBS->MergeBlock("blk1",$_SESSION["vraag"]);
         }
-
-        $vragen = array();
-        
-        /**if (isset($_SESSION["vraag"])){
-            foreach ($_SESSION["vraag"] as $sleutel => $value) {
-                $vragen[$sleutel]["id"] = $sleutel;
-                $vragen[$sleutel]["vraagstelling"] = $value["vraag"];
-                foreach ($value["mogelijkantwoorden"] as $sleutel2 => $value2){
-                    echo $sleutel2 ." " . $value2["antwoord"] . " " . $value2["id"] . "<br />";
-                }
-            }
-        }**/
-
-        echo "<pre>";
-            print_r($_SESSION["vraag"]);
-        echo "</pre>";
-            //$vragen[1]["mogelijkantwoorden"][] = array ("antwoord" => "test",
-                 //  "id" => "1" );
-        
-        $config["pagina"] = "./lector/activeerMC.html";
-        $TBS->LoadTemplate('./../html/lector/templateLector.html');
-        $TBS->MergeBlock("blk1",$_SESSION["vraag"]);
-
     } else {
         $config["pagina"] = "./FileUpload/Error1Login.html";
         $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
