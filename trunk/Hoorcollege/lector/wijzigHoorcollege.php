@@ -7,7 +7,7 @@
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
         if (isset($_POST["verzenden"])){
             $foutboodschap = "";
-
+            $id = $_GET["id"];
             if (!isset($_POST['vak']) || !$_POST['vak'] >0 ) $foutboodschap .= "- U moet een vak selecteren\n";
             if (!isset($_POST['Ond']) || !$_POST['Ond'] >0 ) $foutboodschap .= "- U moet een onderwerp selecteren\n";
             if (!isset($_POST['naam']) || empty($_POST['naam']) ) $foutboodschap .= "- U moet het hoorcollege een naam geven\n";
@@ -48,7 +48,7 @@
                 $boodschap["reden"] = "Hoorcollege succesvol aangepast";
                 $boodschap["inhoud"] = "Uw wijzigingen zijn met succes opgeslagen.";
                 $boodschap["link"] = "index.php";
-                $config["pagina"] = "./algemeneBoodschap.html";
+                $config["pagina"] = "./lector/hoorcollegeWijzigenOk.html";
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');
             }
 
