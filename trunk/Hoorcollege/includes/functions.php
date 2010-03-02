@@ -1525,6 +1525,44 @@ function wijzigMCVragen($id,$arr){
         $db->Execute("DELETE FROM hoorcollege_vraag WHERE idVraag = ".$sleutel);
     }
 
+    /**
+     * Antwoorden toevoegen aan reeds bestaande vragen
+     */
+
+    unset($juisteAntw);
+    $juisteAntw = array();
+
+    foreach ($intevoegenAntwoorden as $sleutel => $waarde){
+        $reset = 0;
+        if (isset($waarde) && is_array($waarde)){
+            foreach ($waarde as $sleutel2 => $waarde2 ){
+                $db->Execute("INSERT INTO hoorcollege_mogelijkantwoord (
+                            idMogelijkAntwoord ,
+                            antwoord ,
+                            Vraag_idVraag
+                            )
+                            VALUES (
+                            NULL , '" . $waarde2["antwoord"] . "', '" . $sleutel . "'
+                            ) ");
+
+                if ($waarde2["juist"] == "1"){
+                    $nieuweIdAnt = $db->Insert_ID();
+                    $juisteAntw[$nieuweId] = $nieuweIdAnt;
+                    $reset = 1;
+                }
+            }
+        }
+        if ($reset>0)$db->Execute("UPDATE hoorcollege_vraag SET juistantwoord  = '0' WHERE hoorcollege_vraag.idVraag = ". $sleutel);
+    }
+
+    foreach ($juisteAntw as $sleutel => $waarde ){
+        $db->Execute("UPDATE hoorcollege_vraag SET juistantwoord  = '". $waarde ."' WHERE hoorcollege_vraag.idVraag = ". $sleutel);
+    }
+
+
+    /**
+     * Vragen deleten
+     */
 
 }
 
