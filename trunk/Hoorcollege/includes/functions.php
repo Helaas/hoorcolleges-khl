@@ -1249,7 +1249,7 @@ function arrTest(){
     $ids2 = array();
 
     $ids1[] = 1;$ids1[] = 2;$ids1[] = 3;$ids1[] = 4;
-    $ids2[] = 5;$ids2[] = 2;$ids2[] = 3;$ids2[] = 4;
+    $ids2[] = 6;$ids2[] = 2;$ids2[] = 3;$ids2[] = 4;
 
     echo "<pre>";
     print_r(vergelijkArrays($ids1,$ids2));

@@ -44,7 +44,7 @@ else if(isset ($_POST['knopvoegtoestudent'])) {
     }
 }
 else if(isset ($_POST['lectortotadminpromoveren'])) {
-    $config["pagina"] = "./admin/lectorPromoveren.html";
+    //$config["pagina"] = "./admin/lectorPromoveren.html";
     if(promoveerLector($_POST['selectlector']) && $_POST['selectlector'] != 'kies') {
         $typeboodschap = "juist";
         $foutboodschap = 'Lector is succesvol gepromoveerd!'; // dit is geen foutboodschap
@@ -59,7 +59,7 @@ else if(isset ($_POST['lectortotadminpromoveren'])) {
     }
 }
 else if(isset ($_POST['knopvoegtoevak'])) { //indien men een nieuwe vak probeert aan te maken in vak.html
-    $config["pagina"] = "./admin/aanmakenVakken.html";
+    //$config["pagina"] = "./admin/aanmakenVakken.html";
     //validatie vak
     if(empty ($_POST['vaknaam'])) {
         $foutboodschap = "Vaknaam mag niet leeg zijn!";
@@ -101,8 +101,7 @@ else if(isset ($_POST['toekennengroepaanvakknop'])) { //alle studenten uit groep
     $count = count($ch);
     $gelukt = true;
     $allemaal = true;
-    for($i=0; $i < $count; $i++) {
-        //$gelukt = kenStudentToeAanVak($ch[$i], $vak, $van);
+    for($i=0; $i < $count; $i++) {    
         if(!isGroepToegekentAanVak($ch[$i], $vak)) {
             $gelukt = kenGroepToeAanVak($ch[$i], $vak, $van);
         }
@@ -276,6 +275,7 @@ else if(isset ($_POST['wijzigvaknaamknop'])) {
     }
     else {
         if(wijzigNaamVak($vak, $nieuweNaam)) {
+            $config["pagina"] = "./admin/message.html";
             $typeboodschap = "juist";
             $foutboodschap = 'Nieuwe naam is toegekent aan vak!'; //dit is geen foutboodschap
         }
