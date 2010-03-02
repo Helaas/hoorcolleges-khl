@@ -302,10 +302,10 @@ visibility: hidden;
 div#fout {
     border: 1px solid #000;
     
-    background-color: #F3FFED;
+    background-color: #fe7e7e;
     padding: 8px;
     margin: 10px 0;
-    color: #FFFFFF;
+    color: #000;
 }
 
 .clearfix {display: inline-table;}
