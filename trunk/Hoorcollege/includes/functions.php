@@ -1327,16 +1327,21 @@ function wijzigVBC($id,$arrIds){
 
     $studentids = "";
 
-    foreach($arrIds as $waarde){
-        $studentids .= (int)$waarde.",";
+    if(count($arrIds)>0){
+        foreach($arrIds as $waarde){
+            $studentids .= (int)$waarde.",";
+        }
+
+        if (strlen($studentids) > 0){
+            $studentids = substr_replace($studentids,"",-1);
+        }
+
+        $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 1 WHERE Gebruiker_idGebruiker IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
+        $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 0 WHERE Gebruiker_idGebruiker NOT IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
+    }else{
+         $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 0 WHERE Hoorcollege_idHoorcollege = ".$id);
     }
 
-     if (strlen($studentids) > 0){
-        $studentids = substr_replace($studentids,"",-1);
-     }
-
-      $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 1 WHERE Gebruiker_idGebruiker IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
-      $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 0 WHERE Gebruiker_idGebruiker NOT IN(". $studentids .") AND Hoorcollege_idHoorcollege = ".$id);
 }
 
 ?>
