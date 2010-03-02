@@ -7,6 +7,9 @@
     if(isset($_GET["reset"])) unset($_SESSION["vraag"]);
     if (!isset($_SESSION["vraag"])) $_SESSION["vraag"] = array();
 
+    /**
+     * Ajax functies
+     */
     if(isset($_GET["actie"]) && $_GET["actie"] == "select" && isset($_GET["zetGeselecteerdVraag"]) && is_numeric($_GET["zetGeselecteerdVraag"]) && isset($_GET["zetGeselecteerdAnt"]) && is_numeric($_GET["zetGeselecteerdAnt"])){
         foreach($_SESSION["vraag"][$_GET["zetGeselecteerdVraag"]]["mogelijkantwoorden"] as &$waarde){
             $waarde["juist"] = 0;
@@ -25,6 +28,9 @@
         exit();
     }
 
+    /**
+     * Eigenlijke pagina
+     */
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
         $foutboodschap = "";
         //evalueren en indien juist opslaan
@@ -52,23 +58,25 @@
             }
 
             if (!$heeftAllesEenAntwoord){
-                    $foutboodschap .= "Elke vraag moet minstens één mogelijk antwoord hebben, waarvan er één antwoord moet geselecteerd worden als het juiste antwoord. Selecteer het bolletje naast een mogelijk antwoord om het te markeren als het juiste antwoord.";
+                    $foutboodschap .= "- Elke vraag moet minstens één mogelijk antwoord hebben, waarvan er één antwoord moet geselecteerd worden als het juiste antwoord. Selecteer het bolletje naast een mogelijk antwoord om het te markeren als het juiste antwoord.";
             } 
             
-            if (strlen($foutboodschap)>1) { //fouten gevonden
+            if (strlen($foutboodschap)>0) { //fouten gevonden
                 $fout = true;
                 $config["pagina"] = "./lector/activeerMC.html";
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');
                 $TBS->MergeBlock("blk1",$_SESSION["vraag"]);
             } else { //alles ok, inserten
-                echo "alles ok";
+                maakMCVragen($_GET["id"],$_SESSION["vraag"]);
+                unset($_SESSION["vraag"]);
+                echo "ok";
             }
 
         } else { //vragen en stuff kunnen toevoegen
             if (isset($_POST["nieuwevraag"])){
                 if (empty($_POST["vraag"])){
                     $fout = true;
-                    $foutboodschap = "De vraag mag niet leeg zijn";
+                    $foutboodschap = "- De vraag mag niet leeg zijn";
                 } else {
                     $id = count($_SESSION["vraag"]);
                     $_SESSION["vraag"][$id]["vraagstelling"] = $_POST["vraag"];

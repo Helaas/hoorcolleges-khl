@@ -1256,9 +1256,44 @@ function arrTest(){
     echo "</pre>";
 }
 
-function maakMCVragen($arr){
-    $db->Execute('');
+function maakMCVragen($id,$arr){
+    global $db;
+    $id = (int)$id;
 
+    $juist = array();
+
+    foreach ($arr as $sleutel => $waarde){
+       $db->Execute("INSERT INTO hoorcollege_vraag (
+                    idVraag ,
+                    vraagstelling ,
+                    juistantwoord ,
+                    Hoorcollege_idHoorcollege
+                    )
+                    VALUES (
+                    NULL , '" . $waarde["vraagstelling"] . "', NULL , '" . $id . "'
+                    )");
+         $nieuweId = $db->Insert_ID();
+        foreach ($waarde["mogelijkantwoorden"] as $sleutel2 => $waarde2 ){
+            $db->Execute("INSERT INTO hoorcollege_mogelijkantwoord (
+                            idMogelijkAntwoord ,
+                            antwoord ,
+                            Vraag_idVraag
+                            )
+                            VALUES (
+                            NULL , '" . $waarde2["antwoord"] . "', '" . $nieuweId . "'
+                            ) ");
+
+            if ($waarde2["juist"] == "1"){
+                $nieuweIdAnt = $db->Insert_ID();
+                $juist[$nieuweId] = $nieuweIdAnt;
+            }
+
+        }
+    }
+
+    foreach ($juist as $sleutel => $waarde ){
+        $db->Execute("UPDATE hoorcollege_vraag SET juistantwoord  = '". $waarde ."' WHERE hoorcollege_vraag.idVraag = ". $sleutel);
+    }
 
 }
 
