@@ -1,0 +1,45 @@
+<h2>Video bekeken controle activeren</h2>
+<p>Met VBC (video bekeken controle) bent u in staat te controleren of uw studenten wel degelijk naar een hoorcollege hebben gekeken. Periodiek verschijnt er een logo van de KHL waarop de student dan moet klikken om te bevestigen dat hij nog steeds kijkt.</p>
+<form action="activeerVBC.php?id=[var._GET.id;noerr]" method="POST">
+    <h3>Aantal logo's</h3>
+    Stel het aantal logo's in die periodiek verschijnen boven op de video. <br />
+    <input type="text" name="aantal" value="8" size="4" />
+
+    <h3>Geluidseffecten</h3>
+    Aangeven of de gebruikers geluidseffecten krijgt bij het al dan niet succesvol klikken op een logo. <br/>
+    Uitschakelen: <input type="radio" name="audio" value="nee" checked="checked" /> Inschakelen: <input type="radio" name="audio" value="ja" />
+
+    <h3>Studenten selecteren</h3>
+    <table border="0">
+            <tbody>
+                <tr>
+                    <td width="300">Studenten die het hoorcollege volgen</td>
+                    <td width="150">Actie studenten</td>
+                    <td width="250">Geselecteerde studenten</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top;">
+                        <div>
+                            <select name="" id="lijstStudent" size="20" multiple="multiple" style="width: 200px">
+                                <option value="[blk1.idGebruiker;block=option]" name="Vak">[blk1.naam] [blk1.voornaam]</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td style="vertical-align:middle;padding-left: 20px;">
+                        <div>
+                            <input type="button" value=">>" onclick="selecteerStudent()"/> <br />
+                            <input type="button" value="<<" onclick="verwijderStudent()"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select name="studentGeselecteerd[]" id="lijstStudentGeselecteerd" size="20" multiple style="width: 200px">
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br /><br />
+    <input type="submit" value="VBC activeren !" name="verzenden" />
+</form>
