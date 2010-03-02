@@ -1367,11 +1367,13 @@ function staatStudentReedsInVbc($idStudent, $idHoorcollege){
 function vbcBepaaldeStudentResetten($idStudent, $idHoorcollege){
     global $db;
     $db->Execute("DELETE FROM hoorcollege_vbc WHERE Gebruiker_idGebruiker = ".$idStudent. " AND Hoorcollege_idHoorcollege = ".$idHoorcollege);
+    $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 0 WHERE Gebruiker_idGebruiker = ".$idStudent. " AND Hoorcollege_idHoorcollege = ".$idHoorcollege);
 }
 
 function vbcVanVolledigHoorcollegeResetten($idHoorcollege){
     global $db;
     $db->Execute("DELETE FROM hoorcollege_vbc WHERE Hoorcollege_idHoorcollege = ".$idHoorcollege);
+    $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 0 WHERE Hoorcollege_idHoorcollege = ".$idHoorcollege);
 }
 function wijzigMCVragen($id,$arr){
     global $db;
