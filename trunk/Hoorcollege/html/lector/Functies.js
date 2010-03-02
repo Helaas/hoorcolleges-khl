@@ -881,12 +881,14 @@ function VerwerkGroepSelectie(form){
     while ( studentDiv.firstChild ){
         studentDiv.removeChild( studentDiv.firstChild );
     }
-
-
+           //error div leegmaken
+           var foutdiv=document.getElementById('foutmelding');
+           while ( foutdiv.firstChild ){
+                    foutdiv.removeChild( foutdiv.firstChild );
+                }
 
     // if geldige groep gekozen, haal info studenten op en geef weer
     if(groepid!=0){
-
 
 
         //voor elke <student>
@@ -978,7 +980,7 @@ function VerwerkGroepSelectie(form){
             //Vul tabel op met XML gegevens
             var vragen=studenten[i].getElementsByTagName('rootvraag');
             if(vragen.length==0){
-                var foutdiv=document.getElementById('foutmelding');
+                foutdiv=document.getElementById('foutmelding');
                 while ( foutdiv.firstChild ){
                     foutdiv.removeChild( foutdiv.firstChild );
                 }
@@ -1219,7 +1221,20 @@ function VerwerkGroepSelectie(form){
 
         }
 
+      if(size==0){
+                var foutdiv=document.getElementById('foutmelding');
+                while ( foutdiv.firstChild ){
+                    foutdiv.removeChild( foutdiv.firstChild );
+                }
 
+                var err=document.createElement('p');
+                err.id='fout';
+                var txt= document.createTextNode("Deze categorie bevat geen studenten die dit hoorcollege volgen.");
+                err.appendChild(txt);
+                err.appendChild(document.createElement('br'));
+                err.appendChild(document.createElement('br'));
+                foutdiv.appendChild(err);
+      }
 
 
 
