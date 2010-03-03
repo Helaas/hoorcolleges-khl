@@ -10,7 +10,7 @@
 
     <h3>Geluidseffecten</h3>
     Aangeven of de gebruikers geluidseffecten krijgt bij het al dan niet succesvol klikken op een logo. <br/>
-    Uitschakelen: <input type="radio" name="audio" value="0" checked="[checked; when [var.audioAan]==0]" /> Inschakelen: <input type="radio" name="audio" value="1" checked="[checked; when [var.audioAan]==1]"/>
+    Uitschakelen: <input type="radio" name="audio" value="0" [var.audioAan;if  [val]=0;then 'checked';else  '';noerr] /> Inschakelen: <input type="radio" name="audio" value="1" [var.audioAan;if  [val]=1;then 'checked';else  '';noerr]/>
 
     <h3>Studenten selecteren</h3>
     <table border="0">

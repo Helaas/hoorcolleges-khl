@@ -1327,6 +1327,8 @@ function wijzigVBC($id,$aantal,$audio,$arrIds){
     $aantal = (int)$aantal;
     $audio = (int)$audio;
 
+    echo $audio;
+
     $db->Execute("UPDATE hoorcollege_hoorcollege SET VBC_aantal = '"  . $aantal .  "',
                   VBC_geluid = '" . $audio . "' WHERE idHoorcollege = " . $id);
 
@@ -1359,7 +1361,7 @@ function staatStudentReedsInVbc($idStudent, $idHoorcollege){
                                    from hoorcollege_vbc where Gebruiker_idGebruiker = ".$idStudent."
                                      AND Hoorcollege_idHoorcollege = ".$idHoorcollege);
 
-    if($resultaat->fields["aantal"] == 0) {
+    if(isset($resultaat->fields["aantal"]) && $resultaat->fields["aantal"] == 0) {
         $db->Execute("INSERT INTO hoorcollege_vbc (Gebruiker_idGebruiker, Hoorcollege_idHoorcollege)VALUES(".$idStudent.", ".$idHoorcollege.")");
     }
 }
