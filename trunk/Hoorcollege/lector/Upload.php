@@ -49,7 +49,7 @@ if(isset ($_SESSION['gebruiker'])) {
                 //Code voor het verplaatsen/kopiëren van het tijdelijke bestand naar de server+pagina weergeven
                 if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
                     $testinhoud="Het bestand ".'"'.  basename( $_FILES['uploadedfile']['name']).'"'." werd geüpload!";
-                    $db->Execute("INSERT INTO hoorcollege_bibliotheekitem (mimetype, beschrijving, locatie, naam, BibliotheekCategorie_idBibliotheekCategorie, BibliotheekCategorie_Gebruiker_idGebruiker) VALUES ('".$stringArray[count($stringArray)-1]."', '".addslashes($_POST['rte1'])."', '".$target_path."', '".$_POST['bestandsnaam']."','".$_POST['cat']."','".$gebruikerID."')");
+                    $db->Execute("INSERT INTO hoorcollege_bibliotheekitem (mimetype, beschrijving, locatie, naam, BibliotheekCategorie_idBibliotheekCategorie, BibliotheekCategorie_Gebruiker_idGebruiker) VALUES ('".$stringArray[count($stringArray)-1]."', '".addslashes($_POST['rte1'])."', '".substr($target_path,2)."', '".$_POST['bestandsnaam']."','".$_POST['cat']."','".$gebruikerID."')");
                 } else {
                     $testinhoud="Er was een probleem bij het uploaden van je bestand, probeer het later opnieuw!  (De maximale bestandsgrootte is ".$_POST['MAX_FILE_SIZE']." bytes)";
                 }
