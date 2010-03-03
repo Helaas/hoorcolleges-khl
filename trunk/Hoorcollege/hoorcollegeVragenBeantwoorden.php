@@ -47,7 +47,7 @@
             $config["pagina"] = "./algemeneBoodschap.html";
             $TBS->LoadTemplate('./html/student/templateStudent.html');
          }
-        } else if(!heeftHoorcollegeVragen($_GET["hoorcollege"])){
+        } else if(isset($_GET["hoorcollege"]) && !heeftHoorcollegeVragen($_GET["hoorcollege"])){
             $fout["reden"] = "Geen vragen beschikbaar";
             $fout["inhoud"] = "Dit hoorcollege bevat geen vragen";
             $config["pagina"] = "./algemeneFout.html";
