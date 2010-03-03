@@ -1,6 +1,19 @@
 <h2>Hoorcollege wijzigen</h2>
 <div id="fout"> <strong>Hemeltje, er ging wat mis: <br /></strong>[var.foutboodschap;noerr]  [onload_1;block=div;when [var.fout]==1]</div>
 <form action="wijzigHoorcollege.php?id=[var._GET.id]" name="Form" method="POST" onsubmit="allesSelecteren()">
+    <h3>Multiple choice, VBC en commentaar van studenten</h3>
+    U kan met onderstaande buttons aanpassingen maken aan de multiple choice vragen, aan de VBC of aan de commentaren achter gelaten door studenten.<br /><strong>Opgelet:</strong> Als op één van deze knoppen klikt verlaat u deze pagina en worden uw wijzigingen niet opgeslagen.
+    <br /><br />
+    <table border="0" width="80%">
+    <tbody>
+        <tr>
+            <td><input type="button" value="Maak of wijzig multiple choice vragen" onclick="location.href = 'activeerMC.php?id=[var._GET.id;noerr]';return false"/></td>
+            <td><input type="button" value="Activeer of wijzig VBC" onclick="location.href = 'activeerVBC.php?id=[var._GET.id;noerr]';return false"/></td>
+            <td><input type="button" value="Bekijk of verwijder commentaar" onclick="location.href = 'commentarenVerwijderen.php?hoorcollege=[var._GET.id;noerr]';return false"/></td>
+        </tr>
+    </tbody>
+    </table>
+
     <h3>Vak en onderwerp</h3>
         Kies een vak: <br />
 <select id="Vak" name="vak" onchange="vakDropdown(this.value);autoSubmit(this.form,'autoSubmit2')">

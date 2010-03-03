@@ -17,7 +17,7 @@ if (isset($_POST["bepaalOverzicht"])){
 }
 
 $TBS = new clsTinyButStrong;
-$config["pagina"] = "index.html";
+$config["pagina"] = "./lector/lector.html";
 
 
 if(isset($_SESSION['gebruiker'])){

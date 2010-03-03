@@ -1327,8 +1327,6 @@ function wijzigVBC($id,$aantal,$audio,$arrIds){
     $aantal = (int)$aantal;
     $audio = (int)$audio;
 
-    echo $audio;
-
     $db->Execute("UPDATE hoorcollege_hoorcollege SET VBC_aantal = '"  . $aantal .  "',
                   VBC_geluid = '" . $audio . "' WHERE idHoorcollege = " . $id);
 
@@ -1618,4 +1616,15 @@ function deactiveerMC($hoorcollid){
 
 }
 
+function heeftVBC($id){
+    global $db;
+    $id = (int)$id;
+    
+    $resultaat = $db->Execute("SELECT *
+            FROM hoorcollege_gebruikerhoorcollege
+            WHERE Hoorcollege_idHoorcollege =" . $id . "
+            AND VBCVerplicht = 1");
+
+    return $resultaat->RecordCount() > 0;
+}
 ?>

@@ -3,6 +3,7 @@ require_once('./../includes/kern.php');
     session_start();
     $fout = false;
 
+    if (isset($_GET["id"]) && is_numeric($_GET["id"]) && heeftVBC($_GET["id"])) header("location: wijzigActivatieVBC.php?id=".$_GET["id"]);
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
         
         if (isset($_POST["verzenden"])){
