@@ -20,6 +20,7 @@ if(isset($_SESSION['gebruiker']) && ($_SESSION['gebruiker']->getNiveau() == 1 ))
         $hoorcolInfo["heeftVragen"] = heeftHoorcollegeVragen($_GET["hoorcollege"])  == true ? "true" : "false"; //ik wil letterlijk de strings
         $hoorcolInfo["heeftVBC"] = heeftHoorcollegeVBC($_SESSION['gebruiker']->getIdGebruiker(),$_GET["hoorcollege"]) == "1" ? "true" : "false"; //ik wil letterlijk de strings
         $hoorcolInfo["gebruiker"] = (int)$_SESSION['gebruiker']->getIdGebruiker();
+        $hoorcolInfo["url"] = "http://".str_replace(basename($_SERVER["PHP_SELF"]), "", $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"]);
 
         /**
          * De items in dit hoorcollege
