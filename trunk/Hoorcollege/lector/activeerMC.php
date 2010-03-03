@@ -15,6 +15,8 @@
             $waarde["juist"] = 0;
         }
         $_SESSION["vraag"][$_GET["zetGeselecteerdVraag"]]["mogelijkantwoorden"][$_GET["zetGeselecteerdAnt"]]["juist"] = 1;
+        if (!isset($_SESSION["anderAntwoord"])) $_SESSION["anderAntwoord"] = array();
+        $_SESSION["anderAntwoord"][$_GET["zetGeselecteerdVraag"]] = $_GET["zetGeselecteerdAnt"];
         exit();
     }
 

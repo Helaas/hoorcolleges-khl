@@ -1375,7 +1375,7 @@ function vbcVanVolledigHoorcollegeResetten($idHoorcollege){
     $db->Execute("DELETE FROM hoorcollege_vbc WHERE Hoorcollege_idHoorcollege = ".$idHoorcollege);
     $db->Execute("UPDATE hoorcollege_gebruikerhoorcollege SET VBCVerplicht = 0 WHERE Hoorcollege_idHoorcollege = ".$idHoorcollege);
 }
-function wijzigMCVragen($id,$arr){
+function wijzigMCVragen($id,$arr, $wijzigant){
     global $db;
     $id = (int)$id;
 
@@ -1393,6 +1393,10 @@ function wijzigMCVragen($id,$arr){
 
     $teverwijderenAntwoorden = array();
     $intevoegenAntwoorden = array();
+
+    foreach ($wijzigant as $sleutel => $waarde ){
+        $db->Execute("UPDATE hoorcollege_vraag SET juistantwoord  = '". (int)$waarde ."' WHERE hoorcollege_vraag.idVraag = ". (int)$sleutel);
+    }
 
     $resultaat = $db->Execute('SELECT idVraag, vraagstelling, juistantwoord
                                 FROM hoorcollege_vraag
@@ -1459,19 +1463,20 @@ function wijzigMCVragen($id,$arr){
         }
      }
 
-    echo "<pre>\n---";
-    /**print_r($oudevragen);
+    /**Debug
+     echo "<pre>\n---";
+    print_r($oudevragen);
     print_r($arr);
-    print_r(vergelijkArrays($oudevragenids, $nieuwevragenids));**/
+    print_r(vergelijkArrays($oudevragenids, $nieuwevragenids));
     print_r($intevoegenVragen);
     print_r($teverwijderenVragen);
     echo "----\n";
-    /**print_r($oudeantwoordenids);
-    print_r($nieuweantwoordenids);**/
+    print_r($oudeantwoordenids);
+    print_r($nieuweantwoordenids);
     echo "---\n";
     print_r($intevoegenAntwoorden);
     print_r($teverwijderenAntwoorden);
-    echo "</pre>";
+    echo "</pre>";**/
 
     /**
      * In te voegen vragen
@@ -1570,6 +1575,22 @@ function wijzigMCVragen($id,$arr){
                 $db->Execute("DELETE FROM hoorcollege_mogelijkantwoord WHERE idMogelijkAntwoord = ".$sleutel2);
             }
         }
+    }
+
+    /**
+     * Gebruikers hoorcollege opnieuw laten maken
+     */
+
+    if (count($intevoegenVragen)>0 || count($teverwijderenVragen )>0 || count($intevoegenAntwoorden)>0 || count($teverwijderenAntwoorden)>0){
+        $db->Execute("DELETE FROM hoorcollege_gegevenantwoord WHERE Gebruiker_idGebruiker IN (
+                                                                                    SELECT Gebruiker_idGebruiker
+                                                                                    FROM hoorcollege_gebruikerhoorcollege
+                                                                                    WHERE Hoorcollege_idHoorcollege = ". $id ."
+                                                                                    ) AND Vraag_idVraag IN (
+                                                                                      SELECT idVraag
+                                                                                        FROM hoorcollege_vraag
+                                                                                        WHERE Hoorcollege_idHoorcollege =  ". $id ."
+                                                                                      )");
     }
 
 }
