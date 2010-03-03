@@ -1547,7 +1547,7 @@ function wijzigMCVragen($id,$arr){
 
                 if ($waarde2["juist"] == "1"){
                     $nieuweIdAnt = $db->Insert_ID();
-                    $juisteAntw[$nieuweId] = $nieuweIdAnt;
+                    $juisteAntw[$sleutel] = $nieuweIdAnt;
                     $reset = 1;
                 }
             }

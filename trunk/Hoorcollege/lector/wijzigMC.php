@@ -72,7 +72,7 @@ echo "</pre>";**/
                 $TBS->MergeBlock("blk1",$_SESSION["vraag"]);
             } else { //alles ok, inserten
                 wijzigMCVragen($_GET["id"],$_SESSION["vraag"]);
-                //unset($_SESSION["vraag"]);
+                unset($_SESSION["vraag"]);
                 $nieuweID = $_GET["id"];
                 $config["pagina"] = "./lector/activeerMCOK.html";
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');
