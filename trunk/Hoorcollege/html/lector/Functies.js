@@ -1325,3 +1325,9 @@ function delVraagSelectieState(){
         window.location = window.location.href;
     }
 }
+
+function bevestigDeactiveren(id){
+    if (confirm('Bent u zeker dat u alle multiple choice gegevens van dit hoorcollege wilt wissen ?')){
+        location.href = "wijzigMC.php?id="+id+"&actie=deactiveer";
+    }
+}

@@ -4,6 +4,22 @@
     session_start();
     $fout = false;
 
+    if(!isset($_SESSION["pagina"])) $_SESSION["pagina"] = "wijzig";
+    else {
+        if ($_SESSION["pagina"] != "wijzig"){
+            unset($_SESSION["vraag"]);
+            $_SESSION["pagina"] = "wijzig";
+        }
+    }
+
+    if (!isset($_SESSION["wijzigid"])) @$_SESSION["wijzigid"] = $_GET["id"];
+    else {
+        if ($_SESSION["wijzigid"] != $_GET["id"]){
+            unset($_SESSION["vraag"]);
+            $_SESSION["wijzigid"] = $_GET["id"];
+        }
+    }
+
     if (!isset($_SESSION["anderAntwoord"])) $_SESSION["anderAntwoord"] = array();
     
     if(isset($_GET["reset"])) unset($_SESSION["vraag"]);
@@ -35,6 +51,17 @@
      * Eigenlijke pagina
      */
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
+        if(isset($_GET["actie"]) && $_GET["actie"] == "deactiveer"){
+            deactiveerMC($_GET["id"]);
+            unset($_SESSION["vraag"]);
+            $config["pagina"] = "./lector/wijzigMCOK.html";
+            $TBS->LoadTemplate('./../html/lector/templateLector.html');
+            $TBS->Show();
+            exit();
+        }
+
+        if(!heeftHoorcollegeVragen($_GET["id"])) header("location:activeerMC.php?id=".$_GET["id"]);
+
         $foutboodschap = "";
         //evalueren en indien juist opslaan
         if (isset($_POST["opslaan"])){
@@ -73,7 +100,7 @@
                 wijzigMCVragen($_GET["id"],$_SESSION["vraag"],$_SESSION["anderAntwoord"]);
                 unset($_SESSION["vraag"]);
                 $nieuweID = $_GET["id"];
-                $config["pagina"] = "./lector/activeerMCOK.html";
+                $config["pagina"] = "./lector/wijzigMCOK.html";
                 $TBS->LoadTemplate('./../html/lector/templateLector.html');
             }
 

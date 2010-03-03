@@ -1,5 +1,6 @@
 <h2>Multiple choice vragen wijzigen</h2>
 Op deze pagina kan u vragen toevoegen aan een hoorcollege. Gebruik het bolletje om het correcte antwoord aan te duiden.
+Ook kan u multiple choice deactiveren voor dit hoorcollege, alle gegevens worden dan gewist. Klik op de link om <a href="#" onclick="bevestigDeactiveren('[var._GET.id;noerr]');return false;">multiple choice voor dit hoorcollege te deactiveren</a>.
 <div id="fout"> <strong>Hemeltje, er ging wat mis: <br /></strong>[var.foutboodschap;noerr]  [onload_1;block=div;when [var.fout]==1]</div>
 <form action="wijzigMC.php?id=[var._GET.id]" method="POST">
      <div><br /><br/>
@@ -15,3 +16,7 @@ Op deze pagina kan u vragen toevoegen aan een hoorcollege. Gebruik het bolletje 
     <br /><br />
     <input type="submit" value="Multiple choice wijzigingen opslaan !" name="opslaan" />
 </form>
+<p>
+    <br/>
+    <strong>Opgelet:</strong> als u een vraag of een mogelijk antwoord toevoegd of verwijderd, dan moet elke student toegewezen aan dat hoorcollege de vragen opnieuw maken.
+</p>

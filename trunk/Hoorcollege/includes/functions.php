@@ -1547,7 +1547,7 @@ function wijzigMCVragen($id,$arr, $wijzigant){
                             Vraag_idVraag
                             )
                             VALUES (
-                            NULL , '" . $waarde2["antwoord"] . "', '" . $sleutel . "'
+                            NULL , '" . addslashes($waarde2["antwoord"]) . "', '" . $sleutel . "'
                             ) ");
 
                 if ($waarde2["juist"] == "1"){
@@ -1592,6 +1592,27 @@ function wijzigMCVragen($id,$arr, $wijzigant){
                                                                                         WHERE Hoorcollege_idHoorcollege =  ". $id ."
                                                                                       )");
     }
+
+}
+
+function deactiveerMC($hoorcollid){
+    global $db;
+    $hoorcollid = (int) $hoorcollid;
+
+     $db->Execute("DELETE FROM hoorcollege_gegevenantwoord
+                                 WHERE  Vraag_idVraag
+                                    in (SELECT idVraag
+                                    FROM hoorcollege_vraag
+                                    WHERE Hoorcollege_idHoorcollege =".$hoorcollid.")");
+    //delete mogelijke antwoorden voor dit hoorcollege
+    $db->Execute("DELETE FROM hoorcollege_mogelijkantwoord
+                                 WHERE  Vraag_idVraag
+                                    in (SELECT idVraag
+                                    FROM hoorcollege_vraag
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid.")");
+    //delete vragen voor dit hoorcollege
+    $db->Execute("DELETE FROM hoorcollege_vraag
+                                        WHERE Hoorcollege_idHoorcollege =".$hoorcollid);
 
 }
 

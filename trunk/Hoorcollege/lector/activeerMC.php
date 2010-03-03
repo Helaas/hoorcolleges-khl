@@ -33,6 +33,27 @@
     /**
      * Eigenlijke pagina
      */
+
+    if(!isset($_SESSION["pagina"])) $_SESSION["pagina"] = "maak";
+    else {
+        if ($_SESSION["pagina"] != "maak"){
+            unset($_SESSION["vraag"]);
+            $_SESSION["vraag"] = array();
+            $_SESSION["pagina"] = "maak";
+        }
+    }
+
+    if (!isset($_SESSION["wijzigid"])) @$_SESSION["wijzigid"] = $_GET["id"];
+    else {
+        if ($_SESSION["wijzigid"] != $_GET["id"]){
+            unset($_SESSION["vraag"]);
+            $_SESSION["vraag"] = array();
+            $_SESSION["wijzigid"] = $_GET["id"];
+        }
+    }
+
+    if(heeftHoorcollegeVragen($_GET["id"])) header("location:wijzigMC.php?id=".$_GET["id"]);
+
     if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
         $foutboodschap = "";
         //evalueren en indien juist opslaan
