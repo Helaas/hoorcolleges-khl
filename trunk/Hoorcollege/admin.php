@@ -70,6 +70,8 @@ else if(isset ($_POST['knopvoegtoevak'])) { //indien men een nieuwe vak probeert
     else {
         //vak toe voegen
         if(!voegVakToe($_POST['vaknaam'])) {
+            $config["pagina"] = "./admin/message.html";
+            $toonTerug = 1;
             $foutboodschap = "Vak niet toegevoegd omwille van technische problemen, probeer later nog eens!";
         }
         else {
@@ -80,6 +82,8 @@ else if(isset ($_POST['knopvoegtoevak'])) { //indien men een nieuwe vak probeert
             kenLectorToeAanVak($lector, $vak);
             $typeboodschap = "juist";
             $foutboodschap = 'Vak is succesvol aangemaakt!'; //dit is geen foutboodschap
+            $config["pagina"] = "./admin/message.html";
+            $toonTerug = 0;
         }
     }
 }
@@ -94,6 +98,8 @@ else if(isset ($_POST['verdertoekennengroepaanvakknop'])) {
     }
 }
 else if(isset ($_POST['toekennengroepaanvakknop'])) { //alle studenten uit groep toekennen aan een vak in vak.html
+    $toonTerug = 0;
+
     $ch = unserialize($_POST['checkbox2']);
     $vak = (int) $_POST['vak'];
     $van = (int) $_POST['vakvan'];
@@ -112,13 +118,14 @@ else if(isset ($_POST['toekennengroepaanvakknop'])) { //alle studenten uit groep
 
     if(!$allemaal && $gelukt) {
         $typeboodschap = "juist";
-        $foutboodschap = 'Sommige groepen waren al reeds aan het vak toegekent, overige geselecteerden zijn aan het vak toegekent.';
+        $foutboodschap = 'Sommige leerlingen van sommige groepen waren al reeds aan het vak toegekent, overige geselecteerden zijn aan het vak toegekent.';
     }
     else if($gelukt == true) {
         $typeboodschap = "juist";
         $foutboodschap = 'Alle leerlingen van de geselecteerde groepen zijn aan het vak toegekent.';
     }
     else {
+        $toonTerug = 1;
         $typeboodschap = "fout";
         $foutboodschap = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groepen correct zijn gelinkt aan het vak!';
     }
@@ -134,6 +141,7 @@ else if(isset ($_POST['toekennenstudentenaanvakoverzichtknop'])) {
     }
 }
 else if(isset ($_POST['toekennenstudentenaanvakknop'])) {
+    $toonTerug = 0;
     $ch = unserialize($_POST['checkbox2']);
     $vak = (int) $_POST['vak'];
     $van = (int) $_POST['vakvan'];
@@ -148,6 +156,7 @@ else if(isset ($_POST['toekennenstudentenaanvakknop'])) {
         $foutboodschap = 'Alle geselecteerden zijn aan het vak toegevoegd!'; // dit is geen foutboodschap
     }
     else {
+        $toonTerug = 1;
         $typeboodschap = "fout";
         $foutboodschap = 'Technisch probleem, mogelijk is niet iedereen toegekent aan het vak, gelieve manueel te controleren';
     }
@@ -155,13 +164,16 @@ else if(isset ($_POST['toekennenstudentenaanvakknop'])) {
 else if(isset ($_POST['lectorVakVoltooiKnop'])) { //indien men een lector wil toekennen aan een vak in vak.html
     //validatie van de toekenning
     if(beheertLectorVak($_POST['selectlector'], $_POST['selectvak'])) {
-        $foutboodschap2 = "Actie niet gelukt: lector is al toegekend aan dit vak of er is een technisch probleem opgedoken!";
+        $foutboodschap = "Actie niet gelukt: lector is al toegekend aan dit vak of er is een technisch probleem opgedoken!";
     }
     else {
+        $config["pagina"] = "./admin/message.html";
         if(!kenLectorToeAanVak($_POST['selectlector'], $_POST['selectvak'])) {
             $foutboodschap = "Actie niet gelukt: waarschijnlijk te wijten aan een technisch probleem!";
+            $toonTerug = 1;
         }
         else {
+            $toonTerug = 0;
             $typeboodschap = "juist";
             $foutboodschap = 'Lector is succesvol aan vak toegekend!'; //dit is geen foutboodschap
         }
@@ -186,6 +198,8 @@ else if(isset ($_POST['verderstudentenontkoppelenselectief'])) {
     }
 }
 else if(isset ($_POST['ontkopelgeselecteerdenvanvak'])) {
+    $toonTerug = 0;
+
     $idVak = $_POST['vak'];
     $ch = unserialize($_POST['checkbox2']);
     $count = count($ch);
@@ -200,6 +214,7 @@ else if(isset ($_POST['ontkopelgeselecteerdenvanvak'])) {
         $foutboodschap = 'Alle geselecteerden zijn ontkoppeld!'; // dit is geen foutboodschap
     }
     else {
+        $toonTerug = 1;
         $typeboodschap = "fout";
         $foutboodschap = 'Technisch probleem, mogelijk is niet iedereen ontkoppeld, gelieve manueel te controleren';
     }
@@ -248,16 +263,17 @@ else if(isset ($_POST['ontkoppelengroepvanvakknop'])) {
     $count = count($ch);
     $gelukt = false;
 
-    for($i=0; $i < $count; $i++) {
-        echo $ch[$i];
+    for($i=0; $i < $count; $i++) {        
         $gelukt = ontkoppelGroepVanVak($ch[$i], $vak);
     }
 
     if($gelukt == true) {
+        $toonTerug = 0;
         $typeboodschap = "juist";
         $foutboodschap = 'Alle leerlingen van de geselecteerde groepen zijn van het vak ontkoppeld.';
     }
     else {
+        $toonTerug = 1;
         $typeboodschap = "fout";
         $foutboodschap = 'Actie is niet volledig uitgevoerd omwille van een technisch probleem, gelieve zelf te controleren of alle studenten van deze groepen correct zijn ontkoppeld van het vak!';
     }
@@ -276,6 +292,7 @@ else if(isset ($_POST['wijzigvaknaamknop'])) {
     else {
         if(wijzigNaamVak($vak, $nieuweNaam)) {
             $config["pagina"] = "./admin/message.html";
+            $toonTerug = 0;
             $typeboodschap = "juist";
             $foutboodschap = 'Nieuwe naam is toegekent aan vak!'; //dit is geen foutboodschap
         }
@@ -308,6 +325,7 @@ else if(isset ($_POST['verderverwijderbeheerdervoltooien'])) {
     else {
         if(verwijderBeheerderVanVak($lector, $vak)) {
             $typeboodschap = "juist";
+            $toonTerug = 0;
             $foutboodschap = 'Lector is niet meer aan het vak toegekend!'; //dit is geen foutboodschap
         }
         else {
@@ -325,11 +343,14 @@ else if(isset ($_POST['verwijderenvakverder'])) {
 }
 else if(isset ($_POST['voltooienverwijderenvak'])) {
     $vak = $_POST['vak'];
+    $config["pagina"] = "./admin/message.html";    
     if(verwijderVak($vak)) {
+        $toonTerug = 0;
         $typeboodschap = "juist";
         $foutboodschap = 'Vak is succesvol verwijderd!'; //dit is geen foutboodschap
     }
     else {
+        $toonTerug = 1;
         $typeboodschap = "fout";
         $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
     }
@@ -343,10 +364,13 @@ else if(isset ($_POST['knopvoegtoegroep'])) { //indien men een groep probeert aa
         $foutboodschap = 'Deze groep bestaat al!';
     }
     else {
+        $config["pagina"] = "./admin/message.html";
         if(!voegGroepToe($_POST['groepnaam'])) {
+            $toonTerug = 1;
             $foutboodschap = 'Door een technische probleem kon de groep niet aangemaakt worden, proper later nog eens!';
         }
         else {
+            $toonTerug = 0;
             $typeboodschap = "juist";
             $foutboodschap = 'Groep is succesvol aangemaakt!'; //dit is geen foutboodschap
         }
@@ -358,10 +382,14 @@ else if(isset ($_POST['wijziggroepnaam'])) { //indien men een groepsnaam probeer
         $naam = (string) $_POST['nieuwenaam'];
         if(!bestaatGroep($naam)) {
             if(wijzigGroepsnaam($idGroep, $naam)) {
+                $config["pagina"] = "./admin/message.html";
+                $toonTerug = 0;
                 $typeboodschap = "juist";
                 $foutboodschap = 'Groepsnaam is succesvol gewijzigd!'; //dit is geen foutboodschap
             }
             else {
+                $config["pagina"] = "./admin/message.html";
+                $toonTerug = 1;
                 $typeboodschap = "fout";
                 $foutboodschap = 'Technisch probleem! Mogelijk is de actie niet uitgevoerd!';
             }
@@ -391,7 +419,9 @@ else if(isset ($_POST['verderverwijdergroepknop'])) {
 }
 else if(isset ($_POST['voltooiengroepverwijderen'])) {
     $idGroep = $_POST['idGroep'];
+    $toonTerug = 1;
     if(verwijderGroep($idGroep)) {
+        $toonTerug = 0;
         $typeboodschap = "juist";
         $foutboodschap = 'Groep is succesvol verwijderd!'; //dit is geen foutboodschap
     }
@@ -411,6 +441,8 @@ else if(isset ($_POST['toekennenstudentenaangroepoverzichtknop'])) {
     }
 }
 else if(isset ($_POST['toekennenstudentenaangroepknop'])) {
+    $toonTerug = 1;
+    
     $ch = unserialize($_POST['checkbox2']);
     $groep = (int) $_POST['groep'];
     $allemaal = true;
@@ -431,10 +463,12 @@ else if(isset ($_POST['toekennenstudentenaangroepknop'])) {
 
     if($gelukt) {
         if($allemaal) {
+            $toonTerug = 0;
             $typeboodschap = "juist";
             $foutboodschap = 'Alle geselecteerden zijn aan de groep toegevoegd!'; // dit is geen foutboodschap
         }
         else {
+            $toonTerug = 0;
             $typeboodschap = "juist";
             $foutboodschap = 'Opgelet: sommige studenten waren al aan een groep toegekent, alle geselecteerden zijn nu aan deze groep toegevoegd!'; // dit is geen foutboodschap
         }
@@ -460,6 +494,8 @@ else if(isset ($_POST['verderopnaamStudGroep'])) {
     $link = "admin.php?pagina=studentGroepOntNaam";
 }
 else if(isset ($_POST['voltStudentGroepOntknop'])) {
+    $toonTerug = 1;
+
     $ch = unserialize($_POST['checkbox2']);
 
     $count = count($ch);
@@ -472,6 +508,7 @@ else if(isset ($_POST['voltStudentGroepOntknop'])) {
     }
 
     if($gelukt == true) {
+        $toonTerug = 0;
         $typeboodschap = "juist";
         $foutboodschap = 'Alle geselecteerden hebben geen groep meer.';
     }

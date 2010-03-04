@@ -1,6 +1,14 @@
-<div id="fout">
+<div id="boodschap">
     <p id ="[onshow.typeboodschap;noerr]">
         [onshow.foutboodschap;noerr]
     </p>
 </div>
-<a href="javascript:history.go(-1);">Terug</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Verder</a>
+
+<div>
+    [onload_1;block=div;when [var.toonTerug;noerr]==1;]
+    <a href="javascript:history.go(-1);">Terug</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Verder</a>
+</div>
+<div>
+    [onload_1;block=div;when [var.toonTerug;noerr]==0;]
+    <a href="admin.php">Verder</a>
+</div> 

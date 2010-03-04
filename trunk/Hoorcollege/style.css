@@ -308,6 +308,15 @@ div#fout {
     color: #000;
 }
 
+div#boodschap {
+    border: 1px solid #000;
+
+    background-color: #EFE7FF;
+    padding: 8px;
+    margin: 10px 0;
+    color: #000;
+}
+
 .clearfix {display: inline-table;}
 
 /* Hides from IE-mac \*/
