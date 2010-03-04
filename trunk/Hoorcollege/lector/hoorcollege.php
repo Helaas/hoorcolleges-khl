@@ -24,10 +24,14 @@ if(isset($_SESSION['gebruiker']) && ($_SESSION['gebruiker']->getNiveau() >= 40))
          */
 
         $hoorcolInfo = getHoorcollegeInformatie($_GET["hoorcollege"]);
-        $hoorcolInfo["VBC_geluid"] = $hoorcolInfo["VBC_geluid"] == "1" ? "true" : "false"; 
-        $hoorcolInfo["heeftVragen"] = heeftHoorcollegeVragen($_GET["hoorcollege"])  == true ? "true" : "false"; 
-        $hoorcolInfo["heeftVBC"] = "false"; 
+//        $hoorcolInfo["VBC_geluid"] = $hoorcolInfo["VBC_geluid"] == "1" ? "true" : "false";
+//        $hoorcolInfo["heeftVragen"] = heeftHoorcollegeVragen($_GET["hoorcollege"])  == true ? "true" : "false";
+//        $hoorcolInfo["heeftVBC"] = "false";
+        $hoorcolInfo["VBC_geluid"] = "false";
+        $hoorcolInfo["heeftVragen"] = "false";
+        $hoorcolInfo["heeftVBC"] = "false";
         $hoorcolInfo["gebruiker"] = (int)$_SESSION['gebruiker']->getIdGebruiker();
+        $hoorcolInfo["url"] = "http://".str_replace("lector/".basename($_SERVER["PHP_SELF"]), "", $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"]);
 
         /**
          * De items in dit hoorcollege

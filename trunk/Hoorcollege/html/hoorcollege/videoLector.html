@@ -1,10 +1,10 @@
 <h3>Video "[var.items.flv.naam]"</h3>
 <div>
-<object type="application/x-shockwave-flash" data="./../html/hoorcollege/flash/player.swf" width="720" height="520">
-        <param name="movie" value="./../html/hoorcollege/flash/player.swf" />
+<object type="application/x-shockwave-flash" data="./../html/hoorcollege/flash/playerLector.swf" width="720" height="520">
+        <param name="movie" value="./../html/hoorcollege/flash/playerLector.swf" />
         <param name="bgcolor" value="#ffffff" />
         <param name="allowFullScreen" value="true" />
-        <param name="FlashVars" value="videoPath=[var.items.flv.locatie]&VBCcontrole=[var.hoorcolInfo.heeftVBC;]&VBCgeluid=[var.hoorcolInfo.VBC_geluid]&MPCvragen=[var.hoorcolInfo.heeftVragen]&aantalHoofden=[var.hoorcolInfo.VBC_aantal]&hoorcollegeId=[var.hoorcolInfo.idHoorcollege]&gebruikerId=[var.hoorcolInfo.gebruiker]" />
+        <param name="FlashVars" value="videoPath=[var.hoorcolInfo.url][var.items.flv.locatie]&VBCcontrole=[var.hoorcolInfo.heeftVBC;]&VBCgeluid=[var.hoorcolInfo.VBC_geluid]&MPCvragen=[var.hoorcolInfo.heeftVragen]&aantalHoofden=[var.hoorcolInfo.VBC_aantal]&hoorcollegeId=[var.hoorcolInfo.idHoorcollege]&gebruikerId=[var.hoorcolInfo.gebruiker]" />
     </object>
 </div>
 <h3>Video beschrijving</h3>
