@@ -16,7 +16,7 @@ if(isset ($_SESSION['gebruiker'])) {
 
 
 
-    if($gebruikerNiv==40 ) {
+    if($gebruikerNiv>= 40 ) {
         //Folder mag geen speciale tekens zoals een punt bevatten, anders zou een vak als .NET bvb een hidden folder aanmaken
         if (preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['cat']) && preg_match('/^[0-9]+$/iD', $gebruikerID) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['bestandsnaam'])) {
             $testinhoud="Het tekstbestand ".'"'.$_POST['bestandsnaam'].'"'." werd geüpload!";

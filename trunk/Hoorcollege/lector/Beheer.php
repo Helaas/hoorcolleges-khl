@@ -8,7 +8,7 @@ if(isset ($_SESSION['gebruiker'])) {
         $gebruiker = $_SESSION['gebruiker'];
         $gebruikerNiv = $gebruiker->getNiveau();
 
-        if($gebruikerNiv==40){
+        if($gebruikerNiv>= 40){
 
     //Enkel getallen mogen hier binnen
  if (preg_match('/^[0-9]+$/iD', $_SESSION['gebruiker']->getIdGebruiker())) {

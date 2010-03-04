@@ -4,7 +4,7 @@
     $script = false;
     $fout = false;
 
-    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
+    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() >= 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
         if (isset($_POST["verzenden"])){
             $foutboodschap = "";
             $id = $_GET["id"];

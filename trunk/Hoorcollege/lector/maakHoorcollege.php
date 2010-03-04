@@ -5,7 +5,7 @@
     $fout = false;
 
 
-    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40){ //lector is ingelogged
+    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() >= 40){ //lector is ingelogged
         if (isset($_POST["verzenden"])){
             $foutboodschap = "";
 

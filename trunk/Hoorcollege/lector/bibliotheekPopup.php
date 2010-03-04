@@ -2,7 +2,7 @@
     require_once('./../includes/kern.php');
     session_start();
 
-    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40){ //lector is ingelogged
+    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() >= 40){ //lector is ingelogged
         $toegestaneTypes = array();
         $toegestaneTypes[] = "mp3";
         $toegestaneTypes[] = "flv";

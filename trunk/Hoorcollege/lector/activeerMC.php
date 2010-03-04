@@ -54,7 +54,7 @@
 
     if(heeftHoorcollegeVragen($_GET["id"])) header("location:wijzigMC.php?id=".$_GET["id"]);
 
-    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
+    if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() >= 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])){ //lector is ingelogged
         $foutboodschap = "";
         //evalueren en indien juist opslaan
         if (isset($_POST["opslaan"])){

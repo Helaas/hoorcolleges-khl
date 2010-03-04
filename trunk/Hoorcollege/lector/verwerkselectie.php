@@ -8,7 +8,7 @@ $config["pagina"] = "index.html";
 
 if(isset($_SESSION['gebruiker'])) {
     //Bepalen welke template laden (afhankelijk van niveau gebruiker)
-    if($_SESSION['gebruiker']->getNiveau() == 40) {
+    if($_SESSION['gebruiker']->getNiveau() >= 40) {
 
         $cat=$_POST['cat'];
 

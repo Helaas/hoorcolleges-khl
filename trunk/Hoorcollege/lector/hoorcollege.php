@@ -3,7 +3,7 @@
 include_once('./../includes/kern.php');
 session_start();
 
-if(isset($_SESSION['gebruiker']) && ($_SESSION['gebruiker']->getNiveau() == 1 || $_SESSION['gebruiker']->getNiveau() == 40)) { //student is ingelogged
+if(isset($_SESSION['gebruiker']) && ($_SESSION['gebruiker']->getNiveau() >= 40)) { //student is ingelogged
 
    $result = $db->Execute("
                                         select Hoorcollege_idHoorcollege

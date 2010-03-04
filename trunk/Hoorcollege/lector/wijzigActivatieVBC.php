@@ -4,7 +4,7 @@ session_start();
 $fout = false;
 
 if (isset($_GET["id"]) && is_numeric($_GET["id"]) && !heeftVBC($_GET["id"])) header("location: activeerVBC.php?id=".$_GET["id"]);
-if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])) { //lector is ingelogged
+if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() >= 40 && isset($_GET["id"]) && is_numeric($_GET["id"]) && geeftLectorHoorcollege($_SESSION['gebruiker']->getIdGebruiker(), $_GET["id"])) { //lector is ingelogged
     $foutboodschap = "";
     if (isset($_POST["verzenden"])) {
         if (!isset($_POST["aantal"]) || !is_numeric($_POST["aantal"]) || empty($_POST["aantal"])|| $_POST["aantal"]<=0) $foutboodschap .= "- Het aantal logo's moet een numeriek getal zijn groter dan 0.\n";

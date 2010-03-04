@@ -10,7 +10,7 @@ if(isset ($_SESSION['gebruiker'])) {
     $gebruikerNiv = $gebruiker->getNiveau();
     $gebruikerID = $gebruiker->getIdGebruiker();
 
-    if($gebruikerNiv==40) {
+    if($gebruikerNiv>= 40) {
       $ondid=$_GET['gevraagdond'];
       $ondnaam=$_GET['gevraagdondnaam'];
 

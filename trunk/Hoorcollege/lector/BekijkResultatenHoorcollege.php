@@ -12,7 +12,7 @@ if(isset ($_SESSION['gebruiker'])) {
 
     $hoorcollid=$_GET['gevraagdhoorcoll'];
     $vak=(int)$_GET['vak'];
-    if($gebruikerNiv==40) {
+    if($gebruikerNiv>= 40) {
 
               if (preg_match('/^[0-9]+$/iD', $_GET['gevraagdhoorcoll']) && preg_match('/^[0-9]+$/iD', $_GET['vak'])) {
                  //controle of het hoorcollege wel bij de lector hoort

@@ -9,7 +9,7 @@ if(isset ($_SESSION['gebruiker'])) {
     $gebruiker = $_SESSION['gebruiker'];
     $gebruikerNiv = $gebruiker->getNiveau();
 
-    if($gebruikerNiv==40) {
+    if($gebruikerNiv>= 40) {
 
         //aangeven dat het antwoord een xml bestand is
         header("Content-type: text/xml");

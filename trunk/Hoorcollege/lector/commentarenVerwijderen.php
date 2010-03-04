@@ -4,7 +4,7 @@ $config["pagina"] = "lector/commentarenVerwijderen.html";
 session_start();
 $TBS->LoadTemplate('./../html/lector/templateLector.html') ;
 
-if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() == 40 && isset($_GET["hoorcollege"])) {
+if(isset($_SESSION['gebruiker']) && $_SESSION['gebruiker']->getNiveau() >= 40 && isset($_GET["hoorcollege"])) {
     //$hoorcollege moet nog veranderen naar = $_GET["hoorcollege"];
     $idHoorcollege = $_GET["hoorcollege"];
     $hoorcollegeInfo = $db->GetRow('select naam from hoorcollege_hoorcollege where idHoorcollege='.$idHoorcollege);

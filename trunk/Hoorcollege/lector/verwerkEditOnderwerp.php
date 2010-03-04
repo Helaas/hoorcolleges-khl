@@ -10,7 +10,7 @@ if(isset ($_SESSION['gebruiker'])) {
     $gebruikerNiv = $gebruiker->getNiveau();
     $gebruikerID = $gebruiker->getIdGebruiker();
 
-    if($gebruikerNiv==40) {
+    if($gebruikerNiv>= 40) {
 
               if (preg_match('/^[0-9]+$/iD', $_POST['OndID']) && preg_match('/^[a-z0-9\+\#\ ]+$/iD', $_POST['veld1'])) {
                  //controle of het onderwerp wel bij de lector hoort
