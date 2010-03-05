@@ -1,9 +1,7 @@
 <?php
+    error_reporting (0); //warnings uit, zekerheidje inbouwen voor de presentatie
 
-    $config["server"] = true; //True = Thuisservers | false = web-k
     $fout = false;
-
-    if ($_SERVER["SERVER_NAME"] == "www.web-k.be") $config["server"] = false;
 
     ## SQL en SQL abstractie
 
@@ -13,22 +11,16 @@
     //$db->debug = true;
 
 
-    if ($config["server"]){
-        $config["dbnaam"] = "hoorcolleges"; // Database naam
-        $config["bdgebruiker"] = "root"; // Gebruikersnaam
-        $config["dbwachtwoord"] = ""; // Password
-    } else {
-        $config["dbnaam"] = "web_k_be"; // Database naam
-        $config["bdgebruiker"] = "web_k_be"; // Gebruikersnaam
-        $config["dbwachtwoord"] = "pJ7xtbvU"; // Password
-    }
+    $config["dbnaam"] = "hoorcolleges"; // Database naam
+    $config["bdgebruiker"] = "root"; // Gebruikersnaam
+    $config["dbwachtwoord"] = ""; // Password
 
     // Verbinden
 
-    //$db->Connect("localhost", $config["bdgebruiker"], $config["dbwachtwoord"], $config["dbnaam"]);
+    $db->Connect("localhost", $config["bdgebruiker"], $config["dbwachtwoord"], $config["dbnaam"]);
 
     //Eens die amazon dinges proberen
-    $db->Connect("ec2-79-125-51-239.eu-west-1.compute.amazonaws.com:3700","wortel", "nutella", "hoorcolleges");
+    //$db->Connect("ec2-79-125-51-239.eu-west-1.compute.amazonaws.com:3700","wortel", "nutella", "hoorcolleges");
 
 
 
