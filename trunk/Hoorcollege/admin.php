@@ -45,7 +45,9 @@ else if(isset ($_POST['knopvoegtoestudent'])) {
 }
 else if(isset ($_POST['lectortotadminpromoveren'])) {
     //$config["pagina"] = "./admin/lectorPromoveren.html";
+    $toonTerug = 1;
     if(promoveerLector($_POST['selectlector']) && $_POST['selectlector'] != 'kies') {
+        $toonTerug = 0;
         $typeboodschap = "juist";
         $foutboodschap = 'Lector is succesvol gepromoveerd!'; // dit is geen foutboodschap
     }
@@ -811,6 +813,9 @@ if(isset ($_GET['pagina'])) {
                                                             FROM hoorcollege_gebruiker g
                                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
                                                             WHERE g.niveau = '1' and g.actief = '1' AND vv.Vak_idVak = '$vak' AND g.naam LIKE '%$naamBegintMet%'
+                                                            AND g.idGebruiker
+                                                            IN (SELECT Gebruiker_idGebruiker
+                                                                FROM hoorcollege_gebruikergroep)
                                                             GROUP BY g.naam, g.voornaam ASC");
                 $studdata = serialize($data);
             }
@@ -865,7 +870,10 @@ if(isset ($_GET['pagina'])) {
                 $naamBegintMet = (string) $_POST['naamBegintMet'];
                 $data = $TBS->MergeBlock('blk1,*', $db, "SELECT g.idGebruiker, g.naam, g.voornaam
                                                        FROM hoorcollege_gebruiker g
-                                                       WHERE g.naam LIKE '%$naamBegintMet%' AND g.niveau = '1' and g.actief = '1'");
+                                                       WHERE g.naam LIKE '%$naamBegintMet%' AND g.niveau = '1' and g.actief = '1'
+                                                       AND g.idGebruiker
+                                                       IN (SELECT Gebruiker_idGebruiker
+                                                           FROM hoorcollege_gebruikergroep)");
                 $studdata = serialize($data);
             }
             else if($filteroptiesVak) { //indien enkel de tweede is geselcteerd
@@ -874,6 +882,9 @@ if(isset ($_GET['pagina'])) {
                                             FROM hoorcollege_gebruiker g
                                             LEFT JOIN hoorcollege_gebruiker_volgt_vak vv ON g.idGebruiker = vv.Gebruiker_idGebruiker
                                             WHERE vv.Vak_idVak = '$vak'
+                                            AND g.idGebruiker
+                                               IN (SELECT Gebruiker_idGebruiker
+                                                   FROM hoorcollege_gebruikergroep)
                                             GROUP BY g.naam, g.voornaam ASC");
                 $studdata = serialize($data);
             }
